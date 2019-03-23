@@ -22,6 +22,12 @@ Imports:
     rpart,
     C50,
     Cubist,
-    withr
+    withr,
+    rsample,
+    dplyr,
+    purrr,
+    furrr,
+    tibble,
+    rlang
 URL: https://github.com/topepo/baguette
 BugReports: https://github.com/topepo/baguette/issues
