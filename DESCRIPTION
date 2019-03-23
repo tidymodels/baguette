@@ -1,0 +1,27 @@
+Package: baguette
+Title: Efficient Model Functions for Bagging
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Max",
+           family = "Kuhn",
+           role = c("aut", "cre"),
+           email = "max@rstudio.com",
+           comment = c(ORCID = "0000-0003-2402-136X"))
+Description: Tree- and rule-based models can be bagged using 
+    this package and their predictions equations are stored 
+    in an efficient format to reduce the model objects size 
+    and speed. 
+License: GPL-3
+Suggests: 
+    testthat
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+Imports: 
+    hardhat,
+    rpart,
+    C50,
+    Cubist,
+    withr
+URL: https://github.com/topepo/baguette
+BugReports: https://github.com/topepo/baguette/issues

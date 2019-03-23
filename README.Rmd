@@ -1,0 +1,33 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+# baguette
+
+<!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![CRAN status](https://www.r-pkg.org/badges/version/baguette)](https://cran.r-project.org/package=baguette)
+<!-- badges: end -->
+
+The goal of baguette is to provide effcieint functions that can be used to create ensemble models. 
+
+## Installation
+
+You can install the released version of baguette from [CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("baguette")
+```
+
+## Example
+
