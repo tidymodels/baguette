@@ -14,16 +14,16 @@ bagger(x, ...)
 \method{bagger}{default}(x, ...)
 
 \method{bagger}{data.frame}(x, y, model = "CART", B = 10L,
-  opt = NULL, var_imp = FALSE, oob = FALSE, extract = NULL, ...)
+  opt = NULL, var_imp = FALSE, oob = NULL, extract = NULL, ...)
 
 \method{bagger}{matrix}(x, y, model = "CART", B = 10L, opt = NULL,
-  var_imp = FALSE, oob = FALSE, extract = NULL, ...)
+  var_imp = FALSE, oob = NULL, extract = NULL, ...)
 
 \method{bagger}{formula}(formula, data, model = "CART", B = 10L,
-  opt = NULL, var_imp = FALSE, oob = FALSE, extract = NULL, ...)
+  opt = NULL, var_imp = FALSE, oob = NULL, extract = NULL, ...)
 
 \method{bagger}{recipe}(x, data, model = "CART", B = 10L, opt = NULL,
-  var_imp = FALSE, oob = FALSE, extract = NULL, ...)
+  var_imp = FALSE, oob = NULL, extract = NULL, ...)
 }
 \arguments{
 \item{x}{A data frame, matrix, or recipe (depending on the method being used.)}
@@ -45,8 +45,8 @@ model function. A list of possible arguments per model are givien in Details.}
 
 \item{var_imp}{A logical: should variable importance scores be calculated?}
 
-\item{oob}{A logical: should out-of-bag performance metrics be calculated?
-TODO Instead maybe NULL or metric set object?}
+\item{oob}{A metric set created by \code{\link[yardstick:metric_set]{yardstick::metric_set()}} or NULL. If not
+NULL, then the out-of-bag samples are used to estimate model performance.}
 
 \item{extract}{A function (or NULL) that can extract model-related aspects
 of each ensemble member. See Details below.}

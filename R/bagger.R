@@ -19,8 +19,8 @@
 #' @param opt A named list (or NULL) of arguments to pass to the underlying
 #'  model function. A list of possible arguments per model are givien in Details.
 #' @param var_imp A logical: should variable importance scores be calculated?
-#' @param oob A logical: should out-of-bag performance metrics be calculated?
-#'  TODO Instead maybe NULL or metric set object?
+#' @param oob A metric set created by [yardstick::metric_set()] or NULL. If not
+#'  NULL, then the out-of-bag samples are used to estimate model performance.
 #' @param extract A function (or NULL) that can extract model-related aspects
 #'  of each ensemble member. See Details below.
 #' @param ... Optional arguments to pass to the `extract` function.
@@ -59,7 +59,7 @@ bagger.data.frame <-
            B = 10L,
            opt = NULL,
            var_imp = FALSE,
-           oob = FALSE,
+           oob = NULL,
            extract = NULL,
            ...) {
     B <- integer_B(B)
@@ -81,7 +81,7 @@ bagger.matrix <-
            B = 10L,
            opt = NULL,
            var_imp = FALSE,
-           oob = FALSE,
+           oob = NULL,
            extract = NULL,
            ...) {
     B <- integer_B(B)
@@ -103,7 +103,7 @@ bagger.formula <-
            B = 10L,
            opt = NULL,
            var_imp = FALSE,
-           oob = FALSE,
+           oob = NULL,
            extract = NULL,
            ...) {
     B <- integer_B(B)
@@ -126,7 +126,7 @@ bagger.recipe <-
            B = 10L,
            opt = NULL,
            var_imp = FALSE,
-           oob = FALSE,
+           oob = NULL,
            extract = NULL,
            ...) {
     B <- integer_B(B)

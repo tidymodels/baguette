@@ -14,6 +14,11 @@ utils::globalVariables(
     "model",
     "passed",
     "predictor",
-    "splits"
+    "splits",
+    ".estimate",
+    ".metric",
+    ".obs",
+    ".pred",
+    ".pred_class"
   )
 )
