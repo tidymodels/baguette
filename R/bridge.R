@@ -23,6 +23,7 @@ bagger_bridge <- function(processed, model, seed, B, opt, var_imp, oob, extract,
     new_bagger(
       model_df = res$model,
       imp = res$imp,
+      oob = res$oob,
       opt = opt,
       model = model,
       blueprint = processed$blueprint

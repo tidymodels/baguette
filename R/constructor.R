@@ -1,6 +1,6 @@
 #' @importFrom tibble is_tibble
 
-new_bagger <- function(model_df, imp, opt, model, blueprint) {
+new_bagger <- function(model_df, imp, oob, opt, model, blueprint) {
 
   if (!is_tibble(model_df)) {
     stop("`model_df` should be a tibble.", call. = FALSE)
@@ -13,10 +13,25 @@ new_bagger <- function(model_df, imp, opt, model, blueprint) {
   if (!is.list(opt) & !is.null(opt)) {
     stop("`opt` should be a list or NULL", call. = FALSE)
   }
+  if (!is_tibble(oob) & !is.null(oob)) {
+    stop("`oob` should be a tibble.", call. = FALSE)
+  }
+
+  exp_nm <- c(".metric", "mean", "stdev", "n")
+  if (length(setdiff(exp_nm, names(oob))) > 0 |
+      length(setdiff(names(oob), exp_nm)) > 0 ) {
+    stop(
+      "`oob` should have columns ",
+      paste0("'", exp_nm, "'", collapse = ","),
+      ".", call. = FALSE
+    )
+  }
+
   hardhat::new_model(
     model_df = model_df,
     imp = imp,
     opt = opt,
+    oob = oob,
     model = model,
     blueprint = blueprint,
     class = "bagger"

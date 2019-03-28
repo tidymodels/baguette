@@ -33,7 +33,8 @@ Imports:
     earth,
     magrittr,
     parsnip,
-    utils
+    utils,
+    yardstick
 URL: https://github.com/topepo/baguette
 BugReports: https://github.com/topepo/baguette/issues
 RoxygenNote: 6.1.1
