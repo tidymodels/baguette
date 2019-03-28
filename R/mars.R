@@ -3,6 +3,7 @@
 #' @importFrom purrr map map2 map_df
 #' @importFrom tibble tibble
 #' @importFrom parsnip mars
+#' @importFrom furrr future_map
 
 mars_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
   is_classif <- is.factor(rs$splits[[1]]$data$.outcome)
@@ -10,7 +11,7 @@ mars_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
   rs <-
     rs %>%
     dplyr::mutate(
-      model = purrr::map(splits, mars_fit, spec = mod_spec),
+      model = furrr::future_map(splits, mars_fit, spec = mod_spec),
       passed = !purrr::map_lgl(model, model_failure)
     )
 

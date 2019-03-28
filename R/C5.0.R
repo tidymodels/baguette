@@ -3,13 +3,14 @@
 #' @importFrom purrr map map2 map_df
 #' @importFrom tibble tibble
 #' @importFrom parsnip decision_tree
+#' @importFrom furrr future_map
 
 c5_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
    mod_spec <- make_c5_spec(opt)
   rs <-
     rs %>%
     dplyr::mutate(
-      model = purrr::map(splits, c5_fit, spec = mod_spec),
+      model = furrr::future_map(splits, c5_fit, spec = mod_spec),
       passed = !purrr::map_lgl(model, model_failure)
     )
 

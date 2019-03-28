@@ -2,12 +2,13 @@
 #' @importFrom rsample analysis
 #' @importFrom purrr map_lgl map2 map_df
 #' @importFrom tibble as_tibble
+#' @importFrom furrr future_map2
 
 cubist_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
   rs <-
     rs %>%
     dplyr::mutate(
-      model = purrr::map2(splits, fit_seed, cubist_fit, opt = opt),
+      model = furrr::future_map2(splits, fit_seed, cubist_fit, opt = opt),
       passed = !purrr::map_lgl(model, model_failure)
     )
 

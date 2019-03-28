@@ -150,18 +150,12 @@ print.bagger <- function(x, ...) {
   }
 
   if (!is.null(x$imp)) {
-    cat("\nSelected variable importance scores:\n\n")
+    cat("\nVariable importance scores include:\n\n")
     print(x$imp)
     cat("\n")
   }
 
   invisible(x)
 }
-
-
-# TODO:
-# 1. move to furrr for model fits
-# 2. use tidypredict to convert models to expressions
-# 3. pass a metric_set to the `oob` argument for performance estimates
 
 

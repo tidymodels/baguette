@@ -24,7 +24,6 @@ Currently in development/draft. Major to-do's are:
 
  * Add tree-based models for two-class models that have asymmetric costs for each class 
 
- * Parallelize using `furrr` when creating the models
 
 ## Installation
 
