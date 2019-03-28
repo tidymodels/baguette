@@ -12,17 +12,19 @@
 #' @param data A data frame containing the variables used in the formula or
 #'  recipe.
 #' @param model A single character value for the model being bagged. Possible
-#'  values are TODO.
+#'  values are "CART", "MARS", "C5.0" (classification only), and "model_rules"
+#'  (regression only).
 #' @param B A single integer greater than 1 for the maximum number of bootstrap
 #'  samples/ensemble members (some model fits might fail).
 #' @param opt A named list (or NULL) of arguments to pass to the underlying
-#'  model function.
+#'  model function. A list of possible arguments per model are givien in Details.
 #' @param var_imp A logical: should variable importance scores be calculated?
 #' @param oob A logical: should out-of-bag performance metrics be calculated?
 #'  TODO Instead maybe NULL or metric set object?
 #' @param extract A function (or NULL) that can extract model-related aspects
 #'  of each ensemble member. See Details below.
 #' @param ... Optional arguments to pass to the `extract` function.
+#' @details TBD
 #' @examples
 #' mars_reg <- bagger(Sepal.Width ~ ., data = iris, model = "MARS", var_imp = TRUE)
 #'

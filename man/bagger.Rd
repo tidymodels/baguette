@@ -34,13 +34,14 @@ bagger(x, ...)
 classes) should be represented as factors, not integers.}
 
 \item{model}{A single character value for the model being bagged. Possible
-values are TODO.}
+values are "CART", "MARS", "C5.0" (classification only), and "model_rules"
+(regression only).}
 
 \item{B}{A single integer greater than 1 for the maximum number of bootstrap
 samples/ensemble members (some model fits might fail).}
 
 \item{opt}{A named list (or NULL) of arguments to pass to the underlying
-model function.}
+model function. A list of possible arguments per model are givien in Details.}
 
 \item{var_imp}{A logical: should variable importance scores be calculated?}
 
@@ -60,6 +61,9 @@ recipe.}
 }
 \description{
 General suite of bagging functions for several models.
+}
+\details{
+TBD
 }
 \examples{
 mars_reg <- bagger(Sepal.Width ~ ., data = iris, model = "MARS", var_imp = TRUE)

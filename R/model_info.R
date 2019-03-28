@@ -6,9 +6,9 @@ models <- c("CART", "model_rules", "C5.0", "MARS")
 # We want to default some arguments for different models
 model_defaults <-
   list(
-    CART = list(cp = 0, xval = 0),
+    CART = list(cp = 0, xval = 0, minsplit = 20, maxdepth = 30),
     "model_rules" = list(),
-    "C5.0" = list(trials = 1),
+    "C5.0" = list(minCases = 2),
     MARS = list(pmethod = "none", nprune = NULL, degree = 2)
   )
 
@@ -19,7 +19,9 @@ model_defaults <-
 
 model_args <-
   list(
-    CART = c('method', 'parms', 'cost', 'minsplit', 'minbucket', 'cp',
+    CART = c('method', 'parms', 'cost',
+             # control function arguments:
+             'minsplit', 'minbucket', 'cp',
              'maxcompete', 'maxsurrogate', 'usesurrogate', 'xval',
              'surrogatestyle', 'maxdepth'),
     "model_rules" = c('unbiased', 'rules', 'extrapolation', 'sample'),
