@@ -110,7 +110,7 @@ bagger.formula <-
     seed <- sample.int(10^5, 1)
     validate_args(model, B, opt, var_imp, oob, extract)
 
-    bp <- hardhat::default_formula_blueprint(indicators = TRUE)
+    bp <- hardhat::default_formula_blueprint(indicators = FALSE)
     processed <- hardhat::mold(formula, data, blueprint = bp)
     bagger_bridge(processed, model, seed, B, opt, var_imp, oob, extract, ...)
   }
