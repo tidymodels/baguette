@@ -10,9 +10,10 @@ validate_args <- function(model, B, opt, var_imp, oob, extract) {
   # ----------------------------------------------------------------------------
 
   if (!is.integer(B)) {
-    stop("`B` an integer > 1.", call. = FALSE)
-    if (B < 1)
-      stop("`B` an integer > 1.", call. = FALSE)
+    stop("`B` must be an integer > 1.", call. = FALSE)
+  }
+  if (B < 1) {
+    stop("`B` must be an integer > 1.", call. = FALSE)
   }
 
   # ----------------------------------------------------------------------------
