@@ -41,7 +41,7 @@ values are "CART", "MARS", "C5.0" (classification only), and "model_rules"
 samples/ensemble members (some model fits might fail).}
 
 \item{opt}{A named list (or NULL) of arguments to pass to the underlying
-model function. A list of possible arguments per model are givien in Details.}
+model function. A list of possible arguments per model are given in Details.}
 
 \item{var_imp}{A logical: should variable importance scores be calculated?}
 

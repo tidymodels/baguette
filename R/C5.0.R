@@ -32,13 +32,30 @@ c5_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
     imps <- NULL
   }
 
+  if (!is.null(oob)) {
+    oob <-
+      purrr::map2_dfr(rs$model, rs$splits, oob_parsnip, met = oob) %>%
+      dplyr::group_by(.metric) %>%
+      dplyr::summarize(
+        mean = mean(.estimate, na.rm = TRUE),
+        stdev = sd(.estimate, na.rm = TRUE),
+        n = sum(!is.na(.estimate))
+      )
+  } else {
+    oob <- NULL
+  }
+
   if (!is.null(extract)) {
     rs <-
       rs %>%
       dplyr::mutate(extras = map(model, extract, ...))
   }
 
-  list(model = rs %>% dplyr::select(-splits, -id, -fit_seed, -passed), imp = imps)
+  list(
+    model = rs %>% dplyr::select(-splits, -id, -fit_seed, -passed),
+    imp = imps,
+    oob = oob
+  )
 }
 
 make_c5_spec <- function(opt) {

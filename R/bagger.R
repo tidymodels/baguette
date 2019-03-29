@@ -17,7 +17,7 @@
 #' @param B A single integer greater than 1 for the maximum number of bootstrap
 #'  samples/ensemble members (some model fits might fail).
 #' @param opt A named list (or NULL) of arguments to pass to the underlying
-#'  model function. A list of possible arguments per model are givien in Details.
+#'  model function. A list of possible arguments per model are given in Details.
 #' @param var_imp A logical: should variable importance scores be calculated?
 #' @param oob A metric set created by [yardstick::metric_set()] or NULL. If not
 #'  NULL, then the out-of-bag samples are used to estimate model performance.
