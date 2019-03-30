@@ -14,7 +14,8 @@ Description: Tree- and rule-based models can be bagged using
 License: GPL-3
 Suggests: 
     testthat,
-    AmesHousing
+    AmesHousing,
+    recipes
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
