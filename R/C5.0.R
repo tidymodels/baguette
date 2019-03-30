@@ -86,7 +86,7 @@ make_c5_spec <- function(opt) {
       c5_spec <- parsnip::set_engine(c5_spec, engine = "C5.0", !!!main_args)
     } else {
       # make a control object from any other arguments:
-      c5_ctrl_call <- rlang::call2("C5.0Control", !!!opt, .ns = "C50")
+      c5_ctrl_call <- rlang::call2("C5.0Control", !!!opts, .ns = "C50")
       ctrl <- rlang::eval_tidy(c5_ctrl_call)
       c5_spec <-
         parsnip::set_engine(c5_spec, engine = "C5.0", !!!main_args, control = ctrl)

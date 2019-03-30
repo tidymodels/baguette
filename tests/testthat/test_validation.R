@@ -123,7 +123,7 @@ test_that('wrong y for C5', {
 
 # ------------------------------------------------------------------------------
 
-test_that('catestrophic failures', {
+test_that('catastrophic failures', {
   expect_error(
     bagger(Sepal.Length ~ ., data = iris, B = 2L, model = "CART", opt = list(cost = 2)),
     regexp = "All of the models"
