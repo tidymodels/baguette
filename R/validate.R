@@ -115,3 +115,23 @@ check_for_disaster <- function(x) {
   invisible(TRUE)
 }
 
+# ------------------------------------------------------------------------------
+
+check_type <- function(object, type) {
+  if (is.null(type)) {
+    if (object$model[2] == "classification") {
+      type <- "class"
+    } else {
+      type <- "numeric"
+    }
+  } else {
+    if (object$model[2] == "classification") {
+      if (!(type %in% c("class", "prob")))
+        stop("`type` should be either 'class' or 'prob'", call. = FALSE)
+    } else {
+      if (type != "numeric")
+        stop("`type` should be 'numeric'", call. = FALSE)
+    }
+  }
+  type
+}
