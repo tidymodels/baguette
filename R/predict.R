@@ -14,7 +14,7 @@
 #' @examples
 #' data("two_class_dat", package = "rsample")
 #'
-#' mod <- bagger(Class ~ ., data = two_class_dat[-(1:6), ], model = "CART")
+#' mod <- bagger(Class ~ ., data = two_class_dat[-(1:6), ], model = "CART", B = 11L)
 #'
 #' predict(mod, two_class_dat[1:6,], type = "class")
 #' predict(mod, two_class_dat[1:6,], type = "prob")
