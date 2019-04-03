@@ -141,7 +141,8 @@ bagger.recipe <-
 
 #' @export
 print.bagger <- function(x, ...) {
-  cat("Bagged ", x$model, " (", nrow(x$model_df), " members)\n", sep = "")
+  cat("Bagged ", x$model[1], " (", x$model[2], " with ",
+      nrow(x$model_df), " members)\n", sep = "")
 
   if (!is.null(x$opt)) {
     cat("Additional model options:\n")

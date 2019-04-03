@@ -29,12 +29,18 @@ new_bagger <- function(model_df, imp, oob, opt, model, blueprint) {
     }
   }
 
+  if (is.numeric(blueprint$ptypes$outcomes[[1]])) {
+    mod_mode <- "regression"
+  } else {
+    mod_mode <- "classification"
+  }
+
   hardhat::new_model(
     model_df = model_df,
     imp = imp,
     opt = opt,
     oob = oob,
-    model = model,
+    model = c(model[1], mod_mode),
     blueprint = blueprint,
     class = "bagger"
   )
