@@ -2,6 +2,8 @@ library(testthat)
 library(purrr)
 library(yardstick)
 
+context("CART models")
+
 # ------------------------------------------------------------------------------
 
 num_leaves <- function(x, ...) {

@@ -1,4 +1,7 @@
 library(testthat)
+
+context("model rules")
+
 # ------------------------------------------------------------------------------
 
 test_that('check cubist opt', {

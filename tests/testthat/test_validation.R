@@ -1,5 +1,9 @@
 library(testthat)
 
+context("validation code")
+
+# ------------------------------------------------------------------------------
+
 test_that('good values', {
   expect_error(
     baguette:::validate_args(

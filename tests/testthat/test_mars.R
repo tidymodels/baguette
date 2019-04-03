@@ -1,6 +1,8 @@
 library(testthat)
 library(rlang)
 
+context("MARS models")
+
 # ------------------------------------------------------------------------------
 
 data("two_class_dat", package = "rsample")
