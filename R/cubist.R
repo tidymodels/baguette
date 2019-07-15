@@ -14,7 +14,11 @@ cubist_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
 
   check_for_disaster(rs)
 
-  rs <- rs %>% dplyr::filter(passed)
+  rs <-
+    rs %>%
+    dplyr::filter(passed) %>%
+    mutate(.pred_form = map(model, tidypredict::tidypredict_fit))
+
   num_mod <- nrow(rs)
 
   if (var_imp) {
@@ -36,7 +40,8 @@ cubist_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
       dplyr::mutate(extras = map(model, extract, ...))
   }
 
-  list(model = rs %>% dplyr::select(-splits, -id, -fit_seed, -passed), imp = imps)
+  list(model = rs %>% dplyr::select(-splits, -id, -fit_seed, -passed, -model),
+       imp = imps)
 }
 
 cubist_control <- function(opt, seed) {

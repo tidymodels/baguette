@@ -6,7 +6,7 @@ models <- c("CART", "model_rules", "C5.0", "MARS")
 # We want to default some arguments for different models
 model_defaults <-
   list(
-    CART = list(cp = 0, xval = 0, minsplit = 20, maxdepth = 30),
+    CART = list(cp = 0, xval = 0, minsplit = 20, maxdepth = 30, model = TRUE),
     "model_rules" = list(),
     "C5.0" = list(minCases = 2),
     MARS = list(pmethod = "none", nprune = NULL, degree = 2)

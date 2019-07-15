@@ -17,7 +17,10 @@ mars_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
 
   check_for_disaster(rs)
 
-  rs <- rs %>% dplyr::filter(passed)
+  rs <-
+    rs %>%
+    dplyr::filter(passed) %>%
+    mutate(.pred_form = map(model, tidypredict::tidypredict_fit))
   num_mod <- nrow(rs)
 
   if (var_imp) {
@@ -35,7 +38,7 @@ mars_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
 
   if (!is.null(oob)) {
     oob <-
-      purrr::map2_dfr(rs$model, rs$splits, oob_parsnip, met = oob) %>%
+      furrr::future_map2_dfr(rs$model, rs$splits, oob_parsnip, met = oob) %>%
       dplyr::group_by(.metric) %>%
       dplyr::summarize(
         mean = mean(.estimate, na.rm = TRUE),
@@ -47,13 +50,11 @@ mars_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
   }
 
   if (!is.null(extract)) {
-    rs <-
-      rs %>%
-      dplyr::mutate(extras = map(model, extract, ...))
+    rs <- rs %>% dplyr::mutate(extras = map(model, ~ extract(.x$fit, ...)))
   }
 
   list(
-    model = rs %>% dplyr::select(-splits, -id, -fit_seed, -passed),
+    model = rs %>% dplyr::select(-splits, -id, -fit_seed, -passed, -model),
     imp = imps,
     oob = oob
   )
@@ -89,11 +90,7 @@ mars_fit  <- function(split, spec) {
   dat <- rsample::analysis(split)
   # only na.fail is supported by earth::earth
   dat <- dat[complete.cases(dat),, drop = FALSE]
-  mod <-
-    parsnip::fit.model_spec(spec,
-                            .outcome ~ .,
-                            data = dat,
-                            control = ctrl)
+  mod <- parsnip::fit.model_spec(spec, .outcome ~ ., data = dat, control = ctrl)
   mod
 }
 

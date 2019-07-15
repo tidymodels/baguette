@@ -63,17 +63,37 @@ recipe.}
 General suite of bagging functions for several models.
 }
 \details{
-TBD
+\code{bagger()} fits separate models to bootstrap samples. The
+prediction function for each model object is encoded in an R
+expression and the original model object is discarded. When
+making predictions, each prediction formula is evaluated on the
+new data and aggregated using the mean.
+
+Any arbitrary item can be saved from the model object
+(including the model object itself) using the \code{extract}
+argument, which should be a function with arguments \code{x}, and
+\code{...}. The results of this function are saved into a list column
+called \code{extras} (see the sample below).
 }
 \examples{
 mars_reg <- bagger(Sepal.Width ~ ., data = iris, model = "MARS", var_imp = TRUE)
 
 library(AmesHousing)
-ames <- make_ames()
+ames <- make_ames() \%>\% dplyr::select(-contains("Qu"))
 # These take a while:
 
 \dontrun{
-ames_mars <- bagger(log10(Sale_Price) ~ ., data = ames, model = "MARS", var_imp = TRUE)
-ames_rules <- bagger(log10(Sale_Price) ~ ., data = ames, model = "model_rules", var_imp = TRUE)
+set.seed(9724)
+ames_mars  <- bagger(log10(Sale_Price) ~ ., data = ames, model = "MARS")
+ames_rules <- bagger(log10(Sale_Price) ~ ., data = ames, model = "model_rules")
+
+# Extracting elements:
+
+num_term_nodes <- function(x, ...) {
+  tibble(num_nodes = sum(x$frame$var == "<leaf>"))
+}
+
+ames_cart <- bagger(log10(Sale_Price) ~ ., data = ames, extract = num_term_nodes)
+bind_rows(ames_cart$model_df$extras)
 }
 }

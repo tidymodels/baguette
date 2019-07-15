@@ -67,4 +67,13 @@ oob_cubist <- function(model, split, met) {
   res
 }
 
+# ------------------------------------------------------------------------------
+
+eval_num_form <- function(.fn, new_data) {
+  dplyr::tibble(
+    .pred = rlang::eval_tidy(.fn, new_data),
+    .row = 1:nrow(new_data)
+  )
+}
+
 

@@ -24,11 +24,13 @@ predict.bagger <- function(object, new_data, type = NULL, ...) {
   new_data <- hardhat::forge(new_data, object$blueprint)$predictors
 
   if (type == "numeric") {
-    if (object$model[1] == "model_rules") {
-      res <- cubist_pred(object$model_df, new_data)
-    } else {
-      res <- numeric_pred(object$model_df, new_data)
-    }
+    preds <-
+      map_dfr(object$model_df$.pred_form, eval_num_form, new_data) %>%
+      group_by(.row) %>%
+      summarize_all(mean, na.rm = TRUE) %>%
+      ungroup() %>%
+      select(-.row)
+
   } else {
     if (type == "class") {
       res <- class_pred(object$model_df, new_data)

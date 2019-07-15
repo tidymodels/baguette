@@ -4,6 +4,7 @@
 #' @importFrom tibble tibble
 #' @importFrom parsnip decision_tree
 #' @importFrom furrr future_map
+#' @importFrom partykit as.party.rpart
 
 cart_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
   is_classif <- is.factor(rs$splits[[1]]$data$.outcome)
@@ -18,6 +19,11 @@ cart_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
   check_for_disaster(rs)
 
   rs <- rs %>% dplyr::filter(passed)
+
+  if (!is.null(extract)) {
+    rs <- rs %>% dplyr::mutate(extras = map(model, ~ extract(.x$fit, ...)))
+  }
+
   num_mod <- nrow(rs)
 
   if (var_imp) {
@@ -46,14 +52,15 @@ cart_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
     oob <- NULL
   }
 
-  if (!is.null(extract)) {
-    rs <-
-      rs %>%
-      dplyr::mutate(extras = map(model, extract, ...))
-  }
+  rs <-
+    rs %>%
+    mutate(
+      model = map(model, ~ partykit::as.party.rpart(.x$fit)),
+      .pred_form = map(model, tidypredict:::tidypredict_fit.party)
+    )
 
   list(
-    model = rs %>% dplyr::select(-splits, -id, -fit_seed, -passed),
+    model = rs %>% dplyr::select(-splits, -id, -fit_seed, -passed, -model),
     imp = imps,
     oob = oob
   )

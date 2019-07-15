@@ -1,4 +1,4 @@
-#' @importFrom C50 C5.0 C5.0Control C5imp
+#' @importFrom C50 C5.0 C5.0Control C5imp as.party.C5.0
 #' @importFrom rsample analysis
 #' @importFrom purrr map map2 map_df
 #' @importFrom tibble tibble
@@ -16,7 +16,14 @@ c5_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
 
   check_for_disaster(rs)
 
-  rs <- rs %>% dplyr::filter(passed)
+  rs <-
+    rs %>%
+    dplyr::filter(passed)  %>%
+    mutate(
+      model = map(model, ~ C50::as.party.C5.0(.x$fit)),
+      .pred_form = map(model, tidypredict:::tidypredict_fit.party)
+    )
+
   num_mod <- nrow(rs)
 
   if (var_imp) {
@@ -52,7 +59,7 @@ c5_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
   }
 
   list(
-    model = rs %>% dplyr::select(-splits, -id, -fit_seed, -passed),
+    model = rs %>% dplyr::select(-splits, -id, -fit_seed, -passed, -model),
     imp = imps,
     oob = oob
   )
