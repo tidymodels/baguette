@@ -8,10 +8,12 @@
 c5_bagger <- function(rs, opt, control, extract, ...) {
 
   mod_spec <- make_c5_spec(opt)
+
+  iter <- get_iterator(control)
+
   rs <-
     rs %>%
-    dplyr::mutate(model = furrr::future_map2(fit_seed, splits, seed_fit,
-                                             .fn = c5_fit, spec = mod_spec))
+    dplyr::mutate(model = iter(fit_seed, splits, seed_fit, .fn = c5_fit, spec = mod_spec))
 
   rs <- check_for_disaster(rs)
 

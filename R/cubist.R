@@ -6,10 +6,11 @@
 
 cubist_bagger <- function(rs, opt, control, extract, ...) {
 
+  iter <- get_iterator(control)
+
   rs <-
     rs %>%
-    dplyr::mutate(model = furrr::future_map2(fit_seed, splits, seed_fit,
-                                             .fn = cubist_fit, opt = opt))
+    dplyr::mutate(model = iter(fit_seed, splits, seed_fit, .fn = cubist_fit, opt = opt))
 
   rs <- check_for_disaster(rs)
 

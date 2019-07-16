@@ -152,3 +152,15 @@ seed_fit <- function(seed, split, .fn, ...) {
 }
 
 
+# ------------------------------------------------------------------------------
+
+get_iterator <- function(control) {
+  if (control$allow_parallel) {
+    iter <- furrr::future_map2
+  } else {
+    iter <- purrr::map2
+  }
+  iter
+}
+
+
