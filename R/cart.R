@@ -28,7 +28,7 @@ cart_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
     rs %>%
     mutate(
       model = map(model, ~ partykit::as.party.rpart(.x$fit)),
-      .pred_form = map(model, tidypredict:::tidypredict_fit.party)
+      .pred_form = map(model, tidypredict::tidypredict_fit)
     )
 
   list(model = select_rs(rs), oob  = oob, imp = imps)
