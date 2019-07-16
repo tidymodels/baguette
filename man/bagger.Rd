@@ -26,7 +26,7 @@ bagger(x, ...)
   var_imp = FALSE, oob = NULL, extract = NULL, ...)
 }
 \arguments{
-\item{x}{A data frame, matrix, or recipe (depending on the method being used.)}
+\item{x}{A data frame, matrix, or recipe (depending on the method being used).}
 
 \item{...}{Optional arguments to pass to the \code{extract} function.}
 
@@ -45,16 +45,17 @@ model function. A list of possible arguments per model are given in Details.}
 
 \item{var_imp}{A logical: should variable importance scores be calculated?}
 
-\item{oob}{A metric set created by \code{\link[yardstick:metric_set]{yardstick::metric_set()}} or NULL. If not
+\item{oob}{A metric set created by \code{\link[yardstick:metric_set]{yardstick::metric_set()}} or \code{NULL}. If not
 NULL, then the out-of-bag samples are used to estimate model performance.}
 
 \item{extract}{A function (or NULL) that can extract model-related aspects
-of each ensemble member. See Details below.}
+of each ensemble member. See Details and example below.}
 
 \item{formula}{An object of class "formula" (or one that can be coerced to
 that class): a symbolic description of the model to be fitted. Note that
 this package does not support multivariate outcomes and that, if some
-predictors are factors, dummy variables will not be created.}
+predictors are factors, dummy variables will \emph{not} be created unless by the
+underyling model function.}
 
 \item{data}{A data frame containing the variables used in the formula or
 recipe.}
@@ -64,20 +65,20 @@ General suite of bagging functions for several models.
 }
 \details{
 \code{bagger()} fits separate models to bootstrap samples. The
-prediction function for each model object is encoded in an R
-expression and the original model object is discarded. When
-making predictions, each prediction formula is evaluated on the
-new data and aggregated using the mean.
+prediction function for each model object is encoded in an R expression and
+the original model object is discarded. When making predictions, each
+prediction formula is evaluated on the new data and aggregated using the
+mean.
 
-Any arbitrary item can be saved from the model object
-(including the model object itself) using the \code{extract}
-argument, which should be a function with arguments \code{x}, and
-\code{...}. The results of this function are saved into a list column
-called \code{extras} (see the sample below).
+Any arbitrary item can be saved from the model object (including the model
+object itself) using the \code{extract} argument, which should be a function with
+arguments \code{x}, and \code{...}. The results of this function are saved into a list
+column called \code{extras} (see the sample below).
 }
 \examples{
 mars_reg <- bagger(Sepal.Width ~ ., data = iris, model = "MARS", var_imp = TRUE)
 
+library(dplyr)
 library(AmesHousing)
 ames <- make_ames() \%>\% dplyr::select(-contains("Qu"))
 # These take a while:

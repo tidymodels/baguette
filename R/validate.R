@@ -96,6 +96,8 @@ model_failure <- function(x) {
 }
 
 check_for_disaster <- function(x) {
+  x <- dplyr::mutate(x, passed = !purrr::map_lgl(model, model_failure))
+
   if (sum(x$passed) == 0) {
     if (inherits(x$model[[1]], "try-error")) {
       msg <- as.character(x$model[[1]])
@@ -112,7 +114,7 @@ check_for_disaster <- function(x) {
 
     stop("All of the models failed. ", msg, call. = FALSE)
   }
-  invisible(TRUE)
+  x
 }
 
 # ------------------------------------------------------------------------------

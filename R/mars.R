@@ -6,58 +6,27 @@
 #' @importFrom furrr future_map
 
 mars_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
+
   is_classif <- is.factor(rs$splits[[1]]$data$.outcome)
   mod_spec <- make_mars_spec(is_classif, opt)
-  rs <-
-    rs %>%
-    dplyr::mutate(
-      model = furrr::future_map(splits, mars_fit, spec = mod_spec),
-      passed = !purrr::map_lgl(model, model_failure)
-    )
-
-  check_for_disaster(rs)
 
   rs <-
     rs %>%
-    dplyr::filter(passed) %>%
-    mutate(.pred_form = map(model, tidypredict::tidypredict_fit))
-  num_mod <- nrow(rs)
+    dplyr::mutate(model = furrr::future_map(splits, mars_fit, spec = mod_spec))
 
-  if (var_imp) {
-    imps <-
-      purrr::map_df(rs$model, mars_imp) %>%
-      dplyr::group_by(predictor) %>%
-      dplyr::summarize(
-        importance = sum(importance)/num_mod,
-        used = length(predictor)
-      ) %>%
-      dplyr::arrange(desc(importance))
-  } else {
-    imps <- NULL
-  }
+  rs <- check_for_disaster(rs)
 
-  if (!is.null(oob)) {
-    oob <-
-      furrr::future_map2_dfr(rs$model, rs$splits, oob_parsnip, met = oob) %>%
-      dplyr::group_by(.metric) %>%
-      dplyr::summarize(
-        mean = mean(.estimate, na.rm = TRUE),
-        stdev = sd(.estimate, na.rm = TRUE),
-        n = sum(!is.na(.estimate))
-      )
-  } else {
-    oob <- NULL
-  }
+  rs <- filter_rs(rs)
 
-  if (!is.null(extract)) {
-    rs <- rs %>% dplyr::mutate(extras = map(model, ~ extract(.x$fit, ...)))
-  }
+  rs <- extractor(rs, extract)
 
-  list(
-    model = rs %>% dplyr::select(-splits, -id, -fit_seed, -passed, -model),
-    imp = imps,
-    oob = oob
-  )
+  imps <- compute_imp(rs, mars_imp, var_imp)
+
+  oob <- compute_oob(rs, oob)
+
+  rs <- rs %>% mutate(.pred_form = map(model, tidypredict::tidypredict_fit))
+
+  list(model = select_rs(rs), oob  = oob, imp = imps)
 }
 
 make_mars_spec <- function(classif, opt) {

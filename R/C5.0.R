@@ -6,63 +6,30 @@
 #' @importFrom furrr future_map
 
 c5_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
-   mod_spec <- make_c5_spec(opt)
+
+  mod_spec <- make_c5_spec(opt)
   rs <-
     rs %>%
-    dplyr::mutate(
-      model = furrr::future_map(splits, c5_fit, spec = mod_spec),
-      passed = !purrr::map_lgl(model, model_failure)
-    )
+    dplyr::mutate(model = furrr::future_map(splits, c5_fit, spec = mod_spec))
 
-  check_for_disaster(rs)
+  rs <- check_for_disaster(rs)
+
+  rs <- filter_rs(rs)
+
+  rs <- extractor(rs, extract)
+
+  imps <- compute_imp(rs, c5_imp, var_imp)
+
+  oob <- compute_oob(rs, oob)
 
   rs <-
     rs %>%
-    dplyr::filter(passed)  %>%
     mutate(
       model = map(model, ~ C50::as.party.C5.0(.x$fit)),
       .pred_form = map(model, tidypredict:::tidypredict_fit.party)
     )
 
-  num_mod <- nrow(rs)
-
-  if (var_imp) {
-    imps <-
-      purrr::map_df(rs$model, c5_imp) %>%
-      dplyr::group_by(predictor) %>%
-      dplyr::summarize(
-        importance = sum(importance)/num_mod,
-        used = length(predictor)
-      ) %>%
-      dplyr::arrange(desc(importance))
-  } else {
-    imps <- NULL
-  }
-
-  if (!is.null(oob)) {
-    oob <-
-      purrr::map2_dfr(rs$model, rs$splits, oob_parsnip, met = oob) %>%
-      dplyr::group_by(.metric) %>%
-      dplyr::summarize(
-        mean = mean(.estimate, na.rm = TRUE),
-        stdev = sd(.estimate, na.rm = TRUE),
-        n = sum(!is.na(.estimate))
-      )
-  } else {
-    oob <- NULL
-  }
-
-  if (!is.null(extract)) {
-    rs <-
-      rs %>%
-      dplyr::mutate(extras = map(model, extract, ...))
-  }
-
-  list(
-    model = rs %>% dplyr::select(-splits, -id, -fit_seed, -passed, -model),
-    imp = imps,
-    oob = oob
-  )
+  list(model = select_rs(rs), oob  = oob, imp = imps)
 }
 
 make_c5_spec <- function(opt) {

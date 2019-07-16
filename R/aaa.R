@@ -19,6 +19,7 @@ utils::globalVariables(
     ".metric",
     ".obs",
     ".pred",
-    ".pred_class"
+    ".pred_class",
+    "mod"
   )
 )

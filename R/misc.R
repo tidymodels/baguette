@@ -56,7 +56,7 @@ oob_cubist <- function(model, split, met) {
   y <- dat$.outcome
   dat <- dat[, names(dat) != ".outcome", drop = FALSE]
   pred <-
-    predict(model, dat) %>%
+    tibble(.pred = predict(model, dat)) %>%
     dplyr::mutate(.obs = y)
 
   res <- try(met(pred, .obs, .pred), silent = TRUE)
@@ -67,6 +67,31 @@ oob_cubist <- function(model, split, met) {
   res
 }
 
+
+compute_oob <- function(rs, oob) {
+
+  if (inherits(rs$model[[1]], "cubist")) {
+    .fn <- oob_cubist
+  } else {
+    .fn <- oob_parsnip
+  }
+
+  if (!is.null(oob)) {
+    oob <-
+      purrr::map2_dfr(rs$model, rs$splits, .fn, met = oob) %>%
+      dplyr::group_by(.metric) %>%
+      dplyr::summarize(
+        mean = mean(.estimate, na.rm = TRUE),
+        stdev = sd(.estimate, na.rm = TRUE),
+        n = sum(!is.na(.estimate))
+      )
+  } else {
+    oob <- NULL
+  }
+  oob
+}
+
+
 # ------------------------------------------------------------------------------
 
 eval_num_form <- function(.fn, new_data) {
@@ -75,5 +100,49 @@ eval_num_form <- function(.fn, new_data) {
     .row = 1:nrow(new_data)
   )
 }
+
+
+# ------------------------------------------------------------------------------
+
+compute_imp <- function(rs, .fn, compute) {
+  if (compute) {
+    num_mod <- nrow(rs)
+    imps <-
+      purrr::map_df(rs$model, .fn) %>%
+      dplyr::group_by(predictor) %>%
+      dplyr::summarize(
+        importance = sum(importance)/num_mod,
+        used = length(predictor)
+      ) %>%
+      dplyr::arrange(desc(importance))
+  } else {
+    imps <- NULL
+  }
+  imps
+}
+
+# ------------------------------------------------------------------------------
+
+extractor <- function(rs, extract) {
+  if (!is.null(extract)) {
+    rs <- rs %>% dplyr::mutate(extras = map(model, ~ extract(.x$fit, ...)))
+  }
+  rs
+}
+
+# ------------------------------------------------------------------------------
+
+select_rs <- function(rs) {
+  rs %>% dplyr::select(-splits, -id, -fit_seed, -passed, -model)
+}
+
+filter_rs <- function(rs) {
+  if (any(names(rs) == "passed")) {
+    rs <- rs %>% dplyr::filter(passed)
+  }
+  rs
+}
+
+
 
 
