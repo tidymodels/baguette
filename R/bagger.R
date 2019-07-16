@@ -36,6 +36,15 @@
 #'  arguments `x`, and `...`. The results of this function are saved into a list
 #'  column called `extras` (see the sample below).
 #'
+#' Variable importance scores are calculated using implementations in each
+#'  package. When requested, the results are in a tibble with column names
+#'  `term` (the predictor), `value` (the importance score), and `used` (the
+#'  percentage of times that the variable was in the prediction equation).
+#'
+#' The models can be fit in parallel using the \pkg{future} package. The
+#'  enable parallelism, use the `future::plan()` function to declare _how_ the
+#'  computations should be distributed. Note that this will almost certainly
+#'  multiple the memory requirements to fit the models.
 #' @examples
 #' mars_reg <- bagger(Sepal.Width ~ ., data = iris, model = "MARS", var_imp = TRUE)
 #'
@@ -181,3 +190,10 @@ print.bagger <- function(x, ...) {
 }
 
 
+# TODO cost-sensitive model interfaces
+
+# TODO down-sampling (or other sampling methods)
+
+# TODO control function for some options?
+
+# TODO allow_parallel option

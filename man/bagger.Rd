@@ -74,6 +74,16 @@ Any arbitrary item can be saved from the model object (including the model
 object itself) using the \code{extract} argument, which should be a function with
 arguments \code{x}, and \code{...}. The results of this function are saved into a list
 column called \code{extras} (see the sample below).
+
+Variable importance scores are calculated using implementations in each
+package. When requested, the results are in a tibble with column names
+\code{term} (the predictor), \code{value} (the importance score), and \code{used} (the
+percentage of times that the variable was in the prediction equation).
+
+The models can be fit in parallel using the \pkg{future} package. The
+enable parallelism, use the \code{future::plan()} function to declare \emph{how} the
+computations should be distributed. Note that this will almost certainly
+multiple the memory requirements to fit the models.
 }
 \examples{
 mars_reg <- bagger(Sepal.Width ~ ., data = iris, model = "MARS", var_imp = TRUE)
