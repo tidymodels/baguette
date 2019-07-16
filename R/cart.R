@@ -1,10 +1,3 @@
-#' @importFrom rpart rpart
-#' @importFrom rsample analysis
-#' @importFrom purrr map map2 map_df
-#' @importFrom tibble tibble
-#' @importFrom parsnip decision_tree
-#' @importFrom furrr future_map
-#' @importFrom partykit as.party.rpart
 
 cart_bagger <- function(rs, opt, control, extract, ...) {
   is_classif <- is.factor(rs$splits[[1]]$data$.outcome)
@@ -14,7 +7,14 @@ cart_bagger <- function(rs, opt, control, extract, ...) {
 
   rs <-
     rs %>%
-    dplyr::mutate(model = iter(fit_seed, splits, seed_fit, .fn = cart_fit, spec = mod_spec))
+    dplyr::mutate(model = iter(
+      fit_seed,
+      splits,
+      seed_fit,
+      .fn = cart_fit,
+      spec = mod_spec,
+      control = control
+    ))
 
   rs <- check_for_disaster(rs)
 
@@ -86,22 +86,17 @@ make_cart_spec <- function(classif, opt) {
   cart_spec
 }
 
-#' @importFrom stats complete.cases
 
-cart_fit  <- function(split, spec, sampling = "none") {
+cart_fit  <- function(split, spec, control = bag_control()) {
 
   dat <- rsample::analysis(split)
 
-  if (sampling == "down") {
+  if (control$sampling == "down") {
     dat <- down_sampler(dat)
   }
 
   ctrl <- parsnip::fit_control(catch = TRUE)
-  mod <-
-    parsnip::fit.model_spec(spec,
-                            .outcome ~ .,
-                            data = rsample::analysis(split),
-                            control = ctrl)
+  mod <- parsnip::fit.model_spec(spec, .outcome ~ ., data = dat, control = ctrl)
   mod
 }
 

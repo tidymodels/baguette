@@ -10,8 +10,6 @@ join_args <- function(default, others) {
 
 failed_stats <- tibble(.metric = "failed", .estiamtor = "none", .estimate = NA_real_)
 
-#' @importFrom rsample assessment
-#' @importFrom stats setNames sd predict
 oob_parsnip <- function(model, split, met) {
   dat <- rsample::assessment(split)
   y <- dat$.outcome
@@ -146,10 +144,27 @@ filter_rs <- function(rs) {
 
 # ------------------------------------------------------------------------------
 
-#' @importFrom withr with_seed
+
 seed_fit <- function(seed, split, .fn, ...) {
   withr::with_seed(seed, .fn(split, ...))
 }
+
+# ------------------------------------------------------------------------------
+
+down_sampler <- function(x) {
+
+  if (!is.factor(x$.outcome)) {
+    warning("Down-sampling is only used in classification models.", call. = FALSE)
+    return(x)
+  }
+
+  min_n <- min(table(x$.outcome))
+  x %>%
+    group_by(.outcome) %>%
+    sample_n(size = min_n, replace = TRUE) %>%
+    ungroup()
+}
+
 
 
 # ------------------------------------------------------------------------------

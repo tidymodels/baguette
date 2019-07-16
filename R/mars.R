@@ -1,9 +1,3 @@
-#' @importFrom earth earth evimp
-#' @importFrom rsample analysis
-#' @importFrom purrr map map2 map_df
-#' @importFrom tibble tibble
-#' @importFrom parsnip mars
-#' @importFrom furrr future_map
 
 mars_bagger <- function(rs, opt, control, extract, ...) {
 
@@ -14,7 +8,14 @@ mars_bagger <- function(rs, opt, control, extract, ...) {
 
   rs <-
     rs %>%
-    dplyr::mutate(model = iter(fit_seed, splits, seed_fit, .fn = mars_fit, spec = mod_spec))
+    dplyr::mutate(model = iter(
+      fit_seed,
+      splits,
+      seed_fit,
+      .fn = mars_fit,
+      spec = mod_spec,
+      control = control
+    ))
 
   rs <- check_for_disaster(rs)
 
@@ -54,13 +55,19 @@ make_mars_spec <- function(classif, opt) {
   mars_spec
 }
 
-#' @importFrom stats complete.cases
 
-mars_fit  <- function(split, spec) {
+
+mars_fit  <- function(split, spec, control = bag_control()) {
   ctrl <- parsnip::fit_control(catch = TRUE)
+
   dat <- rsample::analysis(split)
   # only na.fail is supported by earth::earth
   dat <- dat[complete.cases(dat),, drop = FALSE]
+
+  if (control$sampling == "down") {
+    dat <- down_sampler(dat)
+  }
+
   mod <- parsnip::fit.model_spec(spec, .outcome ~ ., data = dat, control = ctrl)
   mod
 }

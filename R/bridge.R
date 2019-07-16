@@ -1,5 +1,4 @@
-#' @importFrom hardhat validate_outcomes_is_univariate
-#' @importFrom rsample bootstraps
+
 
 bagger_bridge <- function(processed, model, seed, B, opt, control, extract, ...) {
   validate_outcomes_is_univariate(processed$outcomes)

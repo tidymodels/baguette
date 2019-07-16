@@ -66,14 +66,10 @@ validate_y_type <- function(model, outcomes) {
   }
 
   if (model == "model_rules") {
-    if (!is.numeric(outcomes[[1]]))
-      stop("Outcome data must be numeric for model rules.", call. = FALSE)
-    #hardhat::validate_outcomes_is_numeric(outcomes)
+    hardhat::validate_outcomes_are_binary(outcomes)
   }
   if (model == "C5.0") {
-    if (!is.factor(outcomes[[1]]))
-      stop("Outcome data must be a factor for C5.0.", call. = FALSE)
-    #hardhat::validate_outcomes_is_factor(outcomes)
+    hardhat::validate_outcomes_are_factors(outcomes)
   }
 
 }
