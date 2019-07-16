@@ -1,9 +1,3 @@
-#' @importFrom C50 C5.0 C5.0Control C5imp as.party.C5.0
-#' @importFrom rsample analysis
-#' @importFrom purrr map map2 map_df
-#' @importFrom tibble tibble
-#' @importFrom parsnip decision_tree
-#' @importFrom furrr future_map
 
 c5_bagger <- function(rs, opt, control, extract, ...) {
 
@@ -13,7 +7,14 @@ c5_bagger <- function(rs, opt, control, extract, ...) {
 
   rs <-
     rs %>%
-    dplyr::mutate(model = iter(fit_seed, splits, seed_fit, .fn = c5_fit, spec = mod_spec))
+    dplyr::mutate(model = iter(
+      fit_seed,
+      splits,
+      seed_fit,
+      .fn = c5_fit,
+      spec = mod_spec,
+      control = control
+    ))
 
   rs <- check_for_disaster(rs)
 
@@ -74,15 +75,17 @@ make_c5_spec <- function(opt) {
   c5_spec
 }
 
-#' @importFrom stats complete.cases
 
-c5_fit  <- function(split, spec) {
+c5_fit  <- function(split, spec, control = bag_control()) {
   ctrl <- parsnip::fit_control(catch = TRUE)
-  mod <-
-    parsnip::fit.model_spec(spec,
-                            .outcome ~ .,
-                            data = rsample::analysis(split),
-                            control = ctrl)
+
+  dat <- rsample::analysis(split)
+
+  if (control$sampling == "down") {
+    dat <- down_sampler(dat)
+  }
+
+  mod <- parsnip::fit.model_spec(spec, .outcome ~ ., data = dat, control = ctrl)
   mod
 }
 

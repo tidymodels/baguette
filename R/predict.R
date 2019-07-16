@@ -18,7 +18,6 @@
 #'
 #' predict(mod, two_class_dat[1:6,], type = "class")
 #' predict(mod, two_class_dat[1:6,], type = "prob")
-#' @importFrom purrr map_dfr
 #' @export
 predict.bagger <- function(object, new_data, type = NULL, ...) {
   type <- check_type(object, type)

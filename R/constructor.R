@@ -1,4 +1,3 @@
-#' @importFrom tibble is_tibble
 
 new_bagger <- function(model_df, imp, oob, control, opt, model, blueprint) {
 

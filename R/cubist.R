@@ -1,8 +1,3 @@
-#' @importFrom Cubist cubist cubistControl
-#' @importFrom rsample analysis
-#' @importFrom purrr map_lgl map2 map_df
-#' @importFrom tibble as_tibble
-#' @importFrom furrr future_map2
 
 cubist_bagger <- function(rs, opt, control, extract, ...) {
 
