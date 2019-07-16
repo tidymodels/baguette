@@ -5,7 +5,7 @@
 #' @importFrom parsnip decision_tree
 #' @importFrom furrr future_map
 
-c5_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
+c5_bagger <- function(rs, opt, control, extract, ...) {
 
   mod_spec <- make_c5_spec(opt)
   rs <-
@@ -19,9 +19,9 @@ c5_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
 
   rs <- extractor(rs, extract)
 
-  imps <- compute_imp(rs, c5_imp, var_imp)
+  imps <- compute_imp(rs, c5_imp, control$var_imp)
 
-  oob <- compute_oob(rs, oob)
+  oob <- compute_oob(rs, control$oob)
 
   rs <-
     rs %>%

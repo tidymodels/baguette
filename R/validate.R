@@ -1,4 +1,4 @@
-validate_args <- function(model, B, opt, var_imp, oob, extract) {
+validate_args <- function(model, B, opt, control, extract) {
   if (!is.character(model) || length(model) != 1) {
     stop("`model` should be a single character value.", call. = FALSE)
   }
@@ -26,15 +26,9 @@ validate_args <- function(model, B, opt, var_imp, oob, extract) {
 
   # ----------------------------------------------------------------------------
 
-  if (!is.logical(var_imp) || length(var_imp) > 1) {
-    stop("`var_imp` should be single logical.", call. = FALSE)
-  }
-
-  # ----------------------------------------------------------------------------
-
-  if (!is.null(oob) & !is.function(oob)) {
-    stop("`oob` should be a function created by yardstick::metric_set.",
-          call. = FALSE)
+  ctrl_args <- c("var_imp", "oob", "allow_parallel", "sampling")
+  if (!is.list(control)) {
+    stop("`control` should be list created by `bag_control()`.", call. = FALSE)
   }
 
   # ----------------------------------------------------------------------------

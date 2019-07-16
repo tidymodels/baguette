@@ -5,7 +5,7 @@
 #' @importFrom parsnip mars
 #' @importFrom furrr future_map
 
-mars_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
+mars_bagger <- function(rs, opt, control, extract, ...) {
 
   is_classif <- is.factor(rs$splits[[1]]$data$.outcome)
   mod_spec <- make_mars_spec(is_classif, opt)
@@ -21,9 +21,9 @@ mars_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
 
   rs <- extractor(rs, extract)
 
-  imps <- compute_imp(rs, mars_imp, var_imp)
+  imps <- compute_imp(rs, mars_imp, control$var_imp)
 
-  oob <- compute_oob(rs, oob)
+  oob <- compute_oob(rs, control$oob)
 
   rs <- rs %>% mutate(.pred_form = map(model, tidypredict::tidypredict_fit))
 

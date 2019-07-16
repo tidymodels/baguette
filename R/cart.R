@@ -6,7 +6,7 @@
 #' @importFrom furrr future_map
 #' @importFrom partykit as.party.rpart
 
-cart_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
+cart_bagger <- function(rs, opt, control, extract, ...) {
   is_classif <- is.factor(rs$splits[[1]]$data$.outcome)
   mod_spec <- make_cart_spec(is_classif, opt)
 
@@ -21,9 +21,9 @@ cart_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
 
   rs <- extractor(rs, extract)
 
-  imps <- compute_imp(rs, cart_imp, var_imp)
+  imps <- compute_imp(rs, cart_imp, control$var_imp)
 
-  oob <- compute_oob(rs, oob)
+  oob <- compute_oob(rs, control$oob)
 
   rs <-
     rs %>%

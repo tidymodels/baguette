@@ -19,9 +19,6 @@
 #'  samples/ensemble members (some model fits might fail).
 #' @param opt A named list (or NULL) of arguments to pass to the underlying
 #'  model function. A list of possible arguments per model are given in Details.
-#' @param var_imp A logical: should variable importance scores be calculated?
-#' @param oob A metric set created by [yardstick::metric_set()] or `NULL`. If not
-#'  NULL, then the out-of-bag samples are used to estimate model performance.
 #' @param extract A function (or NULL) that can extract model-related aspects
 #'  of each ensemble member. See Details and example below.
 #' @param ... Optional arguments to pass to the `extract` function.
@@ -87,17 +84,16 @@ bagger.data.frame <-
            y,
            model = "CART",
            B = 10L,
-           opt = NULL,
-           var_imp = FALSE,
-           oob = NULL,
+           opt = NULLL,
+           control = bag_control(),
            extract = NULL,
            ...) {
     B <- integer_B(B)
     seed <- sample.int(10^5, 1)
-    validate_args(model, B, opt, var_imp, oob, extract)
+    validate_args(model, B, opt, control, extract)
 
     processed <- hardhat::mold(x, y)
-    bagger_bridge(processed, model, seed, B, opt, var_imp, oob, extract, ...)
+    bagger_bridge(processed, model, seed, B, opt, control, extract, ...)
   }
 
 # XY method - matrix
@@ -110,16 +106,15 @@ bagger.matrix <-
            model = "CART",
            B = 10L,
            opt = NULL,
-           var_imp = FALSE,
-           oob = NULL,
+           control = bag_control(),
            extract = NULL,
            ...) {
     B <- integer_B(B)
     seed <- sample.int(10^5, 1)
-    validate_args(model, B, opt, var_imp, oob, extract)
+    validate_args(model, B, opt, control, extract)
 
     processed <- hardhat::mold(x, y)
-    bagger_bridge(processed, model, seed, B, opt, var_imp, oob, extract, ...)
+    bagger_bridge(processed, model, seed, B, opt, control, extract, ...)
   }
 
 # Formula method
@@ -132,17 +127,16 @@ bagger.formula <-
            model = "CART",
            B = 10L,
            opt = NULL,
-           var_imp = FALSE,
-           oob = NULL,
+           control = bag_control(),
            extract = NULL,
            ...) {
     B <- integer_B(B)
     seed <- sample.int(10^5, 1)
-    validate_args(model, B, opt, var_imp, oob, extract)
+    validate_args(model, B, opt, control, extract)
 
     bp <- hardhat::default_formula_blueprint(indicators = FALSE)
     processed <- hardhat::mold(formula, data, blueprint = bp)
-    bagger_bridge(processed, model, seed, B, opt, var_imp, oob, extract, ...)
+    bagger_bridge(processed, model, seed, B, opt, control, extract, ...)
   }
 
 # Recipe method
@@ -155,19 +149,58 @@ bagger.recipe <-
            model = "CART",
            B = 10L,
            opt = NULL,
-           var_imp = FALSE,
-           oob = NULL,
+           control = bag_control(),
            extract = NULL,
            ...) {
     B <- integer_B(B)
     seed <- sample.int(10^5, 1)
-    validate_args(model, B, opt, var_imp, oob, extract)
+    validate_args(model, B, opt, control, extract)
 
     processed <- hardhat::mold(x, data)
-    bagger_bridge(processed, model, seed, B, opt, var_imp, oob, extract, ...)
+    bagger_bridge(processed, model, seed, B, opt, control, extract, ...)
   }
 
 # ------------------------------------------------------------------------------
+
+
+#' Controlling the bagging process
+#'
+#' `bag_control()` can set options for ancillary aspects of the bagging process.
+#'
+#' @param var_imp A single logical: should variable importance scores be calculated?
+#' @param oob A metric set created by [yardstick::metric_set()] or `NULL`. If not
+#'  NULL, then the out-of-bag samples are used to estimate model performance.
+#' @param allow_parallel A single logical: should the model fits be done in
+#'  parallel (even if a parallel `plan()` has been created)?
+#' @param sampling Either "none" or "down". For classification only. The
+#' training data, after bootstrapping, will be sampled down within each class
+#' (with replacement) to the size of the smallest class.
+#' @return A list.
+
+bag_control <-
+  function(var_imp = TRUE,
+           oob = NULL,
+           allow_parallel = TRUE,
+           sampling = "none") {
+    samps <- c("none", "down")
+
+    if (length(var_imp) != 1 || !is.logical(var_imp)) {
+      stop("`var_imp` should be a single logical value.", call. = FALSE)
+    }
+    if (length(allow_parallel) != 1 || !is.logical(allow_parallel)) {
+      stop("`allow_parallel` should be a single logical value.", call. = FALSE)
+    }
+    if (length(sampling) != 1 || !is.character(sampling) || !any(samps == sampling)) {
+      stop("`sampling` should be either 'none' or 'down'.", call. = FALSE)
+    }
+    if (!is.null(oob) && !inherits(oob, "function")) {
+      stop("`oob` should be either NULL or the results of `yardstick::metric_set()`.",
+           call. = FALSE)
+    }
+
+    list(var_imp = var_imp, oob = oob, allow_parallel = allow_parallel, sampling = sampling)
+
+  }
 
 #' @export
 print.bagger <- function(x, ...) {

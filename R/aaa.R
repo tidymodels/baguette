@@ -20,6 +20,7 @@ utils::globalVariables(
     ".obs",
     ".pred",
     ".pred_class",
-    "mod"
+    "mod",
+    "value"
   )
 )

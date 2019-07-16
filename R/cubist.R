@@ -4,7 +4,7 @@
 #' @importFrom tibble as_tibble
 #' @importFrom furrr future_map2
 
-cubist_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
+cubist_bagger <- function(rs, opt, control, extract, ...) {
 
   rs <-
     rs %>%
@@ -17,9 +17,9 @@ cubist_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
 
   rs <- extractor(rs, extract)
 
-  imps <- compute_imp(rs, cubist_imp, var_imp)
+  imps <- compute_imp(rs, cubist_imp, control$var_imp)
 
-  oob <- compute_oob(rs, oob)
+  oob <- compute_oob(rs, control$oob)
 
   rs <- rs %>% mutate(.pred_form = map(model, tidypredict::tidypredict_fit))
 

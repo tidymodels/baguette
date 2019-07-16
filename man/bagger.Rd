@@ -17,13 +17,13 @@ bagger(x, ...)
   opt = NULL, var_imp = FALSE, oob = NULL, extract = NULL, ...)
 
 \method{bagger}{matrix}(x, y, model = "CART", B = 10L, opt = NULL,
-  var_imp = FALSE, oob = NULL, extract = NULL, ...)
+  control = bag_control(), extract = NULL, ...)
 
 \method{bagger}{formula}(formula, data, model = "CART", B = 10L,
-  opt = NULL, var_imp = FALSE, oob = NULL, extract = NULL, ...)
+  opt = NULL, control = bag_control(), extract = NULL, ...)
 
 \method{bagger}{recipe}(x, data, model = "CART", B = 10L, opt = NULL,
-  var_imp = FALSE, oob = NULL, extract = NULL, ...)
+  control = bag_control(), extract = NULL, ...)
 }
 \arguments{
 \item{x}{A data frame, matrix, or recipe (depending on the method being used).}
@@ -42,11 +42,6 @@ samples/ensemble members (some model fits might fail).}
 
 \item{opt}{A named list (or NULL) of arguments to pass to the underlying
 model function. A list of possible arguments per model are given in Details.}
-
-\item{var_imp}{A logical: should variable importance scores be calculated?}
-
-\item{oob}{A metric set created by \code{\link[yardstick:metric_set]{yardstick::metric_set()}} or \code{NULL}. If not
-NULL, then the out-of-bag samples are used to estimate model performance.}
 
 \item{extract}{A function (or NULL) that can extract model-related aspects
 of each ensemble member. See Details and example below.}
