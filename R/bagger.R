@@ -189,11 +189,3 @@ print.bagger <- function(x, ...) {
   invisible(x)
 }
 
-
-# TODO cost-sensitive model interfaces
-
-# TODO down-sampling (or other sampling methods)
-
-# TODO control function for some options?
-
-# TODO allow_parallel option

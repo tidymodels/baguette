@@ -2,7 +2,10 @@
 #' @importFrom rsample bootstraps
 
 bagger_bridge <- function(processed, model, seed, B, opt, var_imp, oob, extract, ...) {
-  validate_y_type(model, processed$outcomes)
+  validate_outcomes_is_univariate(processed$outcomes)
+  if (model %in% c("C5.0")) {
+    validate_outcomes_are_factors(processed$outcomes)
+  }
 
   dat <- as.data.frame(processed$predictors)
   dat$.outcome <- processed$outcomes[[1]]
