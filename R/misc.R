@@ -111,10 +111,11 @@ compute_imp <- function(rs, .fn, compute) {
       purrr::map_df(rs$model, .fn) %>%
       dplyr::group_by(predictor) %>%
       dplyr::summarize(
-        importance = sum(importance)/num_mod,
+        value = sum(importance)/num_mod,
         used = length(predictor)
       ) %>%
-      dplyr::arrange(desc(importance))
+      dplyr::arrange(desc(value)) %>%
+      dplyr::rename(term = predictor)
   } else {
     imps <- NULL
   }
