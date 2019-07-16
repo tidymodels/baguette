@@ -12,7 +12,8 @@ cart_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
 
   rs <-
     rs %>%
-    dplyr::mutate(model = furrr::future_map(splits, cart_fit, spec = mod_spec))
+    dplyr::mutate(model = furrr::future_map2(fit_seed, splits, seed_fit,
+                                             .fn = cart_fit, spec = mod_spec))
 
   rs <- check_for_disaster(rs)
 
@@ -86,7 +87,14 @@ make_cart_spec <- function(classif, opt) {
 
 #' @importFrom stats complete.cases
 
-cart_fit  <- function(split, spec) {
+cart_fit  <- function(split, spec, sampling = "none") {
+
+  dat <- rsample::analysis(split)
+
+  if (sampling == "down") {
+    dat <- down_sampler(dat)
+  }
+
   ctrl <- parsnip::fit_control(catch = TRUE)
   mod <-
     parsnip::fit.model_spec(spec,

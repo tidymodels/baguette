@@ -144,6 +144,11 @@ filter_rs <- function(rs) {
   rs
 }
 
+# ------------------------------------------------------------------------------
 
+#' @importFrom withr with_seed
+seed_fit <- function(seed, split, .fn, ...) {
+  withr::with_seed(seed, .fn(split, ...))
+}
 
 

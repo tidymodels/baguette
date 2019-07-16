@@ -8,7 +8,8 @@ cubist_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
 
   rs <-
     rs %>%
-    dplyr::mutate(model = furrr::future_map2(splits, fit_seed, cubist_fit, opt = opt))
+    dplyr::mutate(model = furrr::future_map2(fit_seed, splits, seed_fit,
+                                             .fn = cubist_fit, opt = opt))
 
   rs <- check_for_disaster(rs)
 
@@ -30,7 +31,7 @@ cubist_control <- function(opt, seed) {
   rlang::eval_tidy(cb_call)
 }
 
-cubist_fit  <- function(split, seed, opt) {
+cubist_fit  <- function(split, seed = sample.int(10^5, 1), opt) {
   ctrl <- cubist_control(opt, seed)
   dat <- rsample::analysis(split)
   mod <-

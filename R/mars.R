@@ -12,7 +12,8 @@ mars_bagger <- function(rs, opt, var_imp, oob, extract, ...) {
 
   rs <-
     rs %>%
-    dplyr::mutate(model = furrr::future_map(splits, mars_fit, spec = mod_spec))
+    dplyr::mutate(model = furrr::future_map2(fit_seed, splits, seed_fit,
+                                             .fn = mars_fit, spec = mod_spec))
 
   rs <- check_for_disaster(rs)
 
