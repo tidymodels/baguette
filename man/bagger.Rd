@@ -83,25 +83,80 @@ computations should be distributed. Note that this will almost certainly
 multiple the memory requirements to fit the models.
 }
 \examples{
-mars_reg <- bagger(Sepal.Width ~ ., data = iris, model = "MARS", var_imp = TRUE)
-
+library(rsample)
+library(yardstick)
+library(recipes)
 library(dplyr)
-library(AmesHousing)
-ames <- make_ames() \%>\% dplyr::select(-contains("Qu"))
-# These take a while:
 
-\dontrun{
-set.seed(9724)
-ames_mars  <- bagger(log10(Sale_Price) ~ ., data = ames, model = "MARS")
-ames_rules <- bagger(log10(Sale_Price) ~ ., data = ames, model = "model_rules")
+data(biomass)
 
-# Extracting elements:
+biomass_tr <-
+  biomass \%>\%
+  dplyr::filter(dataset == "Training") \%>\%
+  dplyr::select(-dataset, -sample)
+
+biomass_te <-
+  biomass \%>\%
+  dplyr::filter(dataset == "Testing") \%>\%
+  dplyr::select(-dataset, -sample)
+
+# ------------------------------------------------------------------------------
+
+perf <- metric_set(rmse, rsq, ccc)
+
+ctrl <- bag_control(oob = perf, var_imp = TRUE)
+
+# ------------------------------------------------------------------------------
+
+# `B` is low to make the examples run faster
+
+set.seed(7687)
+mars_fit <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
+                   model = "MARS", B = 5, control = ctrl)
+
+set.seed(7687)
+cart_fit <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
+                   model = "CART", B = 5, control = ctrl)
+
+set.seed(7687)
+rule_fit <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
+                   model = "model_rules", B = 5, control = ctrl)
+
+
+# ------------------------------------------------------------------------------
+# Other interfaces
+
+# Recipes can be used
+biomass_rec <-
+  recipe(HHV ~ ., data = biomass_tr) \%>\%
+  step_pca(all_predictors())
+
+set.seed(7687)
+cart_pca_fit <- bagger(biomass_rec, data = biomass_tr, model = "CART", B = 5,
+                       control = ctrl)
+
+cart_pca_fit
+cart_pca_fit$oob
+cart_fit$oob
+
+# An example rule:
+cart_pca_fit$model_df$.pred_form[[1]][[3]]
+
+# Using formulas
+set.seed(7687)
+rule_form<- bagger(HHV ~ ., data = biomass_tr, model = "model_rules", B = 5,
+                   control = ctrl)
+
+# ------------------------------------------------------------------------------
+# Extracting model components
 
 num_term_nodes <- function(x, ...) {
   tibble(num_nodes = sum(x$frame$var == "<leaf>"))
 }
 
-ames_cart <- bagger(log10(Sale_Price) ~ ., data = ames, extract = num_term_nodes)
-bind_rows(ames_cart$model_df$extras)
-}
+set.seed(7687)
+with_extras <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
+                   model = "CART", B = 5, extract = num_term_nodes)
+
+dplyr::bind_rows(with_extras$model_df$extras)
 }

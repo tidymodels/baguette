@@ -12,19 +12,18 @@
 #'  and `'class'` and `'prob'` are valid for classification models.
 #' @param ... Not currently used.
 #' @examples
-#' data("two_class_dat", package = "rsample")
+#' data(airquality)
 #'
-#' mod <- bagger(Class ~ ., data = two_class_dat[-(1:6), ], model = "CART", B = 11L)
-#'
-#' predict(mod, two_class_dat[1:6,], type = "class")
-#' predict(mod, two_class_dat[1:6,], type = "prob")
+#' set.seed(7687)
+#' rule_fit <- bagger(Ozone ~ ., data = airquality, model = "model_rules", B = 5)
+#' predict(rule_fit, new_data = airquality[, -1])
 #' @export
 predict.bagger <- function(object, new_data, type = NULL, ...) {
   type <- check_type(object, type)
   new_data <- hardhat::forge(new_data, object$blueprint)$predictors
 
   if (type == "numeric") {
-    preds <-
+    res <-
       map_dfr(object$model_df$.pred_form, eval_num_form, new_data) %>%
       group_by(.row) %>%
       summarize_all(mean, na.rm = TRUE) %>%

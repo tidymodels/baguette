@@ -25,10 +25,9 @@ models in the ensembles and returns a single aggregated value
 for each sample in \code{new_data}.
 }
 \examples{
-data("two_class_dat", package = "rsample")
+data(airquality)
 
-mod <- bagger(Class ~ ., data = two_class_dat[-(1:6), ], model = "CART", B = 11L)
-
-predict(mod, two_class_dat[1:6,], type = "class")
-predict(mod, two_class_dat[1:6,], type = "prob")
+set.seed(7687)
+rule_fit <- bagger(Ozone ~ ., data = airquality, model = "model_rules", B = 5)
+predict(rule_fit, new_data = airquality[, -1])
 }

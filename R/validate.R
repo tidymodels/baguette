@@ -61,13 +61,6 @@ integer_B <- function(B) {
 validate_y_type <- function(model, outcomes) {
   hardhat::validate_outcomes_is_univariate(outcomes)
 
-  if (model == "X") {
-    hardhat::validate_outcomes_is_binary(outcomes)
-  }
-
-  if (model == "model_rules") {
-    hardhat::validate_outcomes_are_binary(outcomes)
-  }
   if (model == "C5.0") {
     hardhat::validate_outcomes_are_factors(outcomes)
   }
