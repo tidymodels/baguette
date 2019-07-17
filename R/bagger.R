@@ -45,9 +45,9 @@
 #'  multiple the memory requirements to fit the models.
 #' @examples
 #' library(rsample)
-#' library(yardstick)
 #' library(recipes)
 #' library(dplyr)
+#' library(yardstick)
 #'
 #' data(biomass)
 #'
@@ -63,7 +63,7 @@
 #'
 #' # ------------------------------------------------------------------------------
 #'
-#' perf <- metric_set(rmse, rsq, ccc)
+#' perf <- metric_set(rmse, rsq, yardstick::ccc)
 #'
 #' ctrl <- bag_control(oob = perf, var_imp = TRUE)
 #'
@@ -74,6 +74,7 @@
 #' set.seed(7687)
 #' mars_fit <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
 #'                    model = "MARS", B = 5, control = ctrl)
+#' var_imp(mars_fit)
 #'
 #' set.seed(7687)
 #' cart_fit <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
