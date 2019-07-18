@@ -5,6 +5,7 @@ context("C5.0 models")
 # ------------------------------------------------------------------------------
 
 test_that('check C5.0 opt', {
+  skip("waiting for classification in tidypredict")
 
   check_rules <- function(x, ...) {
     x$fit$tree == "" & nchar(x$fit$rules) > 10

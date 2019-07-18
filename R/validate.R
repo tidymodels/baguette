@@ -28,7 +28,7 @@ validate_args <- function(model, B, opt, control, extract) {
 
   ctrl_args <- c("var_imp", "oob", "allow_parallel", "sampling")
   if (!is.list(control)) {
-    stop("`control` should be list created by `bag_control()`.", call. = FALSE)
+    stop("`control` should be a list created by `bag_control()`.", call. = FALSE)
   }
 
   # ----------------------------------------------------------------------------

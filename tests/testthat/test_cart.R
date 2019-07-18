@@ -7,15 +7,15 @@ context("CART models")
 # ------------------------------------------------------------------------------
 
 num_leaves <- function(x, ...) {
-  sum(x$fit$frame$var == "<leaf>")
+  sum(x$frame$var == "<leaf>")
 }
 
 get_method <- function(x, ...) {
-  x$fit$method
+  x$method
 }
 
 get_loss <- function(x, ...) {
-  x$fit$parms$loss
+  x$parms$loss
 }
 
 data("two_class_dat", package = "rsample")
@@ -47,7 +47,7 @@ test_that('check CART opt', {
       data = two_class_dat,
       model = "CART",
       opt = list(parms = list(loss = lmat)),
-      var_imp = TRUE,
+      control = bag_control(var_imp = TRUE),
       extract = get_loss
     )
 
@@ -55,7 +55,7 @@ test_that('check CART opt', {
   expect_true(all(unlist(mod_2$model_df$extras) == 2))
   expect_true(all(map_lgl(mod_3$model_df$extras, ~ is.matrix(.x))))
   expect_true(inherits(mod_3$imp, "tbl_df"))
-  expect_true(isTRUE(all(sort(mod_3$imp$predictor) == LETTERS[1:2])))
+  expect_true(isTRUE(all(sort(mod_3$imp$term) == LETTERS[1:2])))
 })
 
 # ------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ test_that('check CART OOB', {
       Sepal.Width ~ .,
       data = iris,
       model = "CART",
-      oob = ms_1
+      control = bag_control(oob = ms_1)
     )
   expect_true(all(mod_1$oob$.metric == "rsq"))
   expect_true(all(!is.na(mod_1$oob$mean)))
@@ -78,7 +78,7 @@ test_that('check CART OOB', {
       Class ~ .,
       data = two_class_dat,
       model = "CART",
-      oob = ms_2
+      control = bag_control( oob = ms_2)
     )
   expect_true(sum(mod_2$oob$.metric == "accuracy") == 1)
   expect_true(sum(mod_2$oob$.metric == "roc_auc") == 1)
@@ -89,7 +89,7 @@ test_that('check CART OOB', {
       Sepal.Width ~ .,
       data = iris,
       model = "CART",
-      oob = ms_2
+      control = bag_control(oob = ms_2)
     )
   expect_true(all(mod_3$oob$.metric == "failed"))
   expect_true(all(is.na(mod_3$oob$mean)))
@@ -99,7 +99,7 @@ test_that('check CART OOB', {
       Species ~ .,
       data = iris,
       model = "CART",
-      oob = ms_2
+      control = bag_control(oob = ms_2)
     )
   expect_true(sum(mod_4$oob$.metric == "accuracy") == 1)
   expect_true(sum(mod_4$oob$.metric == "roc_auc") == 1)
