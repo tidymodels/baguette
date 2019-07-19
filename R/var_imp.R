@@ -1,9 +1,10 @@
 #' Obtain variable importance scores
 #'
 #' @param object An object.
-#' @param ... Not cuurently used.
+#' @param ... Not currently used.
 #' @return A tibble with columns for `term` (the predictor), `value` (the
-#'  importance score), and `used` (the occurances of the predictors).
+#'  mean importance score), `std.error` (the standard error), and `used` (the
+#'  occurrences of the predictors).
 #' @details `baguette` can compute different variable importance scores for
 #'  each model in the ensemble. The `var_imp()` function returns the average
 #'  importance score for each model. Additionally, the function returns the
@@ -38,9 +39,16 @@
 #'  split. Other predictors may be used frequently in splits, but if the
 #'  terminal nodes cover only a handful of training set samples, the importance
 #'  scores may be close to zero.
+#'
+#' Note that the `value` column that is the average of the importance scores
+#'  form each model. The divisor of this average (and the corresponding standard
+#'  error) is the number of models (as opposed to the number of models that
+#'  used the predictor). This means that the importance scores for a predictor
+#'  that was not used in the model has an implicit zero importance.
 #' @export
 #' @export var_imp.bagger
 var_imp.bagger <- function(object, ...) {
   object$imp
+
 }
 

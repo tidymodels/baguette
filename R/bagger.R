@@ -235,28 +235,17 @@ bagger.recipe <-
 #' @return A list.
 #' @export
 bag_control <-
-  function(var_imp = TRUE,
-           oob = NULL,
-           allow_parallel = TRUE,
-           sampling = "none") {
-    samps <- c("none", "down")
+  function(var_imp = TRUE, oob = NULL, allow_parallel = TRUE, sampling = "none") {
 
-    if (length(var_imp) != 1 || !is.logical(var_imp)) {
-      stop("`var_imp` should be a single logical value.", call. = FALSE)
-    }
-    if (length(allow_parallel) != 1 || !is.logical(allow_parallel)) {
-      stop("`allow_parallel` should be a single logical value.", call. = FALSE)
-    }
-    if (length(sampling) != 1 || !is.character(sampling) || !any(samps == sampling)) {
-      stop("`sampling` should be either 'none' or 'down'.", call. = FALSE)
-    }
-    if (!is.null(oob) && !inherits(oob, "function")) {
-      stop("`oob` should be either NULL or the results of `yardstick::metric_set()`.",
-           call. = FALSE)
-    }
+    res <-
+      list(
+        var_imp = var_imp,
+        oob = oob,
+        allow_parallel = allow_parallel,
+        sampling = sampling
+      )
 
-    list(var_imp = var_imp, oob = oob, allow_parallel = allow_parallel, sampling = sampling)
-
+    validate_control(res)
   }
 
 #' @export

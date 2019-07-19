@@ -26,10 +26,7 @@ validate_args <- function(model, B, opt, control, extract) {
 
   # ----------------------------------------------------------------------------
 
-  ctrl_args <- c("var_imp", "oob", "allow_parallel", "sampling")
-  if (!is.list(control)) {
-    stop("`control` should be a list created by `bag_control()`.", call. = FALSE)
-  }
+  validate_control(control)
 
   # ----------------------------------------------------------------------------
 
@@ -119,4 +116,49 @@ check_type <- function(object, type) {
     }
   }
   type
+}
+
+validate_importance <- function(x) {
+  if (is.null(x)) {
+    return(x)
+  }
+
+  if (!is_tibble(x)) {
+    stop("Imprtance score results should be a tibble.", call. = FALSE)
+  }
+
+  exp_cols <- c("term", "value", "std.error", "used")
+  if (!isTRUE(all.equal(exp_cols, names(x)))) {
+    msg <- paste0("Importance columns should be: ",
+                  paste0("'", exp_cols, "'", collapse = ", "),
+                  "."
+                  )
+    stop(msg, call. = FALSE)
+  }
+  x
+}
+
+# ------------------------------------------------------------------------------
+
+validate_control <- function(x) {
+  if (!is.list(x)) {
+    stop("The control object should be a list created by `bag_control()`.",
+         call. = FALSE)
+  }
+  samps <- c("none", "down")
+
+  if (length(x$var_imp) != 1 || !is.logical(x$var_imp)) {
+    stop("`var_imp` should be a single logical value.", call. = FALSE)
+  }
+  if (length(x$allow_parallel) != 1 || !is.logical(x$allow_parallel)) {
+    stop("`allow_parallel` should be a single logical value.", call. = FALSE)
+  }
+  if (length(x$sampling) != 1 || !is.character(x$sampling) || !any(samps == x$sampling)) {
+    stop("`sampling` should be either 'none' or 'down'.", call. = FALSE)
+  }
+  if (!is.null(x$oob) && !inherits(x$oob, "function")) {
+    stop("`oob` should be either NULL or the results of `yardstick::metric_set()`.",
+         call. = FALSE)
+  }
+  x
 }

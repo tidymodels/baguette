@@ -9,11 +9,12 @@
 \arguments{
 \item{object}{An object.}
 
-\item{...}{Not cuurently used.}
+\item{...}{Not currently used.}
 }
 \value{
 A tibble with columns for \code{term} (the predictor), \code{value} (the
-importance score), and \code{used} (the occurances of the predictors).
+mean importance score), \code{std.error} (the standard error), and \code{used} (the
+occurrences of the predictors).
 }
 \description{
 Obtain variable importance scores
@@ -53,4 +54,10 @@ importance measurement of 100 percent since all samples are affected by this
 split. Other predictors may be used frequently in splits, but if the
 terminal nodes cover only a handful of training set samples, the importance
 scores may be close to zero.
+
+Note that the \code{value} column that is the average of the importance scores
+form each model. The divisor of this average (and the corresponding standard
+error) is the number of models (as opposed to the number of models that
+used the predictor). This means that the importance scores for a predictor
+that was not used in the model has an implicit zero importance.
 }

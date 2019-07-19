@@ -10,7 +10,7 @@ test_that('good values', {
       model = "MARS",
       B = 5L,
       opt = list(x = 1),
-      control = list(),
+      control = bag_control(),
       extract = NULL
     ),
     regexp = NA
@@ -23,7 +23,7 @@ test_that('bad values', {
       model = "mars",
       B = 5L,
       opt = list(x = 1),
-      control = list(),
+      control = bag_control(),
       extract = NULL
     ),
     regexp = "`model`"
@@ -33,7 +33,7 @@ test_that('bad values', {
       model = "MARS",
       B = 1,
       opt = list(x = 1),
-      control = list(),
+      control = bag_control(),
       extract = NULL
     ),
     regexp = "integer"
@@ -43,7 +43,7 @@ test_that('bad values', {
       model = "MARS",
       B = -1L,
       opt = list(x = 1),
-      control = list(),
+      control = bag_control(),
       extract = NULL
     ),
     regexp = "integer"
@@ -53,7 +53,7 @@ test_that('bad values', {
       model = "MARS",
       B = 2L,
       opt = 2,
-      control = list(),
+      control = bag_control(),
       extract = NULL
     ),
     regexp = "should be NULL or a named list"
@@ -73,7 +73,7 @@ test_that('bad values', {
       model = "MARS",
       B = 5L,
       opt = list(x = 1),
-      control = list(),
+      control = bag_control(),
       extract = function(x, y) 2
     ),
     regexp = "2nd"
@@ -83,7 +83,7 @@ test_that('bad values', {
       model = "MARS",
       B = 5L,
       opt = list(x = 1),
-      control = list(),
+      control = bag_control(),
       extract = function(x) 2
     ),
     regexp = "two arguments"
@@ -112,5 +112,26 @@ test_that('catastrophic failures', {
   expect_error(
     bagger(Sepal.Length ~ ., data = iris, B = 2L, model = "CART", opt = list(cost = 2)),
     regexp = "All of the models failed"
+  )
+})
+
+# ------------------------------------------------------------------------------
+
+test_that('validate imps', {
+  expect_error(
+    baguette:::validate_importance(
+      tibble::tibble(
+        terms = letters[1:2],
+        value = 1:2,
+        std.error = 1:2
+      )
+    )
+  )
+  expect_error(
+    baguette:::validate_importance(
+      data.frame(term = letters[1:2],
+                 value = 1:2,
+                 std.error = 1:2)
+    )
   )
 })
