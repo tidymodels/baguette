@@ -46,14 +46,17 @@ test_that('check mars opt', {
   check_classif <- function(x, ...) {
     !is.null(x$glm.coefficients)
   }
-  mod_3 <-
-    bagger(
-      Class ~ .,
-      data = two_class_dat,
-      model = "MARS",
-      control = bag_control(var_imp = TRUE),
-      extract = check_classif
-    )
+  expect_warning(
+    mod_3 <-
+      bagger(
+        Class ~ .,
+        data = two_class_dat,
+        model = "MARS",
+        control = bag_control(var_imp = TRUE),
+        extract = check_classif
+      ),
+    "fitted probabilities numerically 0"
+  )
   expect_true(all(unlist(mod_3$model_df$extras)))
   expect_true(inherits(mod_3$imp, "tbl_df"))
 })

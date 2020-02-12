@@ -44,12 +44,11 @@
 #'  computations should be distributed. Note that this will almost certainly
 #'  multiple the memory requirements to fit the models.
 #' @examples
-#' library(rsample)
 #' library(recipes)
 #' library(dplyr)
 #' library(yardstick)
 #'
-#' data(biomass)
+#' data(biomass, package = "modeldata")
 #'
 #' biomass_tr <-
 #'   biomass %>%

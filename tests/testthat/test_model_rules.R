@@ -13,7 +13,7 @@ test_that('check cubist opt', {
     bagger(
       Ozone ~ .,
       data = airquality,
-      model = "model_rules",
+      model = "model rules",
       opt = list(unbiased = TRUE),
       extract = check_unbiased
     )
@@ -24,7 +24,7 @@ test_that('check cubist opt', {
     bagger(
       Ozone ~ .,
       data = airquality,
-      model = "model_rules",
+      model = "model rules",
       control = bag_control(var_imp = TRUE)
     )
   expect_true(inherits(mod_2$imp, "tbl_df"))
@@ -38,7 +38,7 @@ test_that('check cubist OOB', {
     bagger(
       Sepal.Width ~ .,
       data = iris,
-      model = "model_rules",
+      model = "model rules",
       oob = ms_1
     )
   expect_true(all(mod_3$oob$.metric == "rsq"))
@@ -58,7 +58,7 @@ test_that('cubist predictions', {
   #   bagger(
   #     Ozone ~ .,
   #     data = airquality_na[-holdout, ],
-  #     model = "model_rules",
+  #     model = "model rules",
   #     control = bag_control(oob = metric_set(rsq))
   #   )
   #
@@ -71,7 +71,7 @@ test_that('cubist predictions', {
     bagger(
       Ozone ~ .,
       data = airquality[-holdout, ],
-      model = "model_rules",
+      model = "model rules",
       control = bag_control(oob = metric_set(rsq))
     )
 

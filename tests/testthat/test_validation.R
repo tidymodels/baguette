@@ -8,7 +8,7 @@ test_that('good values', {
   expect_error(
     baguette:::validate_args(
       model = "MARS",
-      B = 5L,
+      times = 5L,
       opt = list(x = 1),
       control = bag_control(),
       extract = NULL
@@ -21,7 +21,7 @@ test_that('bad values', {
   expect_error(
     baguette:::validate_args(
       model = "mars",
-      B = 5L,
+      times = 5L,
       opt = list(x = 1),
       control = bag_control(),
       extract = NULL
@@ -31,7 +31,7 @@ test_that('bad values', {
   expect_error(
     baguette:::validate_args(
       model = "MARS",
-      B = 1,
+      times = 1,
       opt = list(x = 1),
       control = bag_control(),
       extract = NULL
@@ -41,7 +41,7 @@ test_that('bad values', {
   expect_error(
     baguette:::validate_args(
       model = "MARS",
-      B = -1L,
+      times = -1L,
       opt = list(x = 1),
       control = bag_control(),
       extract = NULL
@@ -51,7 +51,7 @@ test_that('bad values', {
   expect_error(
     baguette:::validate_args(
       model = "MARS",
-      B = 2L,
+      times = 2L,
       opt = 2,
       control = bag_control(),
       extract = NULL
@@ -61,7 +61,7 @@ test_that('bad values', {
   expect_error(
     baguette:::validate_args(
       model = "MARS",
-      B = 5L,
+      times = 5L,
       opt = list(x = 1),
       control = 2,
       extract = NULL
@@ -71,7 +71,7 @@ test_that('bad values', {
   expect_error(
     baguette:::validate_args(
       model = "MARS",
-      B = 5L,
+      times = 5L,
       opt = list(x = 1),
       control = bag_control(),
       extract = function(x, y) 2
@@ -81,7 +81,7 @@ test_that('bad values', {
   expect_error(
     baguette:::validate_args(
       model = "MARS",
-      B = 5L,
+      times = 5L,
       opt = list(x = 1),
       control = bag_control(),
       extract = function(x) 2
@@ -94,14 +94,14 @@ test_that('bad values', {
 
 test_that('wrong y for cubist', {
   expect_error(
-    bagger(Species ~ ., data = iris, B = 2L, model = "model_rules"),
+    bagger(Species ~ ., data = iris, times = 2L, model = "model rules"),
     regexp = "cubist models require a numeric outcome"
   )
 })
 
 test_that('wrong y for C5', {
   expect_error(
-    bagger(Sepal.Length ~ ., data = iris, B = 2L, model = "C5.0"),
+    bagger(Sepal.Length ~ ., data = iris, times = 2L, model = "C5.0"),
     regexp = "must be factors"
   )
 })
@@ -110,7 +110,7 @@ test_that('wrong y for C5', {
 
 test_that('catastrophic failures', {
   expect_error(
-    bagger(Sepal.Length ~ ., data = iris, B = 2L, model = "CART", opt = list(cost = 2)),
+    bagger(Sepal.Length ~ ., data = iris, times = 2L, model = "CART", opt = list(cost = 2)),
     regexp = "All of the models failed"
   )
 })
