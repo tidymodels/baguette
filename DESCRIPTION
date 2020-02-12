@@ -6,12 +6,13 @@ Authors@R:
            family = "Kuhn",
            role = c("aut", "cre"),
            email = "max@rstudio.com",
-           comment = c(ORCID = "0000-0003-2402-136X"))
+           comment = c(ORCID = "0000-0003-2402-136X"),
+    person("RStudio", role = "cph"))
 Description: Tree- and rule-based models can be bagged using 
     this package and their predictions equations are stored 
     in an efficient format to reduce the model objects size 
     and speed. 
-License: MIT
+License: MIT + file LICENSE
 Depends: 
     parsnip (>= 0.0.5)
 Suggests: 
