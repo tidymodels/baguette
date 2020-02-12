@@ -1,10 +1,10 @@
 
-mars_bagger <- function(rs, control, extract, ...) {
+mars_bagger <- function(rs, .control, extract, ...) {
 
   is_classif <- is.factor(rs$splits[[1]]$data$.outcome)
   mod_spec <- make_mars_spec(is_classif, ...)
 
-  iter <- get_iterator(control)
+  iter <- get_iterator(.control)
 
   rs <-
     rs %>%
@@ -14,7 +14,7 @@ mars_bagger <- function(rs, control, extract, ...) {
       seed_fit,
       .fn = mars_fit,
       spec = mod_spec,
-      control = control
+      .control = .control
     ))
 
   rs <- check_for_disaster(rs)
@@ -23,9 +23,9 @@ mars_bagger <- function(rs, control, extract, ...) {
 
   rs <- extractor(rs, extract)
 
-  imps <- compute_imp(rs, mars_imp, control$var_imp)
+  imps <- compute_imp(rs, mars_imp, .control$var_imp)
 
-  oob <- compute_oob(rs, control$oob)
+  oob <- compute_oob(rs, .control$oob)
 
   rs <-
     rs %>%
@@ -69,14 +69,14 @@ make_mars_spec <- function(classif, ...) {
 
 
 
-mars_fit  <- function(split, spec, control = bag_control()) {
+mars_fit  <- function(split, spec, .control = bag_control()) {
   ctrl <- parsnip::fit_control(catch = TRUE)
 
   dat <- rsample::analysis(split)
   # only na.fail is supported by earth::earth
   dat <- dat[complete.cases(dat),, drop = FALSE]
 
-  if (control$sampling == "down") {
+  if (.control$sampling == "down") {
     dat <- down_sampler(dat)
   }
 

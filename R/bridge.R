@@ -1,6 +1,6 @@
 
 
-bagger_bridge <- function(processed, base_model, seed, times, control, extract, ...) {
+bagger_bridge <- function(processed, base_model, seed, times, .control, extract, ...) {
   validate_outcomes_are_univariate(processed$outcomes)
   if (base_model %in% c("C5.0")) {
     validate_outcomes_are_factors(processed$outcomes)
@@ -15,9 +15,9 @@ bagger_bridge <- function(processed, base_model, seed, times, control, extract, 
 
   res <- switch(
     base_model,
-    CART = cart_bagger(rs, control, extract, ...),
-    C5.0 = c5_bagger(rs, control, extract, ...),
-    MARS = mars_bagger(rs, control, extract, ...)
+    CART = cart_bagger(rs, .control, extract, ...),
+    C5.0 = c5_bagger(rs, .control, extract, ...),
+    MARS = mars_bagger(rs, .control, extract, ...)
   )
 
   res <-
@@ -25,7 +25,7 @@ bagger_bridge <- function(processed, base_model, seed, times, control, extract, 
       model_df = res$model,
       imp = res$imp,
       oob = res$oob,
-      control = control,
+      .control = .control,
       base_model = base_model,
       blueprint = processed$blueprint
     )

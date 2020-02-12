@@ -9,7 +9,7 @@ test_that('good values', {
     baguette:::validate_args(
       base_model = "MARS",
       times = 5L,
-      control = bag_control(),
+      .control = bag_control(),
       extract = NULL
     ),
     regexp = NA
@@ -21,7 +21,7 @@ test_that('bad values', {
     baguette:::validate_args(
       base_model = "mars",
       times = 5L,
-      control = bag_control(),
+      .control = bag_control(),
       extract = NULL
     ),
     regexp = "`base_model`"
@@ -30,7 +30,7 @@ test_that('bad values', {
     baguette:::validate_args(
       base_model = "MARS",
       times = 1,
-      control = bag_control(),
+      .control = bag_control(),
       extract = NULL
     ),
     regexp = "integer"
@@ -39,7 +39,7 @@ test_that('bad values', {
     baguette:::validate_args(
       base_model = "MARS",
       times = -1L,
-      control = bag_control(),
+      .control = bag_control(),
       extract = NULL
     ),
     regexp = "integer"
@@ -48,7 +48,7 @@ test_that('bad values', {
     baguette:::validate_args(
       base_model = "MARS",
       times = 5L,
-      control = 2,
+      .control = 2,
       extract = NULL
     ),
     regexp = "should be a list"
@@ -57,7 +57,7 @@ test_that('bad values', {
     baguette:::validate_args(
       base_model = "MARS",
       times = 5L,
-      control = bag_control(),
+      .control = bag_control(),
       extract = function(x, y) 2
     ),
     regexp = "2nd"
@@ -66,7 +66,7 @@ test_that('bad values', {
     baguette:::validate_args(
       base_model = "MARS",
       times = 5L,
-      control = bag_control(),
+      .control = bag_control(),
       extract = function(x) 2
     ),
     regexp = "two arguments"

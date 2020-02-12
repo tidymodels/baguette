@@ -1,4 +1,4 @@
-validate_args <- function(base_model, times, control, extract) {
+validate_args <- function(base_model, times, .control, extract) {
   if (!is.character(base_model) || length(base_model) != 1) {
     stop("`base_model` should be a single character value.", call. = FALSE)
   }
@@ -22,7 +22,7 @@ validate_args <- function(base_model, times, control, extract) {
 
   # ----------------------------------------------------------------------------
 
-  validate_control(control)
+  validate_control(.control)
 
   # ----------------------------------------------------------------------------
 
@@ -138,7 +138,7 @@ validate_importance <- function(x) {
 
 validate_control <- function(x) {
   if (!is.list(x)) {
-    stop("The control object should be a list created by `bag_control()`.",
+    stop("The '.control' object should be a list created by `bag_control()`.",
          call. = FALSE)
   }
   samps <- c("none", "down")

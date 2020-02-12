@@ -47,7 +47,7 @@ test_that('check CART opt', {
       data = two_class_dat,
       base_model = "CART",
       parms = list(loss = lmat),
-      control = bag_control(var_imp = TRUE),
+      .control = bag_control(var_imp = TRUE),
       extract = get_loss
     )
 
@@ -67,7 +67,7 @@ test_that('check CART OOB', {
       Sepal.Width ~ .,
       data = iris,
       base_model = "CART",
-      control = bag_control(oob = ms_1)
+      .control = bag_control(oob = ms_1)
     )
   expect_true(all(mod_1$oob$.metric == "rsq"))
   expect_true(all(!is.na(mod_1$oob$mean)))
@@ -78,7 +78,7 @@ test_that('check CART OOB', {
       Class ~ .,
       data = two_class_dat,
       base_model = "CART",
-      control = bag_control( oob = ms_2)
+      .control = bag_control( oob = ms_2)
     )
   expect_true(sum(mod_2$oob$.metric == "accuracy") == 1)
   expect_true(sum(mod_2$oob$.metric == "roc_auc") == 1)
@@ -89,7 +89,7 @@ test_that('check CART OOB', {
       Sepal.Width ~ .,
       data = iris,
       base_model = "CART",
-      control = bag_control(oob = ms_2)
+      .control = bag_control(oob = ms_2)
     )
   expect_true(all(mod_3$oob$.metric == "failed"))
   expect_true(all(is.na(mod_3$oob$mean)))
@@ -99,7 +99,7 @@ test_that('check CART OOB', {
       Species ~ .,
       data = iris,
       base_model = "CART",
-      control = bag_control(oob = ms_2)
+      .control = bag_control(oob = ms_2)
     )
   expect_true(sum(mod_4$oob$.metric == "accuracy") == 1)
   expect_true(sum(mod_4$oob$.metric == "roc_auc") == 1)

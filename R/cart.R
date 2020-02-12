@@ -1,9 +1,9 @@
 
-cart_bagger <- function(rs, control, extract, ...) {
+cart_bagger <- function(rs, .control, extract, ...) {
   is_classif <- is.factor(rs$splits[[1]]$data$.outcome)
   mod_spec <- make_cart_spec(is_classif, ...)
 
-  iter <- get_iterator(control)
+  iter <- get_iterator(.control)
 
   rs <-
     rs %>%
@@ -13,7 +13,7 @@ cart_bagger <- function(rs, control, extract, ...) {
       seed_fit,
       .fn = cart_fit,
       spec = mod_spec,
-      control = control
+      .control = .control
     ))
 
   rs <- check_for_disaster(rs)
@@ -22,9 +22,9 @@ cart_bagger <- function(rs, control, extract, ...) {
 
   rs <- extractor(rs, extract)
 
-  imps <- compute_imp(rs, cart_imp, control$var_imp)
+  imps <- compute_imp(rs, cart_imp, .control$var_imp)
 
-  oob <- compute_oob(rs, control$oob)
+  oob <- compute_oob(rs, .control$oob)
 
   rs <-
     rs %>%
@@ -86,11 +86,11 @@ make_cart_spec <- function(classif, ...) {
 }
 
 
-cart_fit  <- function(split, spec, control = bag_control()) {
+cart_fit  <- function(split, spec, .control = bag_control()) {
 
   dat <- rsample::analysis(split)
 
-  if (control$sampling == "down") {
+  if (.control$sampling == "down") {
     dat <- down_sampler(dat)
   }
 

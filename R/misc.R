@@ -142,8 +142,8 @@ down_sampler <- function(x) {
 
 # ------------------------------------------------------------------------------
 
-get_iterator <- function(control) {
-  if (control$allow_parallel) {
+get_iterator <- function(.control) {
+  if (.control$allow_parallel) {
     iter <- furrr::future_map2
   } else {
     iter <- purrr::map2
