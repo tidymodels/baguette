@@ -66,8 +66,7 @@ bagger(x, ...)
 classes) should be represented as factors, not integers.}
 
 \item{model}{A single character value for the model being bagged. Possible
-values are "CART", "MARS", "C5.0" (classification only), and "model rules"
-(regression only).}
+values are "CART", "MARS", and "C5.0" (classification only).}
 
 \item{times}{A single integer greater than 1 for the maximum number of bootstrap
 samples/ensemble members (some model fits might fail).}
@@ -142,17 +141,13 @@ ctrl <- bag_control(oob = perf, var_imp = TRUE)
 # `times` is low to make the examples run faster
 
 set.seed(7687)
-mars_fit <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
+mars_bag <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
                    model = "MARS", times = 5, control = ctrl)
-var_imp(mars_fit)
+var_imp(mars_bag)
 
 set.seed(7687)
-cart_fit <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
+cart_bag <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
                    model = "CART", times = 5, control = ctrl)
-
-set.seed(7687)
-rule_fit <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
-                   model = "model rules", times = 5, control = ctrl)
 
 
 # ------------------------------------------------------------------------------
@@ -164,19 +159,19 @@ biomass_rec <-
   step_pca(all_predictors())
 
 set.seed(7687)
-cart_pca_fit <- bagger(biomass_rec, data = biomass_tr, model = "CART", times = 5,
-                       control = ctrl)
+cart_pca_bag <- bagger(biomass_rec, data = biomass_tr, model = "CART",
+                       times = 5, control = ctrl)
 
-cart_pca_fit
-cart_pca_fit$oob
-cart_fit$oob
+cart_pca_bag
+cart_pca_bag$oob
+cart_bag$oob
 
 # An example rule:
-cart_pca_fit$model_df$.pred_form[[1]][[3]]
+cart_pca_bag$model_df$.pred_form[[1]][[3]]
 
 # Using formulas
 set.seed(7687)
-rule_form<- bagger(HHV ~ ., data = biomass_tr, model = "model rules", times = 5,
+mars_bag <- bagger(HHV ~ ., data = biomass_tr, model = "MARS", times = 5,
                    control = ctrl)
 
 # ------------------------------------------------------------------------------

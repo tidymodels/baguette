@@ -15,7 +15,6 @@ bagger_bridge <- function(processed, model, seed, times, opt, control, extract, 
 
   res <- switch(
     model,
-    model_rules = cubist_bagger(rs, opt, control, extract, ...),
     CART = cart_bagger(rs, opt, control, extract, ...),
     C5.0 = c5_bagger(rs, opt, control, extract, ...),
     MARS = mars_bagger(rs, opt, control, extract, ...)

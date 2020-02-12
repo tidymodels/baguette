@@ -42,11 +42,6 @@ predictor was never used in any of the MARS basis functions in the final
 model (after pruning), it has an importance value of zero. \code{baguette} wraps
 \code{earth::evimp()}.
 
-\emph{Model Rules}: The underlying Cubist model calculates the occurrence of
-predictors inside the model rule definitions as well as the linear
-regression models contained within each rule. \code{baguette} wraps
-\code{Cubist::summary.cubist()}.
-
 \emph{C5.0}: \code{C5.0} measures predictor importance by determining the percentage
 of training set samples that fall into all the terminal nodes after the
 split. For example, the predictor in the first split automatically has an
