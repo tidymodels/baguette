@@ -153,6 +153,6 @@ tree_wrapper <-
            min_n = 2,
            ...) {
     opts <- list(...)
-    bagger(x = x, y = y, model = "CART", opts = opts, ...)
+    bagger(x = x, y = y, base_model = "CART", opts = opts, ...)
   }
 

@@ -1,9 +1,9 @@
-validate_args <- function(model, times, control, extract) {
-  if (!is.character(model) || length(model) != 1) {
-    stop("`model` should be a single character value.", call. = FALSE)
+validate_args <- function(base_model, times, control, extract) {
+  if (!is.character(base_model) || length(base_model) != 1) {
+    stop("`base_model` should be a single character value.", call. = FALSE)
   }
-  if (!(model %in% models)) {
-    stop("`model` should be one of ", paste0("'", models, "'", collapse = ", "),
+  if (!(base_model %in% models)) {
+    stop("`base_model` should be one of ", paste0("'", models, "'", collapse = ", "),
          call. = FALSE)
   }
 
@@ -51,10 +51,10 @@ integer_B <- function(B) {
 
 # ------------------------------------------------------------------------------
 
-validate_y_type <- function(model, outcomes) {
+validate_y_type <- function(base_model, outcomes) {
   hardhat::validate_outcomes_are_univariate(outcomes)
 
-  if (model == "C5.0") {
+  if (base_model == "C5.0") {
     hardhat::validate_outcomes_are_factors(outcomes)
   }
 
@@ -97,13 +97,13 @@ check_for_disaster <- function(x) {
 
 check_type <- function(object, type) {
   if (is.null(type)) {
-    if (object$model[2] == "classification") {
+    if (object$base_model[2] == "classification") {
       type <- "class"
     } else {
       type <- "numeric"
     }
   } else {
-    if (object$model[2] == "classification") {
+    if (object$base_model[2] == "classification") {
       if (!(type %in% c("class", "prob")))
         stop("`type` should be either 'class' or 'prob'", call. = FALSE)
     } else {

@@ -1,6 +1,6 @@
 # TODO add ... in here somewhere
 
-new_bagger <- function(model_df, imp, oob, control, model, blueprint) {
+new_bagger <- function(model_df, imp, oob, control, base_model, blueprint) {
 
   if (!is_tibble(model_df)) {
     stop("`model_df` should be a tibble.", call. = FALSE)
@@ -33,7 +33,7 @@ new_bagger <- function(model_df, imp, oob, control, model, blueprint) {
     control = control,
     imp = imp,
     oob = oob,
-    model = c(model[1], mod_mode),
+    base_model = c(base_model[1], mod_mode),
     blueprint = blueprint,
     class = "bagger"
   )

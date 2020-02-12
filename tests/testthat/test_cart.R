@@ -28,7 +28,7 @@ test_that('check CART opt', {
     bagger(
       Sepal.Width ~ .,
       data = iris,
-      model = "CART",
+      base_model = "CART",
       method = "anova",
       extract = get_method
     )
@@ -36,7 +36,7 @@ test_that('check CART opt', {
     bagger(
       Sepal.Width ~ .,
       data = iris,
-      model = "CART",
+      base_model = "CART",
       maxdepth = 1,
       extract = num_leaves
     )
@@ -45,7 +45,7 @@ test_that('check CART opt', {
     bagger(
       Class ~ .,
       data = two_class_dat,
-      model = "CART",
+      base_model = "CART",
       parms = list(loss = lmat),
       control = bag_control(var_imp = TRUE),
       extract = get_loss
@@ -66,7 +66,7 @@ test_that('check CART OOB', {
     bagger(
       Sepal.Width ~ .,
       data = iris,
-      model = "CART",
+      base_model = "CART",
       control = bag_control(oob = ms_1)
     )
   expect_true(all(mod_1$oob$.metric == "rsq"))
@@ -77,7 +77,7 @@ test_that('check CART OOB', {
     bagger(
       Class ~ .,
       data = two_class_dat,
-      model = "CART",
+      base_model = "CART",
       control = bag_control( oob = ms_2)
     )
   expect_true(sum(mod_2$oob$.metric == "accuracy") == 1)
@@ -88,7 +88,7 @@ test_that('check CART OOB', {
     bagger(
       Sepal.Width ~ .,
       data = iris,
-      model = "CART",
+      base_model = "CART",
       control = bag_control(oob = ms_2)
     )
   expect_true(all(mod_3$oob$.metric == "failed"))
@@ -98,7 +98,7 @@ test_that('check CART OOB', {
     bagger(
       Species ~ .,
       data = iris,
-      model = "CART",
+      base_model = "CART",
       control = bag_control(oob = ms_2)
     )
   expect_true(sum(mod_4$oob$.metric == "accuracy") == 1)

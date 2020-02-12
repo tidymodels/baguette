@@ -12,7 +12,7 @@ test_that('check C5.0 opt', {
     bagger(
       Species ~ .,
       data = iris,
-      model = "C5.0",
+      base_model = "C5.0",
       rules = TRUE,
       extract = check_rules
     )
@@ -28,7 +28,7 @@ test_that('check C5.0 opt', {
     bagger(
       Species ~ .,
       data = iris,
-      model = "C5.0",
+      base_model = "C5.0",
       rules = TRUE,
       bands = 3,
       control = bag_control(var_imp = TRUE),

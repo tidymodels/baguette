@@ -16,7 +16,7 @@ bagger(x, ...)
 \method{bagger}{data.frame}(
   x,
   y,
-  model = "CART",
+  base_model = "CART",
   times = 10L,
   control = bag_control(),
   extract = NULL,
@@ -26,7 +26,7 @@ bagger(x, ...)
 \method{bagger}{matrix}(
   x,
   y,
-  model = "CART",
+  base_model = "CART",
   times = 10L,
   control = bag_control(),
   extract = NULL,
@@ -36,7 +36,7 @@ bagger(x, ...)
 \method{bagger}{formula}(
   formula,
   data,
-  model = "CART",
+  base_model = "CART",
   times = 10L,
   control = bag_control(),
   extract = NULL,
@@ -46,7 +46,7 @@ bagger(x, ...)
 \method{bagger}{recipe}(
   x,
   data,
-  model = "CART",
+  base_model = "CART",
   times = 10L,
   control = bag_control(),
   extract = NULL,
@@ -61,7 +61,7 @@ bagger(x, ...)
 \item{y}{A numeric or factor vector of outcomes. Categorical outcomes (i.e
 classes) should be represented as factors, not integers.}
 
-\item{model}{A single character value for the model being bagged. Possible
+\item{base_model}{A single character value for the model being bagged. Possible
 values are "CART", "MARS", and "C5.0" (classification only).}
 
 \item{times}{A single integer greater than 1 for the maximum number of bootstrap
@@ -135,12 +135,12 @@ ctrl <- bag_control(oob = perf, var_imp = TRUE)
 
 set.seed(7687)
 mars_bag <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
-                   model = "MARS", times = 5, control = ctrl)
+                   base_model = "MARS", times = 5, control = ctrl)
 var_imp(mars_bag)
 
 set.seed(7687)
 cart_bag <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
-                   model = "CART", times = 5, control = ctrl)
+                   base_model = "CART", times = 5, control = ctrl)
 
 
 # ------------------------------------------------------------------------------
@@ -152,19 +152,15 @@ biomass_rec <-
   step_pca(all_predictors())
 
 set.seed(7687)
-cart_pca_bag <- bagger(biomass_rec, data = biomass_tr, model = "CART",
+cart_pca_bag <- bagger(biomass_rec, data = biomass_tr, base_model = "CART",
                        times = 5, control = ctrl)
 
 cart_pca_bag
 cart_pca_bag$oob
 cart_bag$oob
 
-# An example rule:
-cart_pca_bag$model_df$.pred_form[[1]][[3]]
-
 # Using formulas
-set.seed(7687)
-mars_bag <- bagger(HHV ~ ., data = biomass_tr, model = "MARS", times = 5,
+mars_bag <- bagger(HHV ~ ., data = biomass_tr, base_model = "MARS", times = 5,
                    control = ctrl)
 
 # ------------------------------------------------------------------------------
@@ -176,7 +172,7 @@ num_term_nodes <- function(x, ...) {
 
 set.seed(7687)
 with_extras <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
-                      model = "CART", times = 5, extract = num_term_nodes)
+                      base_model = "CART", times = 5, extract = num_term_nodes)
 
 dplyr::bind_rows(with_extras$model_df$extras)
 }

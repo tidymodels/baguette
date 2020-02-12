@@ -23,7 +23,7 @@ test_that('recipe execution', {
       bagger(
         rec,
         data = iris,
-        model = "CART",
+        base_model = "CART",
         extract = check_ranges
       ),
     regexp = NA)
@@ -45,8 +45,8 @@ test_that('formula execution', {
       bagger(
         Sepal.Length ~ log(Sepal.Width) + Species,
         data = iris,
-        model = "CART",
-        opt = list(model = TRUE),
+        base_model = "CART",
+        model = TRUE,
         extract = check_columns
       ),
     regex = NA)
