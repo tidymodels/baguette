@@ -15,7 +15,6 @@
 #' @importFrom partykit as.party.rpart
 #' @importFrom Cubist cubist cubistControl
 #' @importFrom withr with_seed
-#' @importFrom tidypredict tidypredict_fit
 
 # ------------------------------------------------------------------------------
 

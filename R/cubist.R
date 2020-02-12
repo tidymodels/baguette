@@ -15,9 +15,9 @@ cubist_bagger <- function(rs, opt, control, extract, ...) {
 
   imps <- compute_imp(rs, cubist_imp, control$var_imp)
 
-  oob <- compute_oob(rs, control$oob)
+  ## TODO for model trees, can we eliminate $data
 
-  rs <- rs %>% mutate(.pred_form = map(model, tidypredict::tidypredict_fit))
+  oob <- compute_oob(rs, control$oob)
 
   list(model = select_rs(rs), oob  = oob, imp = imps)
 }

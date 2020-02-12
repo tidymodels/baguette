@@ -89,17 +89,6 @@ compute_oob <- function(rs, oob) {
   oob
 }
 
-
-# ------------------------------------------------------------------------------
-
-eval_num_form <- function(.fn, new_data) {
-  dplyr::tibble(
-    .pred = rlang::eval_tidy(.fn, new_data),
-    .row = 1:nrow(new_data)
-  )
-}
-
-
 # ------------------------------------------------------------------------------
 
 compute_imp <- function(rs, .fn, compute) {
@@ -137,7 +126,7 @@ extractor <- function(rs, extract) {
 # ------------------------------------------------------------------------------
 
 select_rs <- function(rs) {
-  rs %>% dplyr::select(-splits, -id, -fit_seed, -passed, -model)
+  rs %>% dplyr::select(-splits, -id, -fit_seed, -passed)
 }
 
 filter_rs <- function(rs) {
@@ -159,7 +148,7 @@ seed_fit <- function(seed, split, .fn, ...) {
 down_sampler <- function(x) {
 
   if (!is.factor(x$.outcome)) {
-    warning("Down-sampling is only used in classification models.", call. = FALSE)
+    rlang::warn("Down-sampling is only used in classification models.", call. = FALSE)
     return(x)
   }
 
@@ -181,6 +170,20 @@ get_iterator <- function(control) {
     iter <- purrr::map2
   }
   iter
+}
+
+# ------------------------------------------------------------------------------
+
+replaced <- function(x, replacement) {
+  x$preproc$terms <- replacement
+  x
+}
+
+replace_parsnip_terms <- function(x) {
+  new_terms <- butcher::axe_env(x$model[[1]]$preproc$terms)
+  x <- x %>%
+    mutate(model = map(model, replaced, replacement = new_terms))
+  x
 }
 
 

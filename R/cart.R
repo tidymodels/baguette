@@ -28,10 +28,8 @@ cart_bagger <- function(rs, opt, control, extract, ...) {
 
   rs <-
     rs %>%
-    mutate(
-      model = map(model, ~ partykit::as.party.rpart(.x$fit)),
-      .pred_form = map(model, tidypredict::tidypredict_fit)
-    )
+    replace_parsnip_terms() %>%
+    mutate(model = map(model, axe_cart))
 
   list(model = select_rs(rs), oob  = oob, imp = imps)
 }
@@ -110,4 +108,10 @@ cart_imp <- function(x) {
   x
 }
 
-
+axe_cart <- function(x) {
+  x$fit <- butcher::axe_data(x$fit)
+  x$fit <- butcher::axe_ctrl(x$fit)
+  x$fit <- butcher::axe_call(x$fit)
+  x$fit <- butcher::axe_env(x$fit)
+  x
+}

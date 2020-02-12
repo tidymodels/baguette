@@ -1,13 +1,11 @@
-models <- c("CART", "model_rules", "C5.0", "MARS")
+models <- c("CART", "model rules", "C5.0", "MARS")
 # TODO add two-class cost models
-# TODO Something different than "model_rules"? Cubist isn't a great idea since
-#      we don't allow neighbors or boosting.
 
 # We want to default some arguments for different models
 model_defaults <-
   list(
     CART = list(cp = 0, xval = 0, minsplit = 20, maxdepth = 30, model = TRUE),
-    "model_rules" = list(),
+    "model rules" = list(),
     "C5.0" = list(minCases = 2),
     MARS = list(pmethod = "none", nprune = NULL, degree = 2)
   )
@@ -24,7 +22,7 @@ model_args <-
              'minsplit', 'minbucket', 'cp',
              'maxcompete', 'maxsurrogate', 'usesurrogate', 'xval',
              'surrogatestyle', 'maxdepth'),
-    "model_rules" = c('unbiased', 'rules', 'extrapolation', 'sample'),
+    "model rules" = c('unbiased', 'rules', 'extrapolation', 'sample'),
     "C5.0" = c('rules', 'costs', 'subset', 'bands', 'winnow', 'noGlobalPruning',
                'CF', 'minCases', 'fuzzyThreshold', 'sample'),
     MARS = c('pmethod', 'trace', 'glm', 'degree', 'nprune', 'nfold', 'ncross',

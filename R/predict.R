@@ -15,7 +15,7 @@
 #' data(airquality)
 #'
 #' set.seed(7687)
-#' rule_fit <- bagger(Ozone ~ ., data = airquality, model = "model_rules", B = 5)
+#' rule_fit <- bagger(Ozone ~ ., data = airquality, model = "model rules", times = 5)
 #' predict(rule_fit, new_data = airquality[, -1])
 #' @export
 predict.bagger <- function(object, new_data, type = NULL, ...) {
@@ -23,18 +23,13 @@ predict.bagger <- function(object, new_data, type = NULL, ...) {
   new_data <- hardhat::forge(new_data, object$blueprint)$predictors
 
   if (type == "numeric") {
-    res <-
-      map_dfr(object$model_df$.pred_form, eval_num_form, new_data) %>%
-      group_by(.row) %>%
-      summarize_all(mean, na.rm = TRUE) %>%
-      ungroup() %>%
-      select(-.row)
-
+    res <- numeric_pred(object$model_df, new_data)
   } else {
+    lvl <- levels(object$blueprint$ptypes$outcomes[[1]])
     if (type == "class") {
-      res <- class_pred(object$model_df, new_data)
+      res <- class_pred(object$model_df, new_data, lvl)
     } else {
-      lvl <- levels(mod$blueprint$ptypes$outcomes[[1]])
+
       res <- classprob_pred(object$model_df, new_data, lvl)
     }
   }
@@ -42,8 +37,6 @@ predict.bagger <- function(object, new_data, type = NULL, ...) {
 }
 
 # ------------------------------------------------------------------------------
-# Note: These are temporary methods until we have a uniform interface via
-# `tidypredict`
 
 numeric_pred <- function(models, data) {
   n <- nrow(data)
@@ -81,21 +74,23 @@ cb_wrap <- function(x, dat) {
   tibble::tibble(.pred = predict(x, newdata = as.data.frame(dat)))
 }
 
-# TODO this should be driven from the probability predictions
-class_pred <- function(models, data) {
-  n <- nrow(data)
-  m <- nrow(models)
-  preds <-
-    purrr::map_df(models$model, predict, new_data = data, type = "class") %>%
-    dplyr::mutate(.row = rep(1:n, m)) %>%
-    dplyr::group_by(.row, .pred_class) %>%
-    dplyr::count() %>%
-    dplyr::arrange(.row, desc(n)) %>%
+class_pred <- function(models, data, lvl) {
+  classprob_pred(models, data, lvl) %>%
+    dplyr::mutate(.row = dplyr::row_number()) %>%
+    tidyr::pivot_longer(
+      cols = c(dplyr::starts_with(".pred")),
+      names_to = "class",
+      values_to = "prob"
+    ) %>%
     dplyr::group_by(.row) %>%
+    dplyr::arrange(desc(prob)) %>%
     dplyr::slice(1) %>%
+    dplyr::mutate(
+      .pred_class = gsub(".pred_", "", class, fixed = TRUE),
+      .pred_class = factor(.pred_class, levels = lvl)
+    ) %>%
     dplyr::ungroup() %>%
     dplyr::select(.pred_class)
-  preds
 }
 
 classprob_pred <- function(models, data, lvl) {

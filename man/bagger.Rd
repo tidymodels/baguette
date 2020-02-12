@@ -13,17 +13,49 @@ bagger(x, ...)
 
 \method{bagger}{default}(x, ...)
 
-\method{bagger}{data.frame}(x, y, model = "CART", B = 10L,
-  opt = NULL, control = bag_control(), extract = NULL, ...)
+\method{bagger}{data.frame}(
+  x,
+  y,
+  model = "CART",
+  times = 10L,
+  opt = NULL,
+  control = bag_control(),
+  extract = NULL,
+  ...
+)
 
-\method{bagger}{matrix}(x, y, model = "CART", B = 10L, opt = NULL,
-  control = bag_control(), extract = NULL, ...)
+\method{bagger}{matrix}(
+  x,
+  y,
+  model = "CART",
+  times = 10L,
+  opt = NULL,
+  control = bag_control(),
+  extract = NULL,
+  ...
+)
 
-\method{bagger}{formula}(formula, data, model = "CART", B = 10L,
-  opt = NULL, control = bag_control(), extract = NULL, ...)
+\method{bagger}{formula}(
+  formula,
+  data,
+  model = "CART",
+  times = 10L,
+  opt = NULL,
+  control = bag_control(),
+  extract = NULL,
+  ...
+)
 
-\method{bagger}{recipe}(x, data, model = "CART", B = 10L, opt = NULL,
-  control = bag_control(), extract = NULL, ...)
+\method{bagger}{recipe}(
+  x,
+  data,
+  model = "CART",
+  times = 10L,
+  opt = NULL,
+  control = bag_control(),
+  extract = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{A data frame, matrix, or recipe (depending on the method being used).}
@@ -34,10 +66,10 @@ bagger(x, ...)
 classes) should be represented as factors, not integers.}
 
 \item{model}{A single character value for the model being bagged. Possible
-values are "CART", "MARS", "C5.0" (classification only), and "model_rules"
+values are "CART", "MARS", "C5.0" (classification only), and "model rules"
 (regression only).}
 
-\item{B}{A single integer greater than 1 for the maximum number of bootstrap
+\item{times}{A single integer greater than 1 for the maximum number of bootstrap
 samples/ensemble members (some model fits might fail).}
 
 \item{opt}{A named list (or NULL) of arguments to pass to the underlying
@@ -108,20 +140,20 @@ ctrl <- bag_control(oob = perf, var_imp = TRUE)
 
 # ------------------------------------------------------------------------------
 
-# `B` is low to make the examples run faster
+# `times` is low to make the examples run faster
 
 set.seed(7687)
 mars_fit <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
-                   model = "MARS", B = 5, control = ctrl)
+                   model = "MARS", times = 5, control = ctrl)
 var_imp(mars_fit)
 
 set.seed(7687)
 cart_fit <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
-                   model = "CART", B = 5, control = ctrl)
+                   model = "CART", times = 5, control = ctrl)
 
 set.seed(7687)
 rule_fit <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
-                   model = "model_rules", B = 5, control = ctrl)
+                   model = "model rules", times = 5, control = ctrl)
 
 
 # ------------------------------------------------------------------------------
@@ -133,7 +165,7 @@ biomass_rec <-
   step_pca(all_predictors())
 
 set.seed(7687)
-cart_pca_fit <- bagger(biomass_rec, data = biomass_tr, model = "CART", B = 5,
+cart_pca_fit <- bagger(biomass_rec, data = biomass_tr, model = "CART", times = 5,
                        control = ctrl)
 
 cart_pca_fit
@@ -145,7 +177,7 @@ cart_pca_fit$model_df$.pred_form[[1]][[3]]
 
 # Using formulas
 set.seed(7687)
-rule_form<- bagger(HHV ~ ., data = biomass_tr, model = "model_rules", B = 5,
+rule_form<- bagger(HHV ~ ., data = biomass_tr, model = "model rules", times = 5,
                    control = ctrl)
 
 # ------------------------------------------------------------------------------
@@ -157,7 +189,7 @@ num_term_nodes <- function(x, ...) {
 
 set.seed(7687)
 with_extras <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
-                   model = "CART", B = 5, extract = num_term_nodes)
+                   model = "CART", times = 5, extract = num_term_nodes)
 
 dplyr::bind_rows(with_extras$model_df$extras)
 }

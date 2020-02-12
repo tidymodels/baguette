@@ -27,9 +27,20 @@ mars_bagger <- function(rs, opt, control, extract, ...) {
 
   oob <- compute_oob(rs, control$oob)
 
-  rs <- rs %>% mutate(.pred_form = map(model, tidypredict::tidypredict_fit))
+  rs <-
+    rs %>%
+    replace_parsnip_terms() %>%
+    mutate(model = map(model, axe_mars))
+
 
   list(model = select_rs(rs), oob  = oob, imp = imps)
+}
+
+axe_mars <- function(x) {
+  x$fit <- butcher::axe_data(x$fit)
+  x$fit <- butcher::axe_call(x$fit)
+  x$fit <- butcher::axe_fitted(x$fit)
+  x
 }
 
 make_mars_spec <- function(classif, opt) {

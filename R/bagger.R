@@ -13,9 +13,9 @@
 #' @param data A data frame containing the variables used in the formula or
 #'  recipe.
 #' @param model A single character value for the model being bagged. Possible
-#'  values are "CART", "MARS", "C5.0" (classification only), and "model_rules"
+#'  values are "CART", "MARS", "C5.0" (classification only), and "model rules"
 #'  (regression only).
-#' @param B A single integer greater than 1 for the maximum number of bootstrap
+#' @param times A single integer greater than 1 for the maximum number of bootstrap
 #'  samples/ensemble members (some model fits might fail).
 #' @param opt A named list (or NULL) of arguments to pass to the underlying
 #'  model function. A list of possible arguments per model are given in Details.
@@ -69,20 +69,20 @@
 #'
 #' # ------------------------------------------------------------------------------
 #'
-#' # `B` is low to make the examples run faster
+#' # `times` is low to make the examples run faster
 #'
 #' set.seed(7687)
 #' mars_fit <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
-#'                    model = "MARS", B = 5, control = ctrl)
+#'                    model = "MARS", times = 5, control = ctrl)
 #' var_imp(mars_fit)
 #'
 #' set.seed(7687)
 #' cart_fit <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
-#'                    model = "CART", B = 5, control = ctrl)
+#'                    model = "CART", times = 5, control = ctrl)
 #'
 #' set.seed(7687)
 #' rule_fit <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
-#'                    model = "model_rules", B = 5, control = ctrl)
+#'                    model = "model rules", times = 5, control = ctrl)
 #'
 #'
 #' # ------------------------------------------------------------------------------
@@ -94,7 +94,7 @@
 #'   step_pca(all_predictors())
 #'
 #' set.seed(7687)
-#' cart_pca_fit <- bagger(biomass_rec, data = biomass_tr, model = "CART", B = 5,
+#' cart_pca_fit <- bagger(biomass_rec, data = biomass_tr, model = "CART", times = 5,
 #'                        control = ctrl)
 #'
 #' cart_pca_fit
@@ -106,7 +106,7 @@
 #'
 #' # Using formulas
 #' set.seed(7687)
-#' rule_form<- bagger(HHV ~ ., data = biomass_tr, model = "model_rules", B = 5,
+#' rule_form<- bagger(HHV ~ ., data = biomass_tr, model = "model rules", times = 5,
 #'                    control = ctrl)
 #'
 #' # ------------------------------------------------------------------------------
@@ -118,7 +118,7 @@
 #'
 #' set.seed(7687)
 #' with_extras <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
-#'                    model = "CART", B = 5, extract = num_term_nodes)
+#'                    model = "CART", times = 5, extract = num_term_nodes)
 #'
 #' dplyr::bind_rows(with_extras$model_df$extras)
 #' @export
@@ -140,17 +140,17 @@ bagger.data.frame <-
   function(x,
            y,
            model = "CART",
-           B = 10L,
+           times = 10L,
            opt = NULL,
            control = bag_control(),
            extract = NULL,
            ...) {
-    B <- integer_B(B)
+    times <- integer_B(times)
     seed <- sample.int(10^5, 1)
-    validate_args(model, B, opt, control, extract)
+    validate_args(model, times, opt, control, extract)
 
     processed <- hardhat::mold(x, y)
-    bagger_bridge(processed, model, seed, B, opt, control, extract, ...)
+    bagger_bridge(processed, model, seed, times, opt, control, extract, ...)
   }
 
 # XY method - matrix
@@ -161,17 +161,17 @@ bagger.matrix <-
   function(x,
            y,
            model = "CART",
-           B = 10L,
+           times = 10L,
            opt = NULL,
            control = bag_control(),
            extract = NULL,
            ...) {
-    B <- integer_B(B)
+    times <- integer_B(times)
     seed <- sample.int(10^5, 1)
-    validate_args(model, B, opt, control, extract)
+    validate_args(model, times, opt, control, extract)
 
     processed <- hardhat::mold(x, y)
-    bagger_bridge(processed, model, seed, B, opt, control, extract, ...)
+    bagger_bridge(processed, model, seed, times, opt, control, extract, ...)
   }
 
 # Formula method
@@ -182,18 +182,18 @@ bagger.formula <-
   function(formula,
            data,
            model = "CART",
-           B = 10L,
+           times = 10L,
            opt = NULL,
            control = bag_control(),
            extract = NULL,
            ...) {
-    B <- integer_B(B)
+    times <- integer_B(times)
     seed <- sample.int(10^5, 1)
-    validate_args(model, B, opt, control, extract)
+    validate_args(model, times, opt, control, extract)
 
     bp <- hardhat::default_formula_blueprint(indicators = FALSE)
     processed <- hardhat::mold(formula, data, blueprint = bp)
-    bagger_bridge(processed, model, seed, B, opt, control, extract, ...)
+    bagger_bridge(processed, model, seed, times, opt, control, extract, ...)
   }
 
 # Recipe method
@@ -204,17 +204,17 @@ bagger.recipe <-
   function(x,
            data,
            model = "CART",
-           B = 10L,
+           times = 10L,
            opt = NULL,
            control = bag_control(),
            extract = NULL,
            ...) {
-    B <- integer_B(B)
+    times <- integer_B(times)
     seed <- sample.int(10^5, 1)
-    validate_args(model, B, opt, control, extract)
+    validate_args(model, times, opt, control, extract)
 
     processed <- hardhat::mold(x, data)
-    bagger_bridge(processed, model, seed, B, opt, control, extract, ...)
+    bagger_bridge(processed, model, seed, times, opt, control, extract, ...)
   }
 
 # ------------------------------------------------------------------------------

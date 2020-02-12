@@ -28,10 +28,8 @@ c5_bagger <- function(rs, opt, control, extract, ...) {
 
   rs <-
     rs %>%
-    mutate(
-      model = map(model, ~ C50::as.party.C5.0(.x$fit)),
-      .pred_form = map(model, tidypredict::tidypredict_fit)
-    )
+    replace_parsnip_terms() %>%
+    mutate(model = map(model, axe_C5))
 
   list(model = select_rs(rs), oob  = oob, imp = imps)
 }
@@ -100,4 +98,12 @@ c5_imp <- function(x) {
   res
 }
 
+
+axe_C5 <- function(x) {
+  x$fit <- butcher::axe_data(x$fit)
+  x$fit <- butcher::axe_ctrl(x$fit)
+  x$fit <- butcher::axe_call(x$fit)
+  x$fit <- butcher::axe_fitted(x$fit)
+  x
+}
 

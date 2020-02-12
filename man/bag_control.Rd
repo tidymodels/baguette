@@ -4,8 +4,12 @@
 \alias{bag_control}
 \title{Controlling the bagging process}
 \usage{
-bag_control(var_imp = TRUE, oob = NULL, allow_parallel = TRUE,
-  sampling = "none")
+bag_control(
+  var_imp = TRUE,
+  oob = NULL,
+  allow_parallel = TRUE,
+  sampling = "none"
+)
 }
 \arguments{
 \item{var_imp}{A single logical: should variable importance scores be calculated?}

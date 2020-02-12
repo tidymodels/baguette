@@ -1,4 +1,4 @@
-validate_args <- function(model, B, opt, control, extract) {
+validate_args <- function(model, times, opt, control, extract) {
   if (!is.character(model) || length(model) != 1) {
     stop("`model` should be a single character value.", call. = FALSE)
   }
@@ -9,11 +9,11 @@ validate_args <- function(model, B, opt, control, extract) {
 
   # ----------------------------------------------------------------------------
 
-  if (!is.integer(B)) {
-    stop("`B` must be an integer > 1.", call. = FALSE)
+  if (!is.integer(times)) {
+    stop("`times` must be an integer > 1.", call. = FALSE)
   }
-  if (B < 1) {
-    stop("`B` must be an integer > 1.", call. = FALSE)
+  if (times < 1) {
+    stop("`times` must be an integer > 1.", call. = FALSE)
   }
 
   # ----------------------------------------------------------------------------
@@ -56,7 +56,7 @@ integer_B <- function(B) {
 # ------------------------------------------------------------------------------
 
 validate_y_type <- function(model, outcomes) {
-  hardhat::validate_outcomes_is_univariate(outcomes)
+  hardhat::validate_outcomes_are_univariate(outcomes)
 
   if (model == "C5.0") {
     hardhat::validate_outcomes_are_factors(outcomes)

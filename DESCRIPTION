@@ -15,12 +15,14 @@ License: GPL-3
 Suggests: 
     testthat,
     AmesHousing,
-    recipes
+    recipes,
+    modeldata
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 Imports: 
     hardhat,
+    butcher,
     rpart,
     C50,
     Cubist,
@@ -30,15 +32,14 @@ Imports:
     purrr,
     furrr,
     tibble,
+    tidyr,
     rlang,
     earth,
     magrittr,
     parsnip,
     utils,
     yardstick,
-    partykit,
-    tidypredict,
     generics
 URL: https://github.com/topepo/baguette
 BugReports: https://github.com/topepo/baguette/issues
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2.9000

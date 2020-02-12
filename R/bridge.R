@@ -1,7 +1,7 @@
 
 
-bagger_bridge <- function(processed, model, seed, B, opt, control, extract, ...) {
-  validate_outcomes_is_univariate(processed$outcomes)
+bagger_bridge <- function(processed, model, seed, times, opt, control, extract, ...) {
+  validate_outcomes_are_univariate(processed$outcomes)
   if (model %in% c("C5.0")) {
     validate_outcomes_are_factors(processed$outcomes)
   }
@@ -10,8 +10,8 @@ bagger_bridge <- function(processed, model, seed, B, opt, control, extract, ...)
   dat$.outcome <- processed$outcomes[[1]]
 
   set.seed(seed)
-  rs <- rsample::bootstraps(dat, times = B) %>%
-    dplyr::mutate(fit_seed = sample.int(10^5, B))
+  rs <- rsample::bootstraps(dat, times = times) %>%
+    dplyr::mutate(fit_seed = sample.int(10^5, times))
 
   res <- switch(
     model,
