@@ -3,6 +3,8 @@
 #' @import hardhat
 #'
 #' @importFrom parsnip set_engine fit fit_xy fit_control mars decision_tree
+#' @importFrom parsnip set_new_model multi_predict update_dot_check show_fit
+#' @importFrom parsnip new_model_spec null_value update_main_parameters
 #' @importFrom utils globalVariables
 #' @importFrom earth earth evimp
 #' @importFrom rsample analysis bootstraps assessment
@@ -12,7 +14,6 @@
 #' @importFrom stats setNames sd predict complete.cases
 #' @importFrom C50 C5.0 C5.0Control C5imp as.party.C5.0
 #' @importFrom rpart rpart
-#' @importFrom Cubist cubist cubistControl
 #' @importFrom withr with_seed
 
 # ------------------------------------------------------------------------------
@@ -38,3 +39,14 @@ utils::globalVariables(
     "sds"
   )
 )
+
+# ------------------------------------------------------------------------------
+
+# The functions below define the model information. These access the model
+# environment inside of parsnip so they have to be executed once parsnip has
+# been loaded.
+
+.onLoad <- function(libname, pkgname) {
+  # This defines model functions in the parsnip model database
+  make_bag_tree()
+}

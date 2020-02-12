@@ -32,7 +32,7 @@
 #' Any arbitrary item can be saved from the model object (including the model
 #'  object itself) using the `extract` argument, which should be a function with
 #'  arguments `x`, and `...`. The results of this function are saved into a list
-#'  column called `extras` (see the sample below).
+#'  column called `extras` (see the example below).
 #'
 #' Variable importance scores are calculated using implementations in each
 #'  package. When requested, the results are in a tibble with column names
@@ -42,7 +42,7 @@
 #' The models can be fit in parallel using the \pkg{future} package. The
 #'  enable parallelism, use the `future::plan()` function to declare _how_ the
 #'  computations should be distributed. Note that this will almost certainly
-#'  multiple the memory requirements to fit the models.
+#'  multiply the memory requirements required to fit the models.
 #' @examples
 #' library(recipes)
 #' library(dplyr)
@@ -117,7 +117,7 @@
 #'
 #' set.seed(7687)
 #' with_extras <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
-#'                    model = "CART", times = 5, extract = num_term_nodes)
+#'                       model = "CART", times = 5, extract = num_term_nodes)
 #'
 #' dplyr::bind_rows(with_extras$model_df$extras)
 #' @export

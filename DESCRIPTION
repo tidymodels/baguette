@@ -11,7 +11,9 @@ Description: Tree- and rule-based models can be bagged using
     this package and their predictions equations are stored 
     in an efficient format to reduce the model objects size 
     and speed. 
-License: GPL-3
+License: MIT
+Depends: 
+    parsnip (>= 0.0.5)
 Suggests: 
     testthat,
     AmesHousing,
@@ -36,7 +38,6 @@ Imports:
     rlang,
     earth,
     magrittr,
-    parsnip,
     utils,
     yardstick,
     generics
