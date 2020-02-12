@@ -25,7 +25,6 @@ Imports:
     butcher,
     rpart,
     C50,
-    Cubist,
     withr,
     rsample,
     dplyr,

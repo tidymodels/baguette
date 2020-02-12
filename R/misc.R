@@ -49,30 +49,9 @@ oob_parsnip <- function(model, split, met) {
   res
 }
 
-oob_cubist <- function(model, split, met) {
-  dat <- rsample::assessment(split)
-  y <- dat$.outcome
-  dat <- dat[, names(dat) != ".outcome", drop = FALSE]
-  pred <-
-    tibble(.pred = predict(model, dat)) %>%
-    dplyr::mutate(.obs = y)
-
-  res <- try(met(pred, .obs, .pred), silent = TRUE)
-
-  if (inherits(res, "try-error")) {
-    res <- failed_stats
-  }
-  res
-}
-
-
 compute_oob <- function(rs, oob) {
 
-  if (inherits(rs$model[[1]], "cubist")) {
-    .fn <- oob_cubist
-  } else {
-    .fn <- oob_parsnip
-  }
+  .fn <- oob_parsnip
 
   if (!is.null(oob)) {
     oob <-

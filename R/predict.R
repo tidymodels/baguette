@@ -15,8 +15,8 @@
 #' data(airquality)
 #'
 #' set.seed(7687)
-#' rule_fit <- bagger(Ozone ~ ., data = airquality, model = "model rules", times = 5)
-#' predict(rule_fit, new_data = airquality[, -1])
+#' mars_bag <- bagger(Ozone ~ ., data = airquality, model = "MARS", times = 5)
+#' predict(mars_bag, new_data = airquality[, -1])
 #' @export
 predict.bagger <- function(object, new_data, type = NULL, ...) {
   type <- check_type(object, type)
@@ -54,26 +54,6 @@ numeric_pred <- function(models, data) {
   preds
 }
 
-cubist_pred <- function(models, data) {
-  n <- nrow(data)
-  m <- nrow(models)
-  preds <-
-    purrr::map_df(models$model, cb_wrap, data) %>%
-    dplyr::mutate(.row = rep(1:n, m)) %>%
-    dplyr::group_by(.row) %>%
-    dplyr::summarize(
-      # .n = sum(!is.na(.pred)),
-      .pred = mean(.pred, na.rm = TRUE)
-    ) %>%
-    dplyr::arrange(.row) %>%
-    dplyr::select(.pred)
-  preds
-}
-
-cb_wrap <- function(x, dat) {
-  tibble::tibble(.pred = predict(x, newdata = as.data.frame(dat)))
-}
-
 class_pred <- function(models, data, lvl) {
   classprob_pred(models, data, lvl) %>%
     dplyr::mutate(.row = dplyr::row_number()) %>%
@@ -101,7 +81,7 @@ classprob_pred <- function(models, data, lvl) {
     purrr::map_df(models$model, predict, new_data = data, type = "prob") %>%
     dplyr::mutate(.row = rep(1:n, m)) %>%
     dplyr::group_by(.row) %>%
-    ## TODO normalize these
+    ## TODO normalize these; use pivot longer
     dplyr::summarize_at(prob_cols, mean, na.rm = TRUE) %>%
     dplyr::arrange(.row) %>%
     dplyr::select(-.row)
