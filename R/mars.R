@@ -1,8 +1,8 @@
 
-mars_bagger <- function(rs, opt, control, extract, ...) {
+mars_bagger <- function(rs, control, extract, ...) {
 
   is_classif <- is.factor(rs$splits[[1]]$data$.outcome)
-  mod_spec <- make_mars_spec(is_classif, opt)
+  mod_spec <- make_mars_spec(is_classif, ...)
 
   iter <- get_iterator(control)
 
@@ -43,7 +43,8 @@ axe_mars <- function(x) {
   x
 }
 
-make_mars_spec <- function(classif, opt) {
+make_mars_spec <- function(classif, ...) {
+  opt <- list(...)
   opts <- join_args(model_defaults[["MARS"]], opt)
   if (classif) {
     mars_md <- "classification"

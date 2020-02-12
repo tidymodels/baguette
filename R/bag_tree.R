@@ -43,7 +43,7 @@
 #' @importFrom purrr map_lgl
 #' @seealso [[fit()]
 #' @examples
-#' bag_tree(tree_depth = 5) %>% set_mode("classification")
+#' # bag_tree(tree_depth = 5) %>% set_mode("classification")
 #' @export
 
 bag_tree <-
@@ -68,11 +68,11 @@ bag_tree <-
 #' @export
 print.bag_tree <- function(x, ...) {
   cat("Bagged Decision Tree Model Specification (", x$mode, ")\n\n", sep = "")
-  model_printer(x, ...)
+  parsnip::model_printer(x, ...)
 
   if (!is.null(x$method$fit$args)) {
     cat("Model fit template:\n")
-    print(show_call(x))
+    print(parsnip::show_call(x))
   }
   invisible(x)
 }
@@ -81,11 +81,18 @@ print.bag_tree <- function(x, ...) {
 
 #' @export
 #' @param object A bagged tree model specification.
+#' @param parameters A 1-row tibble or named list with _main_
+#'  parameters to update. If the individual arguments are used,
+#'  these will supersede the values in `parameters`. Also, using
+#'  engine arguments in this object will result in an error.
+#' @param ... Not used for `update()`.
+#' @param fresh A logical for whether the arguments should be
+#'  modified in-place of or replaced wholesale.
 #' @examples
-#' model <- bag_tree(cost_complexity = 10, min_n = 3)
-#' model
-#' update(model, cost_complexity = 1)
-#' update(model, cost_complexity = 1, fresh = TRUE)
+#' #model <- bag_tree(cost_complexity = 10, min_n = 3)
+#' #model
+#' #update(model, cost_complexity = 1)
+#' #update(model, cost_complexity = 1, fresh = TRUE)
 #' @method update bag_tree
 #' @rdname bag_tree
 #' @export
@@ -97,7 +104,7 @@ update.bag_tree <-
     update_dot_check(...)
 
     if (!is.null(parameters)) {
-      parameters <- check_final_param(parameters)
+      parameters <- parsnip::check_final_param(parameters)
     }
     args <- list(
       cost_complexity   = enquo(cost_complexity),

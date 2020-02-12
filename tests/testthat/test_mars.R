@@ -19,7 +19,7 @@ test_that('check mars opt', {
       mpg ~ .,
       data = mtcars,
       model = "MARS",
-      opt = list(pmethod = "backward"),
+      pmethod = "backward",
       control = bag_control(var_imp = FALSE),
       extract = check_pruning
     )
@@ -36,7 +36,8 @@ test_that('check mars opt', {
       mpg ~ .,
       data = mtcars,
       model = "MARS",
-      opt = list(nfold = 5, pmethod = "backward"),
+      nfold = 5,
+      pmethod = "backward",
       control = bag_control(var_imp = TRUE),
       extract = check_folds
     )

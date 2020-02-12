@@ -6,18 +6,18 @@
 # nocov
 
 make_bag_tree <- function() {
-  set_new_model("bag_tree")
+  parsnip::set_new_model("bag_tree")
 
-  set_model_mode("bag_tree", "classification")
-  set_model_mode("bag_tree", "regression")
+  parsnip::set_model_mode("bag_tree", "classification")
+  parsnip::set_model_mode("bag_tree", "regression")
 
   # ----------------------------------------------------------------------------
 
-  set_model_engine("bag_tree", "classification", "rpart")
-  set_model_engine("bag_tree", "regression", "rpart")
-  set_dependency("bag_tree", "rpart", "rpart")
+  parsnip::set_model_engine("bag_tree", "classification", "rpart")
+  parsnip::set_model_engine("bag_tree", "regression", "rpart")
+  parsnip::set_dependency("bag_tree", "rpart", "rpart")
 
-  set_model_arg(
+  parsnip::set_model_arg(
     model = "bag_tree",
     eng = "rpart",
     parsnip = "tree_depth",
@@ -26,7 +26,7 @@ make_bag_tree <- function() {
     has_submodel = FALSE
   )
 
-  set_model_arg(
+  parsnip::set_model_arg(
     model = "bag_tree",
     eng = "rpart",
     parsnip = "min_n",
@@ -35,7 +35,7 @@ make_bag_tree <- function() {
     has_submodel = FALSE
   )
 
-  set_model_arg(
+  parsnip::set_model_arg(
     model = "bag_tree",
     eng = "rpart",
     parsnip = "cost_complexity",
@@ -44,7 +44,7 @@ make_bag_tree <- function() {
     has_submodel = FALSE
   )
 
-  set_fit(
+  parsnip::set_fit(
     model = "bag_tree",
     eng = "rpart",
     mode = "regression",
@@ -56,7 +56,7 @@ make_bag_tree <- function() {
     )
   )
 
-  set_fit(
+  parsnip::set_fit(
     model = "bag_tree",
     eng = "rpart",
     mode = "classification",
@@ -68,7 +68,7 @@ make_bag_tree <- function() {
     )
   )
 
-  set_pred(
+  parsnip::set_pred(
     model = "bag_tree",
     eng = "rpart",
     mode = "regression",
@@ -81,7 +81,7 @@ make_bag_tree <- function() {
     )
   )
 
-  set_pred(
+  parsnip::set_pred(
     model = "bag_tree",
     eng = "rpart",
     mode = "classification",
@@ -99,7 +99,7 @@ make_bag_tree <- function() {
     )
   )
 
-  set_pred(
+  parsnip::set_pred(
     model = "bag_tree",
     eng = "rpart",
     mode = "classification",
@@ -114,10 +114,10 @@ make_bag_tree <- function() {
 
   # ------------------------------------------------------------------------------
 
-  set_model_engine("bag_tree", "classification", "C5.0")
-  set_dependency("bag_tree", "C5.0", "C50")
+  parsnip::set_model_engine("bag_tree", "classification", "C5.0")
+  parsnip::set_dependency("bag_tree", "C5.0", "C50")
 
-  set_model_arg(
+  parsnip::set_model_arg(
     model = "bag_tree",
     eng = "C5.0",
     parsnip = "min_n",
@@ -126,7 +126,7 @@ make_bag_tree <- function() {
     has_submodel = FALSE
   )
 
-  set_fit(
+  parsnip::set_fit(
     model = "bag_tree",
     eng = "C5.0",
     mode = "classification",
@@ -138,7 +138,7 @@ make_bag_tree <- function() {
     )
   )
 
-  set_pred(
+  parsnip::set_pred(
     model = "bag_tree",
     eng = "C5.0",
     mode = "classification",
@@ -151,7 +151,7 @@ make_bag_tree <- function() {
     )
   )
 
-  set_pred(
+  parsnip::set_pred(
     model = "bag_tree",
     eng = "C5.0",
     mode = "classification",

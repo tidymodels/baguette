@@ -1,7 +1,7 @@
 
-cart_bagger <- function(rs, opt, control, extract, ...) {
+cart_bagger <- function(rs, control, extract, ...) {
   is_classif <- is.factor(rs$splits[[1]]$data$.outcome)
-  mod_spec <- make_cart_spec(is_classif, opt)
+  mod_spec <- make_cart_spec(is_classif, ...)
 
   iter <- get_iterator(control)
 
@@ -34,7 +34,8 @@ cart_bagger <- function(rs, opt, control, extract, ...) {
   list(model = select_rs(rs), oob  = oob, imp = imps)
 }
 
-make_cart_spec <- function(classif, opt) {
+make_cart_spec <- function(classif, ...) {
+  opt <- list(...)
   opts <- join_args(model_defaults[["CART"]], opt)
   if (classif) {
     cart_md <- "classification"

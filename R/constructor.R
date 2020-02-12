@@ -1,13 +1,11 @@
+# TODO add ... in here somewhere
 
-new_bagger <- function(model_df, imp, oob, control, opt, model, blueprint) {
+new_bagger <- function(model_df, imp, oob, control, model, blueprint) {
 
   if (!is_tibble(model_df)) {
     stop("`model_df` should be a tibble.", call. = FALSE)
   }
 
-  if (!is.list(opt) & !is.null(opt)) {
-    stop("`opt` should be a list or NULL", call. = FALSE)
-  }
   if (!is_tibble(oob) & !is.null(oob)) {
     stop("`oob` should be a tibble.", call. = FALSE)
   }
@@ -34,7 +32,6 @@ new_bagger <- function(model_df, imp, oob, control, opt, model, blueprint) {
     model_df = model_df,
     control = control,
     imp = imp,
-    opt = opt,
     oob = oob,
     model = c(model[1], mod_mode),
     blueprint = blueprint,

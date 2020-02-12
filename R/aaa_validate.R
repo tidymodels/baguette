@@ -1,4 +1,4 @@
-validate_args <- function(model, times, opt, control, extract) {
+validate_args <- function(model, times, control, extract) {
   if (!is.character(model) || length(model) != 1) {
     stop("`model` should be a single character value.", call. = FALSE)
   }
@@ -17,10 +17,6 @@ validate_args <- function(model, times, opt, control, extract) {
   }
 
   # ----------------------------------------------------------------------------
-
-  if (!is.null(opt) & !is.list(opt)) {
-    stop("`opt` should be NULL or a named list.", call. = FALSE)
-  }
 
   # TODO test for names, check args vs list
 

@@ -1,7 +1,7 @@
 
-c5_bagger <- function(rs, opt, control, extract, ...) {
+c5_bagger <- function(rs, control, extract, ...) {
 
-  mod_spec <- make_c5_spec(opt)
+  mod_spec <- make_c5_spec(...)
 
   iter <- get_iterator(control)
 
@@ -34,7 +34,8 @@ c5_bagger <- function(rs, opt, control, extract, ...) {
   list(model = select_rs(rs), oob  = oob, imp = imps)
 }
 
-make_c5_spec <- function(opt) {
+make_c5_spec <- function(...) {
+  opt <- list(...)
   opts <- join_args(model_defaults[["C5.0"]], opt)
   c5_spec <-
     parsnip::decision_tree(

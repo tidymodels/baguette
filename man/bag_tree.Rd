@@ -31,6 +31,16 @@ parameter (a.k.a. \code{Cp}) used by CART models (\code{rpart} only).}
 in a node that are required for the node to be split further.}
 
 \item{object}{A bagged tree model specification.}
+
+\item{parameters}{A 1-row tibble or named list with \emph{main}
+parameters to update. If the individual arguments are used,
+these will supersede the values in \code{parameters}. Also, using
+engine arguments in this object will result in an error.}
+
+\item{fresh}{A logical for whether the arguments should be
+modified in-place of or replaced wholesale.}
+
+\item{...}{Not used for \code{update()}.}
 }
 \description{
 \code{bag_tree()} is a way to generate a \emph{specification} of a model
@@ -65,11 +75,11 @@ greater than 30 \code{rpart} will give nonsense results on 32-bit
 machines.
 }
 \examples{
-bag_tree(tree_depth = 5) \%>\% set_mode("classification")
-model <- bag_tree(cost_complexity = 10, min_n = 3)
-model
-update(model, cost_complexity = 1)
-update(model, cost_complexity = 1, fresh = TRUE)
+# bag_tree(tree_depth = 5) \%>\% set_mode("classification")
+#model <- bag_tree(cost_complexity = 10, min_n = 3)
+#model
+#update(model, cost_complexity = 1)
+#update(model, cost_complexity = 1, fresh = TRUE)
 }
 \seealso{
 [\code{\link[=fit]{fit()}}

@@ -29,7 +29,7 @@ test_that('check CART opt', {
       Sepal.Width ~ .,
       data = iris,
       model = "CART",
-      opt = list(method = "anova"),
+      method = "anova",
       extract = get_method
     )
   mod_2 <-
@@ -37,7 +37,7 @@ test_that('check CART opt', {
       Sepal.Width ~ .,
       data = iris,
       model = "CART",
-      opt = list(maxdepth = 1),
+      maxdepth = 1,
       extract = num_leaves
     )
   lmat <- matrix(c(0, 1, 2, 0), byrow = TRUE, nrow = 2)
@@ -46,7 +46,7 @@ test_that('check CART opt', {
       Class ~ .,
       data = two_class_dat,
       model = "CART",
-      opt = list(parms = list(loss = lmat)),
+      parms = list(loss = lmat),
       control = bag_control(var_imp = TRUE),
       extract = get_loss
     )
