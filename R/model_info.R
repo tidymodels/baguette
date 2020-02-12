@@ -1,4 +1,4 @@
-models <- c("CART", "model rules", "C5.0", "MARS")
+models <- c("CART", "C5.0", "MARS")
 # TODO add two-class cost models
 
 # We want to default some arguments for different models

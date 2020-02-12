@@ -27,11 +27,6 @@
 #'  model (after pruning), it has an importance value of zero. `baguette` wraps
 #'  `earth::evimp()`.
 #'
-#' _Model Rules_: The underlying Cubist model calculates the occurrence of
-#'  predictors inside the model rule definitions as well as the linear
-#'  regression models contained within each rule. `baguette` wraps
-#'  `Cubist::summary.cubist()`.
-#'
 #' _C5.0_: `C5.0` measures predictor importance by determining the percentage
 #'  of training set samples that fall into all the terminal nodes after the
 #'  split. For example, the predictor in the first split automatically has an

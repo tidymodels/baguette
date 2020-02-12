@@ -92,13 +92,6 @@ test_that('bad values', {
 
 # ------------------------------------------------------------------------------
 
-test_that('wrong y for cubist', {
-  expect_error(
-    bagger(Species ~ ., data = iris, times = 2L, model = "model rules"),
-    regexp = "cubist models require a numeric outcome"
-  )
-})
-
 test_that('wrong y for C5', {
   expect_error(
     bagger(Sepal.Length ~ ., data = iris, times = 2L, model = "C5.0"),

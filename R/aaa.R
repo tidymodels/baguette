@@ -12,7 +12,6 @@
 #' @importFrom stats setNames sd predict complete.cases
 #' @importFrom C50 C5.0 C5.0Control C5imp as.party.C5.0
 #' @importFrom rpart rpart
-#' @importFrom Cubist cubist cubistControl
 #' @importFrom withr with_seed
 
 # ------------------------------------------------------------------------------

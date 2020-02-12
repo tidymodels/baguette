@@ -28,6 +28,6 @@ for each sample in \code{new_data}.
 data(airquality)
 
 set.seed(7687)
-rule_fit <- bagger(Ozone ~ ., data = airquality, model = "model rules", times = 5)
-predict(rule_fit, new_data = airquality[, -1])
+mars_bag <- bagger(Ozone ~ ., data = airquality, model = "MARS", times = 5)
+predict(mars_bag, new_data = airquality[, -1])
 }
