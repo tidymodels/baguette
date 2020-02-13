@@ -86,8 +86,8 @@ mars_fit  <- function(split, spec, .control = bag_control()) {
 
 mars_imp <- function(x) {
   imps <- earth::evimp(x$fit)
-  imps <- imps[, "gcv"]
-  x <- tibble::tibble(predictor = names(imps), importance = unname(imps))
+  imps <- imps[, "gcv", drop = FALSE]
+  x <- tibble::tibble(predictor = rownames(imps), importance = unname(imps[, "gcv"]))
   x <- x[x$importance > 0,]
   x
 }
