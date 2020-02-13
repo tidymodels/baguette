@@ -37,7 +37,8 @@ utils::globalVariables(
     "value",
     ".outcome",
     "prob",
-    "sds"
+    "sds",
+    ".estimator"
   )
 )
 

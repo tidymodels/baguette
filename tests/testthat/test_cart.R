@@ -70,7 +70,7 @@ test_that('check CART OOB', {
       .control = bag_control(oob = ms_1)
     )
   expect_true(all(mod_1$oob$.metric == "rsq"))
-  expect_true(all(!is.na(mod_1$oob$mean)))
+  expect_true(all(!is.na(mod_1$oob$.estimate)))
 
   ms_2 <- metric_set(accuracy, roc_auc)
   mod_2 <-
@@ -82,7 +82,7 @@ test_that('check CART OOB', {
     )
   expect_true(sum(mod_2$oob$.metric == "accuracy") == 1)
   expect_true(sum(mod_2$oob$.metric == "roc_auc") == 1)
-  expect_true(all(!is.na(mod_2$oob$mean)))
+  expect_true(all(!is.na(mod_2$oob$.estimate)))
 
   mod_3 <-
     bagger(
@@ -92,7 +92,7 @@ test_that('check CART OOB', {
       .control = bag_control(oob = ms_2)
     )
   expect_true(all(mod_3$oob$.metric == "failed"))
-  expect_true(all(is.na(mod_3$oob$mean)))
+  expect_true(all(is.na(mod_3$oob$.estimate)))
 
   mod_4 <-
     bagger(
@@ -103,5 +103,5 @@ test_that('check CART OOB', {
     )
   expect_true(sum(mod_4$oob$.metric == "accuracy") == 1)
   expect_true(sum(mod_4$oob$.metric == "roc_auc") == 1)
-  expect_true(all(!is.na(mod_4$oob$mean)))
+  expect_true(all(!is.na(mod_4$oob$.estimate)))
 })

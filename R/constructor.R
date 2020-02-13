@@ -11,7 +11,7 @@ new_bagger <- function(model_df, imp, oob, .control, base_model, blueprint) {
   }
 
   if (!is.null(oob)) {
-    exp_nm <- c(".metric", "mean", "stdev", "n")
+    exp_nm <- c(".metric", ".estimator", ".estimate")
     if (length(setdiff(exp_nm, names(oob))) > 0 |
         length(setdiff(names(oob), exp_nm)) > 0 ) {
       stop(

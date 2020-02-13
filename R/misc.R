@@ -8,7 +8,7 @@ join_args <- function(default, others) {
 
 # ------------------------------------------------------------------------------
 
-failed_stats <- tibble(.metric = "failed", .estiamtor = "none", .estimate = NA_real_)
+failed_stats <- tibble(.metric = "failed", .estimator = "none", .estimate = NA_real_)
 
 oob_parsnip <- function(model, split, met) {
   dat <- rsample::assessment(split)
@@ -56,12 +56,9 @@ compute_oob <- function(rs, oob) {
   if (!is.null(oob)) {
     oob <-
       purrr::map2_dfr(rs$model, rs$splits, .fn, met = oob) %>%
-      dplyr::group_by(.metric) %>%
-      dplyr::summarize(
-        mean = mean(.estimate, na.rm = TRUE),
-        stdev = sd(.estimate, na.rm = TRUE),
-        n = sum(!is.na(.estimate))
-      )
+      dplyr::group_by(.metric, .estimator) %>%
+      dplyr::summarize(.estimate = mean(.estimate, na.rm = TRUE)) %>%
+      mutate(.estimator = "out-of-bag")
   } else {
     oob <- NULL
   }
