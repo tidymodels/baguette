@@ -51,8 +51,8 @@ make_bag_tree <- function() {
     value = list(
       interface = "formula",
       protect = c("formula", "data", "weights"),
-      func = c(pkg = "rpart", fun = "rpart"),
-      defaults = list()
+      func = c(pkg = "baguette", fun = "bagger"),
+      defaults = list(base_model = "CART")
     )
   )
 
@@ -63,8 +63,8 @@ make_bag_tree <- function() {
     value = list(
       interface = "formula",
       protect = c("formula", "data", "weights"),
-      func = c(pkg = "rpart", fun = "rpart"),
-      defaults = list()
+      func = c(pkg = "baguette", fun = "bagger"),
+      defaults = list(base_model = "CART")
     )
   )
 
@@ -77,7 +77,7 @@ make_bag_tree <- function() {
       pre = NULL,
       post = NULL,
       func = c(fun = "predict"),
-      args = list(object = quote(object$fit), newdata = quote(new_data))
+      args = list(object = quote(object$fit), new_data = quote(new_data))
     )
   )
 
@@ -88,12 +88,12 @@ make_bag_tree <- function() {
     type = "class",
     value = list(
       pre = NULL,
-      post = NULL,
+      post = fix_column_names,
       func = c(pkg = NULL, fun = "predict"),
       args =
         list(
           object = quote(object$fit),
-          newdata = quote(new_data),
+          new_data = quote(new_data),
           type = "class"
         )
     )
@@ -106,9 +106,9 @@ make_bag_tree <- function() {
     type = "prob",
     value = list(
       pre = NULL,
-      post = NULL,
+      post = fix_column_names,
       func = c(pkg = NULL, fun = "predict"),
-      args = list(object = quote(object$fit), newdata = quote(new_data))
+      args = list(object = quote(object$fit), new_data = quote(new_data), type = "prob")
     )
   )
 

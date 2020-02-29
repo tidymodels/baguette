@@ -162,4 +162,17 @@ replace_parsnip_terms <- function(x) {
   x
 }
 
+# ------------------------------------------------------------------------------
+
+# fix column names (see https://github.com/tidymodels/parsnip/issues/263)
+
+fix_column_names <- function(result, object) {
+  # print("# ------------------------------------------------------------------------------\n")
+  # print(head(result))
+  nms <- colnames(result)
+  nms <- gsub(".pred_", "", nms, fixed = TRUE)
+  result <- setNames(result, nms)
+  # print(head(result))
+  result
+}
 

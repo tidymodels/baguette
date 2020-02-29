@@ -50,5 +50,5 @@ utils::globalVariables(
 
 .onLoad <- function(libname, pkgname) {
   # This defines model functions in the parsnip model database
-  # make_bag_tree()
+  make_bag_tree()
 }

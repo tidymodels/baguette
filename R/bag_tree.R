@@ -142,17 +142,3 @@ check_args.bag_tree <- function(object) {
     stop("C5.0 is classification only.", call. = FALSE)
   invisible(object)
 }
-
-# ------------------------------------------------------------------------------
-
-tree_wrapper <-
-  function(x,
-           y,
-           cost_complexity = 0,
-           tree_depth = NULL,
-           min_n = 2,
-           ...) {
-    opts <- list(...)
-    bagger(x = x, y = y, base_model = "CART", opts = opts, ...)
-  }
-
