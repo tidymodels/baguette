@@ -117,15 +117,6 @@ make_bag_tree <- function() {
   parsnip::set_model_engine("bag_tree", "classification", "C5.0")
   parsnip::set_dependency("bag_tree", "C5.0", "C50")
 
-  parsnip::set_model_arg(
-    model = "bag_tree",
-    eng = "C5.0",
-    parsnip = "min_n",
-    original = "minCases",
-    func = list(pkg = "dials", fun = "min_n"),
-    has_submodel = FALSE
-  )
-
   parsnip::set_fit(
     model = "bag_tree",
     eng = "C5.0",
@@ -133,9 +124,18 @@ make_bag_tree <- function() {
     value = list(
       interface = "data.frame",
       protect = c("x", "y", "weights"),
-      func = c(pkg = "parsnip", fun = "C5.0_train"),
-      defaults = list(trials = 1)
+      func = c(pkg = "baguette", fun = "bagger"),
+      defaults = list(base_model = "C5.0")
     )
+  )
+
+  parsnip::set_model_arg(
+    model = "bag_tree",
+    eng = "C5.0",
+    parsnip = "min_n",
+    original = "minCases",
+    func = list(pkg = "dials", fun = "min_n"),
+    has_submodel = FALSE
   )
 
   parsnip::set_pred(
@@ -147,7 +147,11 @@ make_bag_tree <- function() {
       pre = NULL,
       post = NULL,
       func = c(fun = "predict"),
-      args = list(object = quote(object$fit), newdata = quote(new_data))
+      args = list(
+        object = quote(object$fit),
+        new_data = quote(new_data),
+        type = "class"
+      )
     )
   )
 
@@ -158,12 +162,12 @@ make_bag_tree <- function() {
     type = "prob",
     value = list(
       pre = NULL,
-      post = NULL,
+      post = fix_column_names,
       func = c(fun = "predict"),
       args =
         list(
           object = quote(object$fit),
-          newdata = quote(new_data),
+          new_data = quote(new_data),
           type = "prob"
         )
     )
