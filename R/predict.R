@@ -29,12 +29,21 @@ predict.bagger <- function(object, new_data, type = NULL, ...) {
     if (type == "class") {
       res <- class_pred(object$model_df, new_data, lvl)
     } else {
-
       res <- classprob_pred(object$model_df, new_data, lvl)
     }
   }
   res
 }
+
+class_pred_path <- function(models, data, lvl, type) {
+  if (type == "class") {
+    res <- class_pred(models, data, lvl)
+  } else {
+    res <- classprob_pred(models, data, lvl)
+  }
+}
+
+
 
 # ------------------------------------------------------------------------------
 

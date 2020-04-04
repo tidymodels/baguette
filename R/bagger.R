@@ -249,7 +249,14 @@ bag_control <-
 
 #' @export
 print.bagger <- function(x, ...) {
-  cat("Bagged ", x$model[1], " (", x$model[2], " with ",
+
+  if (is.null(x$.cost)) {
+    mod_name <- x$model[1]
+  } else {
+    mod_name <- paste("Cost-Sensitive", x$model[1])
+  }
+
+  cat("Bagged ", mod_name, " (", x$model[2], " with ",
       nrow(x$model_df), " members)\n", sep = "")
 
   if (!is.null(x$opt)) {

@@ -1,15 +1,15 @@
 
-new_bagger <- function(model_df, imp, oob, control, opt, model, blueprint) {
+new_bagger <- function(model_df, imp, oob, control, .cost, opt, model, blueprint) {
 
   if (!is_tibble(model_df)) {
-    stop("`model_df` should be a tibble.", call. = FALSE)
+    rlang::abort("`model_df` should be a tibble.")
   }
 
   if (!is.list(opt) & !is.null(opt)) {
-    stop("`opt` should be a list or NULL", call. = FALSE)
+    rlang::abort("`opt` should be a list or NULL.")
   }
   if (!is_tibble(oob) & !is.null(oob)) {
-    stop("`oob` should be a tibble.", call. = FALSE)
+    rlang::abort("`oob` should be a tibble.")
   }
 
   if (!is.null(oob)) {
@@ -33,6 +33,7 @@ new_bagger <- function(model_df, imp, oob, control, opt, model, blueprint) {
   hardhat::new_model(
     model_df = model_df,
     control = control,
+    .cost = .cost,
     imp = imp,
     opt = opt,
     oob = oob,

@@ -6,8 +6,20 @@ validate_args <- function(model, times, opt, control, cost, extract) {
     rlang::abort("`model` should be one of ", paste0("'", models, "'", collapse = ", "))
   }
 
+  # ----------------------------------------------------------------------------
+
   if (!is.null(cost) & !(model %in% c("CART", "C5.0"))) {
     rlang::abort("`model` should be either 'CART' or 'C5.0'")
+  }
+  if (!is.null(cost)) {
+    if (is.numeric(cost) && cost < 0) {
+      rlang::abort("`cost` should be non-negative.")
+    }
+    if (is.matrix(cost)) {
+      if (any(cost) < 0) {
+        rlang::abort("`cost` should be non-negative.")
+      }
+    }
   }
 
   # ----------------------------------------------------------------------------

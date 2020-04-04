@@ -33,6 +33,7 @@ bagger_bridge <- function(processed, model, seed, times, opt, .control, .cost, e
       imp = res$imp,
       oob = res$oob,
       control = .control,
+      .cost = .cost,
       opt = opt,
       model = model,
       blueprint = processed$blueprint
