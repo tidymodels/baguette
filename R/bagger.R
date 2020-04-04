@@ -135,16 +135,16 @@ bagger.data.frame <-
            y,
            model = "CART",
            times = 10L,
-           opt = NULL,
-           control = bag_control(),
+           .control = bag_control(),
+           .cost = NULL,
            extract = NULL,
            ...) {
     times <- integer_B(times)
     seed <- sample.int(10^5, 1)
-    validate_args(model, times, opt, control, extract)
+    validate_args(base_model, times, .control, .cost, extract)
 
     processed <- hardhat::mold(x, y)
-    bagger_bridge(processed, model, seed, times, opt, control, extract, ...)
+    bagger_bridge(processed, base_model, seed, times, .control, .cost, extract, ...)
   }
 
 # XY method - matrix
@@ -156,16 +156,16 @@ bagger.matrix <-
            y,
            model = "CART",
            times = 10L,
-           opt = NULL,
-           control = bag_control(),
+           .control = bag_control(),
+           .cost = NULL,
            extract = NULL,
            ...) {
     times <- integer_B(times)
     seed <- sample.int(10^5, 1)
-    validate_args(model, times, opt, control, extract)
+    validate_args(base_model, times, .control, .cost, extract)
 
     processed <- hardhat::mold(x, y)
-    bagger_bridge(processed, model, seed, times, opt, control, extract, ...)
+    bagger_bridge(processed, base_model, seed, times, .control, .cost, extract, ...)
   }
 
 # Formula method
@@ -177,17 +177,17 @@ bagger.formula <-
            data,
            model = "CART",
            times = 10L,
-           opt = NULL,
-           control = bag_control(),
+           .control = bag_control(),
+           .cost = NULL,
            extract = NULL,
            ...) {
     times <- integer_B(times)
     seed <- sample.int(10^5, 1)
-    validate_args(model, times, opt, control, extract)
+    validate_args(base_model, times, .control, .cost, extract)
 
     bp <- hardhat::default_formula_blueprint(indicators = FALSE)
     processed <- hardhat::mold(formula, data, blueprint = bp)
-    bagger_bridge(processed, model, seed, times, opt, control, extract, ...)
+    bagger_bridge(processed, base_model, seed, times, .control, .cost, extract, ...)
   }
 
 # Recipe method
@@ -199,16 +199,16 @@ bagger.recipe <-
            data,
            model = "CART",
            times = 10L,
-           opt = NULL,
-           control = bag_control(),
+           .control = bag_control(),
+           .cost = NULL,
            extract = NULL,
            ...) {
     times <- integer_B(times)
     seed <- sample.int(10^5, 1)
-    validate_args(model, times, opt, control, extract)
+    validate_args(base_model, times, .control, .cost, extract)
 
     processed <- hardhat::mold(x, data)
-    bagger_bridge(processed, model, seed, times, opt, control, extract, ...)
+    bagger_bridge(processed, base_model, seed, times, .control, .cost, extract, ...)
   }
 
 # ------------------------------------------------------------------------------
