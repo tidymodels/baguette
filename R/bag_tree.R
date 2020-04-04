@@ -1,6 +1,4 @@
-# Prototype parsnip code for decision trees
-
-#' General Interface for Decision Tree Models
+#' General Interface for Bagged Decision Tree Models
 #'
 #' `bag_tree()` is a way to generate a _specification_ of a model
 #'  before fitting and allows the model to be created using
@@ -41,7 +39,6 @@
 #'  greater than 30 `rpart` will give nonsense results on 32-bit
 #'  machines.
 #' @importFrom purrr map_lgl
-#' @seealso [[fit()]
 #' @examples
 #' # bag_tree(tree_depth = 5) %>% set_mode("classification")
 #' @export

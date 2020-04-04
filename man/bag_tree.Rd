@@ -3,7 +3,7 @@
 \name{bag_tree}
 \alias{bag_tree}
 \alias{update.bag_tree}
-\title{General Interface for Decision Tree Models}
+\title{General Interface for Bagged Decision Tree Models}
 \usage{
 bag_tree(mode = "unknown", cost_complexity = 0, tree_depth = NULL, min_n = 2)
 
@@ -80,7 +80,4 @@ machines.
 #model
 #update(model, cost_complexity = 1)
 #update(model, cost_complexity = 1, fresh = TRUE)
-}
-\seealso{
-[\code{\link[=fit]{fit()}}
 }
