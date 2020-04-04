@@ -41,4 +41,4 @@ Imports:
     generics
 URL: https://github.com/topepo/baguette
 BugReports: https://github.com/topepo/baguette/issues
-RoxygenNote: 7.0.2.9000
+RoxygenNote: 7.1.0.9000

@@ -7,14 +7,16 @@ cart_bagger <- function(rs, opt, control, extract, ...) {
 
   rs <-
     rs %>%
-    dplyr::mutate(model = iter(
-      fit_seed,
-      splits,
-      seed_fit,
-      .fn = cart_fit,
-      spec = mod_spec,
-      control = control
-    ))
+    dplyr::mutate(
+      model = iter(
+        fit_seed,
+        splits,
+        seed_fit,
+        .fn = cart_fit,
+        spec = mod_spec,
+        control = control
+      )
+    )
 
   rs <- check_for_disaster(rs)
 
