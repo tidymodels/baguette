@@ -1,8 +1,6 @@
-
-
 bagger_bridge <- function(processed, model, seed, times, opt, .control, .cost, extract, ...) {
   validate_outcomes_are_univariate(processed$outcomes)
-  if (model %in% c("C5.0")) {
+  if (base_model %in% c("C5.0")) {
     validate_outcomes_are_factors(processed$outcomes)
   }
 

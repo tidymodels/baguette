@@ -1,3 +1,4 @@
+# TODO add ... in here somewhere
 
 new_bagger <- function(model_df, imp, oob, control, .cost, opt, model, blueprint) {
 
@@ -8,12 +9,13 @@ new_bagger <- function(model_df, imp, oob, control, .cost, opt, model, blueprint
   if (!is.list(opt) & !is.null(opt)) {
     rlang::abort("`opt` should be a list or NULL.")
   }
+
   if (!is_tibble(oob) & !is.null(oob)) {
     rlang::abort("`oob` should be a tibble.")
   }
 
   if (!is.null(oob)) {
-    exp_nm <- c(".metric", "mean", "stdev", "n")
+    exp_nm <- c(".metric", ".estimator", ".estimate")
     if (length(setdiff(exp_nm, names(oob))) > 0 |
         length(setdiff(names(oob), exp_nm)) > 0 ) {
       stop(
@@ -35,9 +37,8 @@ new_bagger <- function(model_df, imp, oob, control, .cost, opt, model, blueprint
     control = control,
     .cost = .cost,
     imp = imp,
-    opt = opt,
     oob = oob,
-    model = c(model[1], mod_mode),
+    base_model = c(base_model[1], mod_mode),
     blueprint = blueprint,
     class = "bagger"
   )

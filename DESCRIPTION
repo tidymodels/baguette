@@ -1,17 +1,23 @@
 Package: baguette
 Title: Efficient Model Functions for Bagging
 Version: 0.0.0.9000
-Authors@R: 
-    person(given = "Max",
-           family = "Kuhn",
-           role = c("aut", "cre"),
-           email = "max@rstudio.com",
-           comment = c(ORCID = "0000-0003-2402-136X"))
+Authors@R: c(
+    person(
+        given = "Max",
+        family = "Kuhn",
+        email = "max@rstudio.com",
+        comment = c(ORCID = "0000-0003-2402-136X"),
+        role = c("aut", "cre")
+    ),
+    person("RStudio", role = "cph")
+    )
 Description: Tree- and rule-based models can be bagged using 
     this package and their predictions equations are stored 
     in an efficient format to reduce the model objects size 
     and speed. 
-License: GPL-3
+License: MIT + file LICENSE
+Depends: 
+    parsnip (>= 0.0.5.9000)
 Suggests: 
     testthat,
     AmesHousing,
@@ -35,10 +41,12 @@ Imports:
     rlang,
     earth,
     magrittr,
-    parsnip,
     utils,
     yardstick,
     generics
 URL: https://github.com/topepo/baguette
 BugReports: https://github.com/topepo/baguette/issues
 RoxygenNote: 7.1.0.9000
+Remotes:
+    tidymodels/parsnip
+

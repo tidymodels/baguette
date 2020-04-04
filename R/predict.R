@@ -15,7 +15,7 @@
 #' data(airquality)
 #'
 #' set.seed(7687)
-#' mars_bag <- bagger(Ozone ~ ., data = airquality, model = "MARS", times = 5)
+#' mars_bag <- bagger(Ozone ~ ., data = airquality, base_model = "MARS", times = 5)
 #' predict(mars_bag, new_data = airquality[, -1])
 #' @export
 predict.bagger <- function(object, new_data, type = NULL, ...) {

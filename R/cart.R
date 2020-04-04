@@ -1,9 +1,9 @@
 
-cart_bagger <- function(rs, opt, control, extract, ...) {
+cart_bagger <- function(rs, .control, extract, ...) {
   is_classif <- is.factor(rs$splits[[1]]$data$.outcome)
-  mod_spec <- make_cart_spec(is_classif, opt)
+  mod_spec <- make_cart_spec(is_classif, ...)
 
-  iter <- get_iterator(control)
+  iter <- get_iterator(.control)
 
   rs <-
     rs %>%
@@ -24,9 +24,9 @@ cart_bagger <- function(rs, opt, control, extract, ...) {
 
   rs <- extractor(rs, extract)
 
-  imps <- compute_imp(rs, cart_imp, control$var_imp)
+  imps <- compute_imp(rs, cart_imp, .control$var_imp)
 
-  oob <- compute_oob(rs, control$oob)
+  oob <- compute_oob(rs, .control$oob)
 
   rs <-
     rs %>%
@@ -36,7 +36,8 @@ cart_bagger <- function(rs, opt, control, extract, ...) {
   list(model = select_rs(rs), oob  = oob, imp = imps)
 }
 
-make_cart_spec <- function(classif, opt) {
+make_cart_spec <- function(classif, ...) {
+  opt <- list(...)
   opts <- join_args(model_defaults[["CART"]], opt)
   if (classif) {
     cart_md <- "classification"
@@ -87,11 +88,11 @@ make_cart_spec <- function(classif, opt) {
 }
 
 
-cart_fit  <- function(split, spec, control = bag_control()) {
+cart_fit  <- function(split, spec, .control = bag_control()) {
 
   dat <- rsample::analysis(split)
 
-  if (control$sampling == "down") {
+  if (.control$sampling == "down") {
     dat <- down_sampler(dat)
   }
 

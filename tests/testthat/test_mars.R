@@ -10,7 +10,7 @@ data("two_class_dat", package = "rsample")
 # ------------------------------------------------------------------------------
 
 test_that('check mars opt', {
-
+  set.seed(36323)
   check_pruning <- function(x, ...) {
     rlang::eval_tidy(x$call$pmethod) == "backward"
   }
@@ -18,9 +18,9 @@ test_that('check mars opt', {
     bagger(
       mpg ~ .,
       data = mtcars,
-      model = "MARS",
-      opt = list(pmethod = "backward"),
-      control = bag_control(var_imp = FALSE),
+      base_model = "MARS",
+      pmethod = "backward",
+      .control = bag_control(var_imp = FALSE),
       extract = check_pruning
     )
   expect_true(all(unlist(mod_1$model_df$extras)))
@@ -35,9 +35,10 @@ test_that('check mars opt', {
     bagger(
       mpg ~ .,
       data = mtcars,
-      model = "MARS",
-      opt = list(nfold = 5, pmethod = "backward"),
-      control = bag_control(var_imp = TRUE),
+      base_model = "MARS",
+      nfold = 5,
+      pmethod = "backward",
+      .control = bag_control(var_imp = TRUE),
       extract = check_folds
     )
   expect_true(all(unlist(mod_2$model_df$extras)))
@@ -51,8 +52,8 @@ test_that('check mars opt', {
       bagger(
         Class ~ .,
         data = two_class_dat,
-        model = "MARS",
-        control = bag_control(var_imp = TRUE),
+        base_model = "MARS",
+        .control = bag_control(var_imp = TRUE),
         extract = check_classif
       ),
     "fitted probabilities numerically 0"

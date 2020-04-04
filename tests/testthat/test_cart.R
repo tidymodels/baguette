@@ -28,16 +28,16 @@ test_that('check CART opt', {
     bagger(
       Sepal.Width ~ .,
       data = iris,
-      model = "CART",
-      opt = list(method = "anova"),
+      base_model = "CART",
+      method = "anova",
       extract = get_method
     )
   mod_2 <-
     bagger(
       Sepal.Width ~ .,
       data = iris,
-      model = "CART",
-      opt = list(maxdepth = 1),
+      base_model = "CART",
+      maxdepth = 1,
       extract = num_leaves
     )
   lmat <- matrix(c(0, 1, 2, 0), byrow = TRUE, nrow = 2)
@@ -45,9 +45,9 @@ test_that('check CART opt', {
     bagger(
       Class ~ .,
       data = two_class_dat,
-      model = "CART",
-      opt = list(parms = list(loss = lmat)),
-      control = bag_control(var_imp = TRUE),
+      base_model = "CART",
+      parms = list(loss = lmat),
+      .control = bag_control(var_imp = TRUE),
       extract = get_loss
     )
 
@@ -66,42 +66,42 @@ test_that('check CART OOB', {
     bagger(
       Sepal.Width ~ .,
       data = iris,
-      model = "CART",
-      control = bag_control(oob = ms_1)
+      base_model = "CART",
+      .control = bag_control(oob = ms_1)
     )
   expect_true(all(mod_1$oob$.metric == "rsq"))
-  expect_true(all(!is.na(mod_1$oob$mean)))
+  expect_true(all(!is.na(mod_1$oob$.estimate)))
 
   ms_2 <- metric_set(accuracy, roc_auc)
   mod_2 <-
     bagger(
       Class ~ .,
       data = two_class_dat,
-      model = "CART",
-      control = bag_control( oob = ms_2)
+      base_model = "CART",
+      .control = bag_control( oob = ms_2)
     )
   expect_true(sum(mod_2$oob$.metric == "accuracy") == 1)
   expect_true(sum(mod_2$oob$.metric == "roc_auc") == 1)
-  expect_true(all(!is.na(mod_2$oob$mean)))
+  expect_true(all(!is.na(mod_2$oob$.estimate)))
 
   mod_3 <-
     bagger(
       Sepal.Width ~ .,
       data = iris,
-      model = "CART",
-      control = bag_control(oob = ms_2)
+      base_model = "CART",
+      .control = bag_control(oob = ms_2)
     )
   expect_true(all(mod_3$oob$.metric == "failed"))
-  expect_true(all(is.na(mod_3$oob$mean)))
+  expect_true(all(is.na(mod_3$oob$.estimate)))
 
   mod_4 <-
     bagger(
       Species ~ .,
       data = iris,
-      model = "CART",
-      control = bag_control(oob = ms_2)
+      base_model = "CART",
+      .control = bag_control(oob = ms_2)
     )
   expect_true(sum(mod_4$oob$.metric == "accuracy") == 1)
   expect_true(sum(mod_4$oob$.metric == "roc_auc") == 1)
-  expect_true(all(!is.na(mod_4$oob$mean)))
+  expect_true(all(!is.na(mod_4$oob$.estimate)))
 })

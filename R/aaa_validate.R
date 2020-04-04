@@ -41,7 +41,7 @@ validate_args <- function(model, times, opt, control, cost, extract) {
 
   # ----------------------------------------------------------------------------
 
-  validate_control(control)
+  validate_control(.control)
 
   # ----------------------------------------------------------------------------
 
@@ -70,10 +70,10 @@ integer_B <- function(B) {
 
 # ------------------------------------------------------------------------------
 
-validate_y_type <- function(model, outcomes) {
+validate_y_type <- function(base_model, outcomes) {
   hardhat::validate_outcomes_are_univariate(outcomes)
 
-  if (model == "C5.0") {
+  if (base_model == "C5.0") {
     hardhat::validate_outcomes_are_factors(outcomes)
   }
 
@@ -116,13 +116,13 @@ check_for_disaster <- function(x) {
 
 check_type <- function(object, type) {
   if (is.null(type)) {
-    if (object$model[2] == "classification") {
+    if (object$base_model[2] == "classification") {
       type <- "class"
     } else {
       type <- "numeric"
     }
   } else {
-    if (object$model[2] == "classification") {
+    if (object$base_model[2] == "classification") {
       if (!(type %in% c("class", "prob")))
         rlang::abort("`type` should be either 'class' or 'prob'")
     } else {

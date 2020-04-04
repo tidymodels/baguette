@@ -8,7 +8,7 @@ join_args <- function(default, others) {
 
 # ------------------------------------------------------------------------------
 
-failed_stats <- tibble(.metric = "failed", .estiamtor = "none", .estimate = NA_real_)
+failed_stats <- tibble(.metric = "failed", .estimator = "none", .estimate = NA_real_)
 
 oob_parsnip <- function(model, split, met) {
   dat <- rsample::assessment(split)
@@ -56,12 +56,9 @@ compute_oob <- function(rs, oob) {
   if (!is.null(oob)) {
     oob <-
       purrr::map2_dfr(rs$model, rs$splits, .fn, met = oob) %>%
-      dplyr::group_by(.metric) %>%
-      dplyr::summarize(
-        mean = mean(.estimate, na.rm = TRUE),
-        stdev = sd(.estimate, na.rm = TRUE),
-        n = sum(!is.na(.estimate))
-      )
+      dplyr::group_by(.metric, .estimator) %>%
+      dplyr::summarize(.estimate = mean(.estimate, na.rm = TRUE)) %>%
+      mutate(.estimator = "out-of-bag")
   } else {
     oob <- NULL
   }
@@ -142,8 +139,8 @@ down_sampler <- function(x) {
 
 # ------------------------------------------------------------------------------
 
-get_iterator <- function(control) {
-  if (control$allow_parallel) {
+get_iterator <- function(.control) {
+  if (.control$allow_parallel) {
     iter <- furrr::future_map2
   } else {
     iter <- purrr::map2
@@ -165,4 +162,17 @@ replace_parsnip_terms <- function(x) {
   x
 }
 
+# ------------------------------------------------------------------------------
+
+# fix column names (see https://github.com/tidymodels/parsnip/issues/263)
+
+fix_column_names <- function(result, object) {
+  # print("# ------------------------------------------------------------------------------\n")
+  # print(head(result))
+  nms <- colnames(result)
+  nms <- gsub(".pred_", "", nms, fixed = TRUE)
+  result <- setNames(result, nms)
+  # print(head(result))
+  result
+}
 
