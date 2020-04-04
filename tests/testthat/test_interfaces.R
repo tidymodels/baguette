@@ -23,8 +23,7 @@ test_that('recipe execution', {
       bagger(
         rec,
         data = iris,
-        model = "CART",
-        opt = list(model = TRUE),
+        base_model = "CART",
         extract = check_ranges
       ),
     regexp = NA)
@@ -34,6 +33,7 @@ test_that('recipe execution', {
 
 
 test_that('formula execution', {
+  skip("change `model` argument name")
   # check to make sure that appropriate data are given to model
   check_columns <- function(x, ...) {
     max(x$model$`log(Sepal.Width)`) <= log(max(iris$Sepal.Width)) &
@@ -45,8 +45,8 @@ test_that('formula execution', {
       bagger(
         Sepal.Length ~ log(Sepal.Width) + Species,
         data = iris,
-        model = "CART",
-        opt = list(model = TRUE),
+        base_model = "CART",
+        model = TRUE,
         extract = check_columns
       ),
     regex = NA)
