@@ -1,15 +1,15 @@
 validate_args <- function(model, times, opt, control, cost, extract) {
   if (!is.character(model) || length(model) != 1) {
-    rlang::abort("`model` should be a single character value.")
+    rlang::abort("`base_model` should be a single character value.")
   }
   if (!(model %in% models)) {
-    rlang::abort("`model` should be one of ", paste0("'", models, "'", collapse = ", "))
+    rlang::abort("`base_model` should be one of ", paste0("'", models, "'", collapse = ", "))
   }
 
   # ----------------------------------------------------------------------------
 
   if (!is.null(cost) & !(model %in% c("CART", "C5.0"))) {
-    rlang::abort("`model` should be either 'CART' or 'C5.0'")
+    rlang::abort("`base_model` should be either 'CART' or 'C5.0'")
   }
   if (!is.null(cost)) {
     if (is.numeric(cost) && cost < 0) {
@@ -41,7 +41,7 @@ validate_args <- function(model, times, opt, control, cost, extract) {
 
   # ----------------------------------------------------------------------------
 
-  validate_control(.control)
+  validate_control(control)
 
   # ----------------------------------------------------------------------------
 
@@ -63,8 +63,9 @@ validate_args <- function(model, times, opt, control, cost, extract) {
 }
 
 integer_B <- function(B) {
-  if (is.numeric(B) & !is.integer(B))
+  if (is.numeric(B) & !is.integer(B)) {
     B <- as.integer(B)
+  }
   B
 }
 

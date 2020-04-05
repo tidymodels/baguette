@@ -20,7 +20,7 @@ test_that('check mars opt', {
       data = mtcars,
       base_model = "MARS",
       pmethod = "backward",
-      .control = bag_control(var_imp = FALSE),
+      control = bag_control(var_imp = FALSE),
       extract = check_pruning
     )
   expect_true(all(unlist(mod_1$model_df$extras)))
@@ -38,7 +38,7 @@ test_that('check mars opt', {
       base_model = "MARS",
       nfold = 5,
       pmethod = "backward",
-      .control = bag_control(var_imp = TRUE),
+      control = bag_control(var_imp = TRUE),
       extract = check_folds
     )
   expect_true(all(unlist(mod_2$model_df$extras)))
@@ -53,7 +53,7 @@ test_that('check mars opt', {
         Class ~ .,
         data = two_class_dat,
         base_model = "MARS",
-        .control = bag_control(var_imp = TRUE),
+        control = bag_control(var_imp = TRUE),
         extract = check_classif
       ),
     "fitted probabilities numerically 0"

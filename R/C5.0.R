@@ -1,9 +1,9 @@
 
-c5_bagger <- function(rs, .control, extract, ...) {
+c5_bagger <- function(rs, opt, control, extract, ...) {
 
-  mod_spec <- make_c5_spec(...)
+  mod_spec <- make_c5_spec(opt)
 
-  iter <- get_iterator(.control)
+  iter <- get_iterator(control)
 
   rs <-
     rs %>%
@@ -13,7 +13,7 @@ c5_bagger <- function(rs, .control, extract, ...) {
       seed_fit,
       .fn = c5_fit,
       spec = mod_spec,
-      .control = .control
+      control = control
     ))
 
   rs <- check_for_disaster(rs)
@@ -22,20 +22,17 @@ c5_bagger <- function(rs, .control, extract, ...) {
 
   rs <- extractor(rs, extract)
 
-  imps <- compute_imp(rs, c5_imp, .control$var_imp)
-
-  oob <- compute_oob(rs, .control$oob)
+  imps <- compute_imp(rs, c5_imp, control$var_imp)
 
   rs <-
     rs %>%
     replace_parsnip_terms() %>%
     mutate(model = map(model, axe_C5))
 
-  list(model = select_rs(rs), oob  = oob, imp = imps)
+  list(model = rs, imp = imps)
 }
 
-make_c5_spec <- function(...) {
-  opt <- list(...)
+make_c5_spec <- function(opt) {
   opts <- join_args(model_defaults[["C5.0"]], opt)
   c5_spec <-
     parsnip::decision_tree(
@@ -75,12 +72,12 @@ make_c5_spec <- function(...) {
 }
 
 
-c5_fit  <- function(split, spec, .control = bag_control()) {
+c5_fit  <- function(split, spec, control = bag_control()) {
   ctrl <- parsnip::fit_control(catch = TRUE)
 
   dat <- rsample::analysis(split)
 
-  if (.control$sampling == "down") {
+  if (control$sampling == "down") {
     dat <- down_sampler(dat)
   }
 

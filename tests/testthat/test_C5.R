@@ -31,7 +31,7 @@ test_that('check C5.0 opt', {
       base_model = "C5.0",
       rules = TRUE,
       bands = 3,
-      .control = bag_control(var_imp = TRUE),
+      control = bag_control(var_imp = TRUE),
       extract = check_winnow
     )
   expect_true(all(unlist(mod_2$model_df$extras)))

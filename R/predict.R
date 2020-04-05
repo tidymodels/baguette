@@ -26,24 +26,28 @@ predict.bagger <- function(object, new_data, type = NULL, ...) {
     res <- numeric_pred(object$model_df, new_data)
   } else {
     lvl <- levels(object$blueprint$ptypes$outcomes[[1]])
-    if (type == "class") {
-      res <- class_pred(object$model_df, new_data, lvl)
-    } else {
-      res <- classprob_pred(object$model_df, new_data, lvl)
-    }
+    use_majority <- object$base_model[1] == "C5.0" && !is.null(object$cost)
+    res <- class_pred_path(object$model_df, new_data, lvl, type, use_majority)
   }
   res
 }
 
-class_pred_path <- function(models, data, lvl, type) {
-  if (type == "class") {
-    res <- class_pred(models, data, lvl)
+
+# For some cost-sensitive classification models, class probabilities cannot be
+# naturally estimated. In these cases, the hard class predictions are
+# summarized to use majority vote for the probability estimates.
+class_pred_path <- function(models, data, lvl, type, majority = FALSE) {
+  if (majority) {
+    res <- majority_vote(models, data, lvl, type == "prob")
   } else {
-    res <- classprob_pred(models, data, lvl)
+    if (type == "class") {
+      res <- class_pred(models, data, lvl)
+    } else {
+      res <- classprob_pred(models, data, lvl)
+    }
   }
+  res
 }
-
-
 
 # ------------------------------------------------------------------------------
 
@@ -96,5 +100,37 @@ classprob_pred <- function(models, data, lvl) {
     dplyr::select(-.row)
   preds
 }
+
+majority_vote <- function(models, data, lvl, probs = FALSE) {
+  n <- nrow(data)
+  m <- nrow(models)
+  prob_cols <- paste0(".pred_", lvl)
+  preds <-
+    purrr::map_df(models$model, predict, new_data = data, type = "class") %>%
+    dplyr::mutate(.row = rep(1:n, each = m)) %>%
+    dplyr::group_by(.row) %>%
+    dplyr::count(.pred_class, .drop = FALSE) %>%
+    dplyr::mutate(n = n/m)
+
+  if (probs) {
+    preds <-
+      preds %>%
+      dplyr::mutate(.pred_class = paste0(".pred_", .pred_class)) %>%
+      dplyr::ungroup() %>%
+      tidyr::pivot_wider(id_cols = .row,
+                         names_from = ".pred_class",
+                         values_from = "n") %>%
+      dplyr::select(dplyr::one_of(prob_cols))
+  } else {
+    preds <-
+      preds %>%
+      dplyr::arrange(desc(n), .by_group = TRUE) %>%
+      dplyr::slice(1) %>%
+      dplyr::ungroup() %>%
+      dplyr::select(.pred_class)
+  }
+  preds
+}
+
 
 
