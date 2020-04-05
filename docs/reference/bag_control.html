@@ -111,12 +111,7 @@
     <p><code>bag_control()</code> can set options for ancillary aspects of the bagging process.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bag_control</span>(
-  <span class='kw'>var_imp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>oob</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>allow_parallel</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>sampling</span> <span class='kw'>=</span> <span class='st'>"none"</span>
-)</pre>
+    <pre class="usage"><span class='fu'>bag_control</span>(<span class='kw'>var_imp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>allow_parallel</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>sampling</span> <span class='kw'>=</span> <span class='st'>"none"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -124,11 +119,6 @@
     <tr>
       <th>var_imp</th>
       <td><p>A single logical: should variable importance scores be calculated?</p></td>
-    </tr>
-    <tr>
-      <th>oob</th>
-      <td><p>A metric set created by <code><a href='https://rdrr.io/pkg/yardstick/man/metric_set.html'>yardstick::metric_set()</a></code> or <code>NULL</code>. If not
-NULL, then the out-of-bag samples are used to estimate model performance.</p></td>
     </tr>
     <tr>
       <th>allow_parallel</th>

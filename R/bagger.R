@@ -62,7 +62,7 @@
 #'
 #' perf <- metric_set(rmse, rsq, yardstick::ccc)
 #'
-#' ctrl <- bag_control(oob = perf, var_imp = TRUE)
+#' ctrl <- bag_control(var_imp = TRUE)
 #'
 #' # ------------------------------------------------------------------------------
 #'
@@ -91,8 +91,6 @@
 #'                        times = 5, control = ctrl)
 #'
 #' cart_pca_bag
-#' cart_pca_bag$oob
-#' cart_bag$oob
 #'
 #' # Using formulas
 #' mars_bag <- bagger(HHV ~ ., data = biomass_tr, base_model = "MARS", times = 5,
@@ -129,7 +127,7 @@ bagger.data.frame <-
   function(x,
            y,
            base_model = "CART",
-           times = 10L,
+           times = 11L,
            opt = NULL,
            control = bag_control(),
            cost = NULL,
@@ -151,7 +149,6 @@ bagger.data.frame <-
                     extract,
                     ...)
 
-    res$oob <- compute_oob(res$model_df, oob = control$oob)
     res$model_df <- select_rs(res$model_df)
     res
   }
@@ -164,7 +161,7 @@ bagger.matrix <-
   function(x,
            y,
            base_model = "CART",
-           times = 10L,
+           times = 11L,
            opt = NULL,
            control = bag_control(),
            cost = NULL,
@@ -187,7 +184,6 @@ bagger.matrix <-
                     extract,
                     ...)
 
-    res$oob <- compute_oob(res$model_df, oob = control$oob)
     res$model_df <- select_rs(res$model_df)
     res
   }
@@ -200,7 +196,7 @@ bagger.formula <-
   function(formula,
            data,
            base_model = "CART",
-           times = 10L,
+           times = 11L,
            opt = NULL,
            control = bag_control(),
            cost = NULL,
@@ -224,7 +220,6 @@ bagger.formula <-
                     extract,
                     ...)
 
-    res$oob <- compute_oob(res$model_df, oob = control$oob)
     res$model_df <- select_rs(res$model_df)
     res
   }
@@ -237,7 +232,7 @@ bagger.recipe <-
   function(x,
            data,
            base_model = "CART",
-           times = 10L,
+           times = 11L,
            opt = NULL,
            control = bag_control(),
            cost = NULL,
@@ -260,7 +255,6 @@ bagger.recipe <-
                     extract,
                     ...)
 
-    res$oob <- compute_oob(res$model_df, oob = control$oob)
     res$model_df <- select_rs(res$model_df)
     res
   }
@@ -273,8 +267,6 @@ bagger.recipe <-
 #' `bag_control()` can set options for ancillary aspects of the bagging process.
 #'
 #' @param var_imp A single logical: should variable importance scores be calculated?
-#' @param oob A metric set created by [yardstick::metric_set()] or `NULL`. If not
-#'  NULL, then the out-of-bag samples are used to estimate model performance.
 #' @param allow_parallel A single logical: should the model fits be done in
 #'  parallel (even if a parallel `plan()` has been created)?
 #' @param sampling Either "none" or "down". For classification only. The
@@ -283,12 +275,11 @@ bagger.recipe <-
 #' @return A list.
 #' @export
 bag_control <-
-  function(var_imp = TRUE, oob = NULL, allow_parallel = TRUE, sampling = "none") {
+  function(var_imp = TRUE, allow_parallel = TRUE, sampling = "none") {
 
     res <-
       list(
         var_imp = var_imp,
-        oob = oob,
         allow_parallel = allow_parallel,
         sampling = sampling
       )
@@ -311,10 +302,6 @@ print.bagger <- function(x, ...) {
   if (!is.null(x$imp)) {
     cat("\nVariable importance scores include:\n\n")
     print(x$imp)
-  }
-  if (inherits(x$oob, "tbl")) {
-    cat("\nOut-of-bag statistics:\n\n")
-    print(x$oob)
   }
   cat("\n")
   invisible(x)

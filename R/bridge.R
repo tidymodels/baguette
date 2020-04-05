@@ -30,7 +30,6 @@ bagger_bridge <- function(processed, base_model, seed, times, opt, control, cost
     new_bagger(
       model_df = res$model,
       imp = res$imp,
-      oob = NULL,
       control = control,
       cost = cost,
       opt = opt,

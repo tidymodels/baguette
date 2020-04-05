@@ -171,8 +171,5 @@ validate_control <- function(x) {
   if (length(x$sampling) != 1 || !is.character(x$sampling) || !any(samps == x$sampling)) {
     rlang::abort("`sampling` should be either 'none' or 'down'.")
   }
-  if (!is.null(x$oob) && !inherits(x$oob, "function")) {
-    rlang::abort("`oob` should be either NULL or the results of `yardstick::metric_set()`.")
-  }
   x
 }

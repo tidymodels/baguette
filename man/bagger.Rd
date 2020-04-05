@@ -17,7 +17,7 @@ bagger(x, ...)
   x,
   y,
   base_model = "CART",
-  times = 10L,
+  times = 11L,
   opt = NULL,
   control = bag_control(),
   cost = NULL,
@@ -29,7 +29,7 @@ bagger(x, ...)
   x,
   y,
   base_model = "CART",
-  times = 10L,
+  times = 11L,
   opt = NULL,
   control = bag_control(),
   cost = NULL,
@@ -41,7 +41,7 @@ bagger(x, ...)
   formula,
   data,
   base_model = "CART",
-  times = 10L,
+  times = 11L,
   opt = NULL,
   control = bag_control(),
   cost = NULL,
@@ -53,7 +53,7 @@ bagger(x, ...)
   x,
   data,
   base_model = "CART",
-  times = 10L,
+  times = 11L,
   opt = NULL,
   control = bag_control(),
   cost = NULL,
@@ -137,7 +137,7 @@ biomass_te <-
 
 perf <- metric_set(rmse, rsq, yardstick::ccc)
 
-ctrl <- bag_control(oob = perf, var_imp = TRUE)
+ctrl <- bag_control(var_imp = TRUE)
 
 # ------------------------------------------------------------------------------
 
@@ -166,8 +166,6 @@ cart_pca_bag <- bagger(biomass_rec, data = biomass_tr, base_model = "CART",
                        times = 5, control = ctrl)
 
 cart_pca_bag
-cart_pca_bag$oob
-cart_bag$oob
 
 # Using formulas
 mars_bag <- bagger(HHV ~ ., data = biomass_tr, base_model = "MARS", times = 5,
