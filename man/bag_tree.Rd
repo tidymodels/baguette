@@ -5,7 +5,13 @@
 \alias{update.bag_tree}
 \title{General Interface for Bagged Decision Tree Models}
 \usage{
-bag_tree(mode = "unknown", cost_complexity = 0, tree_depth = NULL, min_n = 2)
+bag_tree(
+  mode = "unknown",
+  cost_complexity = 0,
+  tree_depth = NULL,
+  min_n = 2,
+  class_cost = NULL
+)
 
 \method{update}{bag_tree}(
   object,
@@ -13,6 +19,7 @@ bag_tree(mode = "unknown", cost_complexity = 0, tree_depth = NULL, min_n = 2)
   cost_complexity = NULL,
   tree_depth = NULL,
   min_n = NULL,
+  class_cost = NULL,
   fresh = FALSE,
   ...
 )

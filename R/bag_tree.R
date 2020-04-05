@@ -44,12 +44,16 @@
 #' @export
 
 bag_tree <-
-  function(mode = "unknown", cost_complexity = 0, tree_depth = NULL, min_n = 2) {
-
+  function(mode = "unknown",
+           cost_complexity = 0,
+           tree_depth = NULL,
+           min_n = 2,
+           class_cost = NULL) {
     args <- list(
       cost_complexity   = enquo(cost_complexity),
       tree_depth  = enquo(tree_depth),
-      min_n  = enquo(min_n)
+      min_n  = enquo(min_n),
+      class_cost = enquo(class_cost)
     )
 
     new_model_spec(
@@ -97,6 +101,7 @@ update.bag_tree <-
   function(object,
            parameters = NULL,
            cost_complexity = NULL, tree_depth = NULL, min_n = NULL,
+           class_cost = NULL,
            fresh = FALSE, ...) {
     update_dot_check(...)
 

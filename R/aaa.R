@@ -16,6 +16,7 @@
 #' @importFrom C50 C5.0 C5.0Control C5imp as.party.C5.0
 #' @importFrom rpart rpart
 #' @importFrom withr with_seed
+#' @importFrom dials new_quant_param
 
 # ------------------------------------------------------------------------------
 

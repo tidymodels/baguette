@@ -7,7 +7,7 @@ cost_matrix <- function(x, lvl, truth_is_row = TRUE) {
     } else {
       x0 <- x
       x <- matrix(1, ncol = 2, nrow = 2)
-      x[2, 1] <- x0
+      x[1, 2] <- x0
       diag(x) <- 0
       colnames(x) <- lvl
       rownames(x) <- lvl
