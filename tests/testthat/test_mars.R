@@ -46,6 +46,9 @@ test_that('check mars opt', {
   check_classif <- function(x, ...) {
     !is.null(x$glm.coefficients)
   }
+
+  # For correct random numbers
+  skip_if(compareVersion(as.character(getRversion()), "3.6.0") > 0)
   expect_warning(
     mod_3 <-
       bagger(
