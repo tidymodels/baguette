@@ -37,6 +37,11 @@ parameter (a.k.a. \code{Cp}) used by CART models (\code{rpart} only).}
 \item{min_n}{An integer for the minimum number of data points
 in a node that are required for the node to be split further.}
 
+\item{class_cost}{A non-negative scalar for a class cost (where a cost of 1
+means no extra cost). This is useful for when the first level of the outcome
+factor is the minority class. If this is not the case, values between zero
+and one can be used to bias to the second level of the factor.}
+
 \item{object}{A bagged tree model specification.}
 
 \item{parameters}{A 1-row tibble or named list with \emph{main}
@@ -60,6 +65,8 @@ used by CART models (\code{rpart} only).
 \item \code{tree_depth}: The \emph{maximum} depth of a tree (\code{rpart}).
 \item \code{min_n}: The minimum number of data points in a node
 that are required for the node to be split further.
+\item {class_cost}: A cost value to asign to the class corresponding to the
+first factor level (for 2-class models, \code{rpart} and \code{C5.0} only).
 }
 These arguments are converted to their specific names at the
 time that the model is fit. Other options and argument can be

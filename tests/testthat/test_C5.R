@@ -13,7 +13,7 @@ test_that('check C5.0 opt', {
       Species ~ .,
       data = iris,
       base_model = "C5.0",
-      rules = TRUE,
+      opt = list(rules = TRUE),
       extract = check_rules
     )
   expect_true(all(unlist(mod_1$model_df$extras)))
@@ -29,8 +29,7 @@ test_that('check C5.0 opt', {
       Species ~ .,
       data = iris,
       base_model = "C5.0",
-      rules = TRUE,
-      bands = 3,
+      opt = list(rules = TRUE, bands = 3),
       control = bag_control(var_imp = TRUE),
       extract = check_winnow
     )

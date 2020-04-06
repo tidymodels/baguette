@@ -18,7 +18,7 @@ get_loss <- function(x, ...) {
   x$parms$loss
 }
 
-data("two_class_dat", package = "rsample")
+data("two_class_dat", package = "modeldata")
 
 # ------------------------------------------------------------------------------
 
@@ -29,7 +29,7 @@ test_that('check CART opt', {
       Sepal.Width ~ .,
       data = iris,
       base_model = "CART",
-      method = "anova",
+      opt = list(method = "anova"),
       extract = get_method
     )
   mod_2 <-
@@ -37,7 +37,7 @@ test_that('check CART opt', {
       Sepal.Width ~ .,
       data = iris,
       base_model = "CART",
-      maxdepth = 1,
+      opt = list(maxdepth = 1),
       extract = num_leaves
     )
   lmat <- matrix(c(0, 1, 2, 0), byrow = TRUE, nrow = 2)
@@ -46,7 +46,7 @@ test_that('check CART opt', {
       Class ~ .,
       data = two_class_dat,
       base_model = "CART",
-      parms = list(loss = lmat),
+      opt = list(parms = list(loss = lmat)),
       control = bag_control(var_imp = TRUE),
       extract = get_loss
     )

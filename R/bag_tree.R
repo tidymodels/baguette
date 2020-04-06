@@ -10,6 +10,8 @@
 #'   \item \code{tree_depth}: The _maximum_ depth of a tree (`rpart`).
 #'   \item \code{min_n}: The minimum number of data points in a node
 #'   that are required for the node to be split further.
+#'   \item {class_cost}: A cost value to asign to the class corresponding to the
+#'   first factor level (for 2-class models, `rpart` and `C5.0` only).
 #' }
 #' These arguments are converted to their specific names at the
 #'  time that the model is fit. Other options and argument can be
@@ -26,6 +28,10 @@
 #' @param tree_depth An integer for maximum depth of the tree.
 #' @param min_n An integer for the minimum number of data points
 #'  in a node that are required for the node to be split further.
+#' @param class_cost A non-negative scalar for a class cost (where a cost of 1
+#' means no extra cost). This is useful for when the first level of the outcome
+#' factor is the minority class. If this is not the case, values between zero
+#' and one can be used to bias to the second level of the factor.
 #' @details
 #' The model can be created using the `fit()` function using the
 #'  following _engines_:

@@ -2,8 +2,8 @@ validate_args <- function(model, times, opt, control, cost, extract) {
   if (!is.character(model) || length(model) != 1) {
     rlang::abort("`base_model` should be a single character value.")
   }
-  if (!(model %in% models)) {
-    rlang::abort("`base_model` should be one of ", paste0("'", models, "'", collapse = ", "))
+  if (!(model %in% baguette_models)) {
+    rlang::abort("`base_model` should be one of ", paste0("'", baguette_models, "'", collapse = ", "))
   }
 
   # ----------------------------------------------------------------------------

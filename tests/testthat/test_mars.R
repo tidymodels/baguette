@@ -5,7 +5,7 @@ context("MARS models")
 
 # ------------------------------------------------------------------------------
 
-data("two_class_dat", package = "rsample")
+data("two_class_dat", package = "modeldata")
 
 # ------------------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ test_that('check mars opt', {
       mpg ~ .,
       data = mtcars,
       base_model = "MARS",
-      pmethod = "backward",
+      opt = list(pmethod = "backward"),
       control = bag_control(var_imp = FALSE),
       extract = check_pruning
     )
@@ -36,8 +36,7 @@ test_that('check mars opt', {
       mpg ~ .,
       data = mtcars,
       base_model = "MARS",
-      nfold = 5,
-      pmethod = "backward",
+      opt = list(nfold = 5, pmethod = "backward"),
       control = bag_control(var_imp = TRUE),
       extract = check_folds
     )

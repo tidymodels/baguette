@@ -45,8 +45,8 @@ Imports:
     yardstick,
     generics,
     dials
-URL: https://github.com/topepo/baguette
-BugReports: https://github.com/topepo/baguette/issues
+URL: https://github.com/tidymodels/baguette
+BugReports: https://github.com/tidymodels/baguette/issues
 RoxygenNote: 7.1.0.9000
 Remotes:
     tidymodels/parsnip

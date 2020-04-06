@@ -1,5 +1,4 @@
-models <- c("CART", "C5.0", "MARS")
-# TODO add two-class cost models
+baguette_models <- c("CART", "C5.0", "MARS")
 
 # We want to default some arguments for different models
 model_defaults <-
