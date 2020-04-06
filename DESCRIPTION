@@ -23,7 +23,8 @@ Suggests:
     AmesHousing,
     recipes,
     modeldata,
-    covr
+    covr,
+    yardstick
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -43,7 +44,6 @@ Imports:
     earth,
     magrittr,
     utils,
-    yardstick,
     generics,
     dials
 URL: https://github.com/tidymodels/baguette
