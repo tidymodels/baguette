@@ -1,10 +1,10 @@
 
-mars_bagger <- function(rs, .control, extract, ...) {
+mars_bagger <- function(rs, opt, control, extract, ...) {
 
   is_classif <- is.factor(rs$splits[[1]]$data$.outcome)
-  mod_spec <- make_mars_spec(is_classif, ...)
+  mod_spec <- make_mars_spec(is_classif, opt)
 
-  iter <- get_iterator(.control)
+  iter <- get_iterator(control)
 
   rs <-
     rs %>%
@@ -14,7 +14,7 @@ mars_bagger <- function(rs, .control, extract, ...) {
       seed_fit,
       .fn = mars_fit,
       spec = mod_spec,
-      .control = .control
+      control = control
     ))
 
   rs <- check_for_disaster(rs)
@@ -23,17 +23,14 @@ mars_bagger <- function(rs, .control, extract, ...) {
 
   rs <- extractor(rs, extract)
 
-  imps <- compute_imp(rs, mars_imp, .control$var_imp)
-
-  oob <- compute_oob(rs, .control$oob)
+  imps <- compute_imp(rs, mars_imp, control$var_imp)
 
   rs <-
     rs %>%
     replace_parsnip_terms() %>%
     mutate(model = map(model, axe_mars))
 
-
-  list(model = select_rs(rs), oob  = oob, imp = imps)
+  list(model = rs, imp = imps)
 }
 
 axe_mars <- function(x) {
@@ -43,8 +40,7 @@ axe_mars <- function(x) {
   x
 }
 
-make_mars_spec <- function(classif, ...) {
-  opt <- list(...)
+make_mars_spec <- function(classif, opt) {
   opts <- join_args(model_defaults[["MARS"]], opt)
   if (classif) {
     mars_md <- "classification"
@@ -69,14 +65,14 @@ make_mars_spec <- function(classif, ...) {
 
 
 
-mars_fit  <- function(split, spec, .control = bag_control()) {
+mars_fit  <- function(split, spec, control = bag_control()) {
   ctrl <- parsnip::fit_control(catch = TRUE)
 
   dat <- rsample::analysis(split)
   # only na.fail is supported by earth::earth
   dat <- dat[complete.cases(dat),, drop = FALSE]
 
-  if (.control$sampling == "down") {
+  if (control$sampling == "down") {
     dat <- down_sampler(dat)
   }
 

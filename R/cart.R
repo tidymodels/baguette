@@ -1,20 +1,22 @@
 
-cart_bagger <- function(rs, .control, extract, ...) {
+cart_bagger <- function(rs, opt, control, extract, ...) {
   is_classif <- is.factor(rs$splits[[1]]$data$.outcome)
-  mod_spec <- make_cart_spec(is_classif, ...)
+  mod_spec <- make_cart_spec(is_classif, opt)
 
-  iter <- get_iterator(.control)
+  iter <- get_iterator(control)
 
   rs <-
     rs %>%
-    dplyr::mutate(model = iter(
-      fit_seed,
-      splits,
-      seed_fit,
-      .fn = cart_fit,
-      spec = mod_spec,
-      .control = .control
-    ))
+    dplyr::mutate(
+      model = iter(
+        fit_seed,
+        splits,
+        seed_fit,
+        .fn = cart_fit,
+        spec = mod_spec,
+        control = control
+      )
+    )
 
   rs <- check_for_disaster(rs)
 
@@ -22,20 +24,17 @@ cart_bagger <- function(rs, .control, extract, ...) {
 
   rs <- extractor(rs, extract)
 
-  imps <- compute_imp(rs, cart_imp, .control$var_imp)
-
-  oob <- compute_oob(rs, .control$oob)
+  imps <- compute_imp(rs, cart_imp, control$var_imp)
 
   rs <-
     rs %>%
     replace_parsnip_terms() %>%
     mutate(model = map(model, axe_cart))
 
-  list(model = select_rs(rs), oob  = oob, imp = imps)
+  list(model = rs, imp = imps)
 }
 
-make_cart_spec <- function(classif, ...) {
-  opt <- list(...)
+make_cart_spec <- function(classif, opt) {
   opts <- join_args(model_defaults[["CART"]], opt)
   if (classif) {
     cart_md <- "classification"
@@ -74,7 +73,7 @@ make_cart_spec <- function(classif, ...) {
       main_args <- NULL
     }
 
-    # Note: from ?rpart: "arguments to rpart.control may also be specified in
+    # Note: from ?rpart: "arguments to rpartcontrol may also be specified in
     # the call to rpart. They are checked against the list of valid arguments."
 
     cart_spec <-
@@ -86,11 +85,11 @@ make_cart_spec <- function(classif, ...) {
 }
 
 
-cart_fit  <- function(split, spec, .control = bag_control()) {
+cart_fit  <- function(split, spec, control = bag_control()) {
 
   dat <- rsample::analysis(split)
 
-  if (.control$sampling == "down") {
+  if (control$sampling == "down") {
     dat <- down_sampler(dat)
   }
 

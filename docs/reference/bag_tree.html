@@ -44,6 +44,8 @@ used by CART models (rpart only).
 tree_depth: The maximum depth of a tree (rpart).
 min_n: The minimum number of data points in a node
 that are required for the node to be split further.
+class_cost: A cost value to asign to the class corresponding to the
+first factor level (for 2-class models, rpart and C5.0 only).
 These arguments are converted to their specific names at the
 time that the model is fit. Other options and argument can be
 set using set_engine(). If left to their defaults
@@ -98,7 +100,7 @@ in lieu of recreating the object from scratch." />
   <a href="../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/topepo/baguette/">
+  <a href="https://github.com/tidymodels/baguette/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -117,7 +119,7 @@ in lieu of recreating the object from scratch." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>General Interface for Bagged Decision Tree Models</h1>
-    <small class="dont-index">Source: <a href='https://github.com/topepo/baguette/blob/master/R/bag_tree.R'><code>R/bag_tree.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/baguette/blob/master/R/bag_tree.R'><code>R/bag_tree.R</code></a></small>
     <div class="hidden name"><code>bag_tree.Rd</code></div>
     </div>
 
@@ -131,6 +133,8 @@ used by CART models (<code>rpart</code> only).</p></li>
 <li><p><code>tree_depth</code>: The <em>maximum</em> depth of a tree (<code>rpart</code>).</p></li>
 <li><p><code>min_n</code>: The minimum number of data points in a node
 that are required for the node to be split further.</p></li>
+<li><p>class_cost: A cost value to asign to the class corresponding to the
+first factor level (for 2-class models, <code>rpart</code> and <code>C5.0</code> only).</p></li>
 </ul><p>These arguments are converted to their specific names at the
 time that the model is fit. Other options and argument can be
 set using <code>set_engine()</code>. If left to their defaults
@@ -139,7 +143,13 @@ functions. If parameters need to be modified, <code><a href='https://rdrr.io/r/s
 in lieu of recreating the object from scratch.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bag_tree</span>(<span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"unknown"</span>, <span class='kw'>cost_complexity</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>tree_depth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>min_n</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+    <pre class="usage"><span class='fu'>bag_tree</span>(
+  <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"unknown"</span>,
+  <span class='kw'>cost_complexity</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>tree_depth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>min_n</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>class_cost</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)
 
 <span class='co'># S3 method for bag_tree</span>
 <span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span>(
@@ -148,6 +158,7 @@ in lieu of recreating the object from scratch.</p>
   <span class='kw'>cost_complexity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>tree_depth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>min_n</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>class_cost</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>fresh</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
 )</pre>
@@ -174,6 +185,13 @@ parameter (a.k.a. <code>Cp</code>) used by CART models (<code>rpart</code> only)
       <th>min_n</th>
       <td><p>An integer for the minimum number of data points
 in a node that are required for the node to be split further.</p></td>
+    </tr>
+    <tr>
+      <th>class_cost</th>
+      <td><p>A non-negative scalar for a class cost (where a cost of 1
+means no extra cost). This is useful for when the first level of the outcome
+factor is the minority class. If this is not the case, values between zero
+and one can be used to bias to the second level of the factor.</p></td>
     </tr>
     <tr>
       <th>object</th>

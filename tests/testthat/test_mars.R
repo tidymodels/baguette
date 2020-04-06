@@ -5,7 +5,7 @@ context("MARS models")
 
 # ------------------------------------------------------------------------------
 
-data("two_class_dat", package = "rsample")
+data("two_class_dat", package = "modeldata")
 
 # ------------------------------------------------------------------------------
 
@@ -19,8 +19,8 @@ test_that('check mars opt', {
       mpg ~ .,
       data = mtcars,
       base_model = "MARS",
-      pmethod = "backward",
-      .control = bag_control(var_imp = FALSE),
+      opt = list(pmethod = "backward"),
+      control = bag_control(var_imp = FALSE),
       extract = check_pruning
     )
   expect_true(all(unlist(mod_1$model_df$extras)))
@@ -36,9 +36,8 @@ test_that('check mars opt', {
       mpg ~ .,
       data = mtcars,
       base_model = "MARS",
-      nfold = 5,
-      pmethod = "backward",
-      .control = bag_control(var_imp = TRUE),
+      opt = list(nfold = 5, pmethod = "backward"),
+      control = bag_control(var_imp = TRUE),
       extract = check_folds
     )
   expect_true(all(unlist(mod_2$model_df$extras)))
@@ -47,13 +46,16 @@ test_that('check mars opt', {
   check_classif <- function(x, ...) {
     !is.null(x$glm.coefficients)
   }
+
+  # For correct random numbers
+  skip_if(compareVersion(as.character(getRversion()), "3.6.0") > 0)
   expect_warning(
     mod_3 <-
       bagger(
         Class ~ .,
         data = two_class_dat,
         base_model = "MARS",
-        .control = bag_control(var_imp = TRUE),
+        control = bag_control(var_imp = TRUE),
         extract = check_classif
       ),
     "fitted probabilities numerically 0"

@@ -1,40 +1,59 @@
-validate_args <- function(base_model, times, .control, extract) {
-  if (!is.character(base_model) || length(base_model) != 1) {
-    stop("`base_model` should be a single character value.", call. = FALSE)
+validate_args <- function(model, times, opt, control, cost, extract) {
+  if (!is.character(model) || length(model) != 1) {
+    rlang::abort("`base_model` should be a single character value.")
   }
-  if (!(base_model %in% models)) {
-    stop("`base_model` should be one of ", paste0("'", models, "'", collapse = ", "),
-         call. = FALSE)
+  if (!(model %in% baguette_models)) {
+    rlang::abort("`base_model` should be one of ", paste0("'", baguette_models, "'", collapse = ", "))
+  }
+
+  # ----------------------------------------------------------------------------
+
+  if (!is.null(cost) & !(model %in% c("CART", "C5.0"))) {
+    rlang::abort("`base_model` should be either 'CART' or 'C5.0'")
+  }
+  if (!is.null(cost)) {
+    if (is.numeric(cost) && cost < 0) {
+      rlang::abort("`cost` should be non-negative.")
+    }
+    if (is.matrix(cost)) {
+      if (any(cost) < 0) {
+        rlang::abort("`cost` should be non-negative.")
+      }
+    }
   }
 
   # ----------------------------------------------------------------------------
 
   if (!is.integer(times)) {
-    stop("`times` must be an integer > 1.", call. = FALSE)
+    rlang::abort("`times` must be an integer > 1.")
   }
   if (times < 1) {
-    stop("`times` must be an integer > 1.", call. = FALSE)
+    rlang::abort("`times` must be an integer > 1.")
   }
 
   # ----------------------------------------------------------------------------
+
+  if (!is.null(opt) & !is.list(opt)) {
+    rlang::abort("`opt` should be NULL or a named list.")
+  }
 
   # TODO test for names, check args vs list
 
   # ----------------------------------------------------------------------------
 
-  validate_control(.control)
+  validate_control(control)
 
   # ----------------------------------------------------------------------------
 
   if (!is.null(extract) && !is.function(extract)) {
-    stop("`extract` should be NULL or a function.", call. = FALSE)
+    rlang::abort("`extract` should be NULL or a function.")
   }
   if (!is.null(extract)) {
     extract_nms <- names(formals(extract))
     if (length(extract_nms) != 2)
-      stop("`extract` should have two arguments.", call. = FALSE)
+      rlang::abort("`extract` should have two arguments.")
     if (extract_nms[2] != "...")
-      stop("The 2nd arg of `extract` should be `...`.", call. = FALSE)
+      rlang::abort("The 2nd arg of `extract` should be `...`.")
   }
 
   # ----------------------------------------------------------------------------
@@ -44,8 +63,9 @@ validate_args <- function(base_model, times, .control, extract) {
 }
 
 integer_B <- function(B) {
-  if (is.numeric(B) & !is.integer(B))
+  if (is.numeric(B) & !is.integer(B)) {
     B <- as.integer(B)
+  }
   B
 }
 
@@ -88,7 +108,7 @@ check_for_disaster <- function(x) {
     } else msg <- ""
 
 
-    stop("All of the models failed. ", msg, call. = FALSE)
+    rlang::abort("All of the models failed. ", msg)
   }
   x
 }
@@ -105,10 +125,10 @@ check_type <- function(object, type) {
   } else {
     if (object$base_model[2] == "classification") {
       if (!(type %in% c("class", "prob")))
-        stop("`type` should be either 'class' or 'prob'", call. = FALSE)
+        rlang::abort("`type` should be either 'class' or 'prob'")
     } else {
       if (type != "numeric")
-        stop("`type` should be 'numeric'", call. = FALSE)
+        rlang::abort("`type` should be 'numeric'")
     }
   }
   type
@@ -120,7 +140,7 @@ validate_importance <- function(x) {
   }
 
   if (!is_tibble(x)) {
-    stop("Imprtance score results should be a tibble.", call. = FALSE)
+    rlang::abort("Imprtance score results should be a tibble.")
   }
 
   exp_cols <- c("term", "value", "std.error", "used")
@@ -129,7 +149,7 @@ validate_importance <- function(x) {
                   paste0("'", exp_cols, "'", collapse = ", "),
                   "."
                   )
-    stop(msg, call. = FALSE)
+    rlang::abort(msg)
   }
   x
 }
@@ -138,23 +158,18 @@ validate_importance <- function(x) {
 
 validate_control <- function(x) {
   if (!is.list(x)) {
-    stop("The '.control' object should be a list created by `bag_control()`.",
-         call. = FALSE)
+    rlang::abort("The control object should be a list created by `bag_control()`.")
   }
   samps <- c("none", "down")
 
   if (length(x$var_imp) != 1 || !is.logical(x$var_imp)) {
-    stop("`var_imp` should be a single logical value.", call. = FALSE)
+    rlang::abort("`var_imp` should be a single logical value.")
   }
   if (length(x$allow_parallel) != 1 || !is.logical(x$allow_parallel)) {
-    stop("`allow_parallel` should be a single logical value.", call. = FALSE)
+    rlang::abort("`allow_parallel` should be a single logical value.")
   }
   if (length(x$sampling) != 1 || !is.character(x$sampling) || !any(samps == x$sampling)) {
-    stop("`sampling` should be either 'none' or 'down'.", call. = FALSE)
-  }
-  if (!is.null(x$oob) && !inherits(x$oob, "function")) {
-    stop("`oob` should be either NULL or the results of `yardstick::metric_set()`.",
-         call. = FALSE)
+    rlang::abort("`sampling` should be either 'none' or 'down'.")
   }
   x
 }

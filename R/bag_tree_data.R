@@ -20,6 +20,14 @@ make_bag_tree <- function() {
   parsnip::set_model_arg(
     model = "bag_tree",
     eng = "rpart",
+    parsnip = "class_cost",
+    original = "cost",
+    func = list(pkg = "baguette", fun = "class_cost"),
+    has_submodel = FALSE
+  )
+  parsnip::set_model_arg(
+    model = "bag_tree",
+    eng = "rpart",
     parsnip = "tree_depth",
     original = "maxdepth",
     func = list(pkg = "dials", fun = "tree_depth"),
@@ -127,6 +135,16 @@ make_bag_tree <- function() {
       func = c(pkg = "baguette", fun = "bagger"),
       defaults = list(base_model = "C5.0")
     )
+  )
+
+
+  parsnip::set_model_arg(
+    model = "bag_tree",
+    eng = "C5.0",
+    parsnip = "class_cost",
+    original = "cost",
+    func = list(pkg = "baguette", fun = "class_cost"),
+    has_submodel = FALSE
   )
 
   parsnip::set_model_arg(

@@ -22,7 +22,9 @@ Suggests:
     testthat,
     AmesHousing,
     recipes,
-    modeldata
+    modeldata,
+    covr,
+    yardstick
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -42,10 +44,10 @@ Imports:
     earth,
     magrittr,
     utils,
-    yardstick,
-    generics
-URL: https://github.com/topepo/baguette
-BugReports: https://github.com/topepo/baguette/issues
+    generics,
+    dials
+URL: https://github.com/tidymodels/baguette
+BugReports: https://github.com/tidymodels/baguette/issues
 RoxygenNote: 7.1.0.9000
 Remotes:
     tidymodels/parsnip

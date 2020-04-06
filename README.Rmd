@@ -1,9 +1,3 @@
----
-output: github_document
----
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -17,25 +11,17 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/baguette)](https://cran.r-project.org/package=baguette)
+[![Codecov test coverage](https://codecov.io/gh/topepo/baguette/branch/master/graph/badge.svg)](https://codecov.io/gh/topepo/baguette?branch=master)
+[![R build status](https://github.com/topepo/baguette/workflows/R-CMD-check/badge.svg)](https://github.com/topepo/baguette/actions)
 <!-- badges: end -->
 
-The goal of baguette is to provide efficient functions that can be used to create ensemble models. 
-
-Currently in development/draft. Major to-do's are:
-
- * Convert model objects to expressions _a la_ `tidypredict`
-
- * Test out `hardhat` more
-
- * Add tree-based models for two-class models that have asymmetric costs for each class 
+The goal of baguette is to provide efficient functions that can be used to create ensemble models via bagging. 
 
 ## Installation
 
 For now:
 
 ``` r
-devtools::install_github("topepo/baguette")
+devtools::install_github("tidymodels/baguette")
 ```
-
-## Example
 
