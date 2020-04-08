@@ -158,7 +158,7 @@ validate_importance <- function(x) {
 
 validate_control <- function(x) {
   if (!is.list(x)) {
-    rlang::abort("The control object should be a list created by `bag_control()`.")
+    rlang::abort("The control object should be a list created by `control_bag()`.")
   }
   samps <- c("none", "down")
 

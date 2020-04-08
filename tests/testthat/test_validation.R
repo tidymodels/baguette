@@ -10,7 +10,7 @@ test_that('good values', {
       model = "MARS",
       opt = NULL,
       times = 5L,
-      control = bag_control(),
+      control = control_bag(),
       extract = NULL,
       cost = NULL
     ),
@@ -24,7 +24,7 @@ test_that('bad values', {
       model = "mars",
       opt = NULL,
       times = 5L,
-      control = bag_control(),
+      control = control_bag(),
       extract = NULL,
       cost = NULL
     ),
@@ -36,7 +36,7 @@ test_that('bad values', {
       model = "MARS",
       opt = NULL,
       times = 1,
-      control = bag_control(),
+      control = control_bag(),
       extract = NULL,
       cost = NULL
     ),
@@ -47,7 +47,7 @@ test_that('bad values', {
       model = "MARS",
       opt = NULL,
       times = -1L,
-      control = bag_control(),
+      control = control_bag(),
       extract = NULL,
       cost = NULL
     ),
@@ -69,7 +69,7 @@ test_that('bad values', {
       model = "MARS",
       opt = NULL,
       times = 5L,
-      control = bag_control(),
+      control = control_bag(),
       extract = function(x, y) 2,
       cost = NULL
     ),
@@ -80,7 +80,7 @@ test_that('bad values', {
       model = "MARS",
       opt = NULL,
       times = 5L,
-      control = bag_control(),
+      control = control_bag(),
       extract = function(x) 2,
       cost = NULL
     ),

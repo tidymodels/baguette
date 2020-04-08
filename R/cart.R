@@ -85,7 +85,7 @@ make_cart_spec <- function(classif, opt) {
 }
 
 
-cart_fit  <- function(split, spec, control = bag_control()) {
+cart_fit  <- function(split, spec, control = control_bag()) {
 
   dat <- rsample::analysis(split)
 

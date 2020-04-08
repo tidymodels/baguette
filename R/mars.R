@@ -65,7 +65,7 @@ make_mars_spec <- function(classif, opt) {
 
 
 
-mars_fit  <- function(split, spec, control = bag_control()) {
+mars_fit  <- function(split, spec, control = control_bag()) {
   ctrl <- parsnip::fit_control(catch = TRUE)
 
   dat <- rsample::analysis(split)

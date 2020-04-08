@@ -47,7 +47,7 @@ test_that('check CART opt', {
       data = two_class_dat,
       base_model = "CART",
       opt = list(parms = list(loss = lmat)),
-      control = bag_control(var_imp = TRUE),
+      control = control_bag(var_imp = TRUE),
       extract = get_loss
     )
 
