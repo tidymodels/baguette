@@ -65,7 +65,7 @@ used by CART models (\code{rpart} only).
 \item \code{tree_depth}: The \emph{maximum} depth of a tree (\code{rpart}).
 \item \code{min_n}: The minimum number of data points in a node
 that are required for the node to be split further.
-\item {class_cost}: A cost value to asign to the class corresponding to the
+\item \code{class_cost}: A cost value to asign to the class corresponding to the
 first factor level (for 2-class models, \code{rpart} and \code{C5.0} only).
 }
 These arguments are converted to their specific names at the

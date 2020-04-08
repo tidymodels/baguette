@@ -10,7 +10,7 @@
 #'   \item \code{tree_depth}: The _maximum_ depth of a tree (`rpart`).
 #'   \item \code{min_n}: The minimum number of data points in a node
 #'   that are required for the node to be split further.
-#'   \item {class_cost}: A cost value to asign to the class corresponding to the
+#'   \item \code{class_cost}: A cost value to asign to the class corresponding to the
 #'   first factor level (for 2-class models, `rpart` and `C5.0` only).
 #' }
 #' These arguments are converted to their specific names at the
@@ -117,7 +117,8 @@ update.bag_tree <-
     args <- list(
       cost_complexity   = enquo(cost_complexity),
       tree_depth  = enquo(tree_depth),
-      min_n  = enquo(min_n)
+      min_n  = enquo(min_n),
+      class_cost = enquo(class_cost)
     )
 
     args <- update_main_parameters(args, parameters)
