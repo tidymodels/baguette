@@ -26,8 +26,13 @@ c5_bagger <- function(rs, opt, control, extract, ...) {
 
   rs <-
     rs %>%
-    replace_parsnip_terms() %>%
-    mutate(model = map(model, axe_C5))
+    replace_parsnip_terms()
+
+  if (control$reduce) {
+    rs <-
+      rs %>%
+      mutate(model = map(model, axe_C5))
+  }
 
   list(model = rs, imp = imps)
 }

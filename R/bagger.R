@@ -270,19 +270,21 @@ bagger.recipe <-
 #' @param var_imp A single logical: should variable importance scores be calculated?
 #' @param allow_parallel A single logical: should the model fits be done in
 #'  parallel (even if a parallel `plan()` has been created)?
+#' @param reduce Should models be modified to reduce their size on disk?
 #' @param sampling Either "none" or "down". For classification only. The
 #' training data, after bootstrapping, will be sampled down within each class
 #' (with replacement) to the size of the smallest class.
 #' @return A list.
 #' @export
 control_bag <-
-  function(var_imp = TRUE, allow_parallel = TRUE, sampling = "none") {
+  function(var_imp = TRUE, allow_parallel = TRUE, sampling = "none", reduce = TRUE) {
 
     res <-
       list(
         var_imp = var_imp,
         allow_parallel = allow_parallel,
-        sampling = sampling
+        sampling = sampling,
+        reduce = reduce
       )
 
     validate_control(res)

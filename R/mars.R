@@ -27,8 +27,13 @@ mars_bagger <- function(rs, opt, control, extract, ...) {
 
   rs <-
     rs %>%
-    replace_parsnip_terms() %>%
-    mutate(model = map(model, axe_mars))
+    replace_parsnip_terms()
+
+  if (control$reduce) {
+    rs <-
+     rs %>%
+      mutate(model = map(model, axe_mars))
+  }
 
   list(model = rs, imp = imps)
 }

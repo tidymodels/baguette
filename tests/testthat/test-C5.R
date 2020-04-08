@@ -36,3 +36,35 @@ test_that('check C5.0 opt', {
   expect_true(all(unlist(mod_2$model_df$extras)))
   expect_true(inherits(mod_2$imp, "tbl_df"))
 })
+
+
+# ------------------------------------------------------------------------------
+
+test_that('check model reduction', {
+  set.seed(36323)
+  reduced <-
+    bagger(
+      Species ~ .,
+      data = iris,
+      base_model = "C5.0",
+      times = 3
+    )
+  expect_true(length(reduced$model_df$model[[1]]$fit$control) == 1)
+  expect_equal(reduced$model_df$model[[1]]$fit$call, rlang::call2("dummy_call"))
+  expect_equal(reduced$model_df$model[[1]]$fit$output, character(0))
+
+  set.seed(36323)
+  full <-
+    bagger(
+      Species ~ .,
+      data = iris,
+      base_model = "C5.0",
+      times = 3,
+      control = control_bag(reduce = FALSE)
+    )
+
+  expect_true(length(full$model_df$model[[1]]$fit$control) > 1)
+  expect_true(is.call(full$model_df$model[[1]]$fit$call))
+  expect_true(nchar(full$model_df$model[[1]]$fit$output) > 10)
+
+})

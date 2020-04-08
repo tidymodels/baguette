@@ -28,8 +28,13 @@ cart_bagger <- function(rs, opt, control, extract, ...) {
 
   rs <-
     rs %>%
-    replace_parsnip_terms() %>%
-    mutate(model = map(model, axe_cart))
+    replace_parsnip_terms()
+
+  if (control$reduce) {
+    rs <-
+      rs %>%
+      mutate(model = map(model, axe_cart))
+  }
 
   list(model = rs, imp = imps)
 }

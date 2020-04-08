@@ -57,3 +57,42 @@ test_that('check CART opt', {
   expect_true(inherits(mod_3$imp, "tbl_df"))
   expect_true(isTRUE(all(sort(mod_3$imp$term) == LETTERS[1:2])))
 })
+
+# ------------------------------------------------------------------------------
+
+test_that('check model reduction', {
+  set.seed(36323)
+  reduced <-
+    bagger(
+      Species ~ .,
+      data = iris,
+      base_model = "CART",
+      times = 3
+    )
+  expect_true(length(reduced$model_df$model[[1]]$fit$y) == 0)
+  expect_true(length(reduced$model_df$model[[1]]$fit$control) == 2)
+  expect_equal(reduced$model_df$model[[1]]$fit$call, rlang::call2("dummy_call"))
+  expect_identical(attr(reduced$model_df$model[[1]]$fit$terms, ".Environment"), rlang::base_env())
+
+  set.seed(36323)
+  full <-
+    bagger(
+      Species ~ .,
+      data = iris,
+      base_model = "CART",
+      times = 3,
+      control = control_bag(reduce = FALSE)
+    )
+
+  expect_true(length(full$model_df$model[[1]]$fit$y) > 0)
+  expect_true(length(full$model_df$model[[1]]$fit$control) > 1)
+  expect_true(is.call(full$model_df$model[[1]]$fit$call))
+  expect_false(
+    isTRUE(
+      all.equal(attr(full$model_df$model[[1]]$fit$terms, ".Environment"),
+                rlang::base_env()
+      )
+    )
+  )
+
+})

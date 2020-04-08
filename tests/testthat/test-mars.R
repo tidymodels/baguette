@@ -48,7 +48,7 @@ test_that('check mars opt', {
   }
 
   # For correct random numbers
-  skip_if(compareVersion(as.character(getRversion()), "3.6.0") > 0)
+  skip_if(compareVersion(as.character(getRversion()), "3.6.0") < 0)
   expect_warning(
     mod_3 <-
       bagger(
@@ -63,3 +63,35 @@ test_that('check mars opt', {
   expect_true(all(unlist(mod_3$model_df$extras)))
   expect_true(inherits(mod_3$imp, "tbl_df"))
 })
+
+# ------------------------------------------------------------------------------
+
+test_that('check model reduction', {
+  set.seed(36323)
+  reduced <-
+    bagger(
+      mpg ~ .,
+      data = mtcars,
+      base_model = "MARS",
+      times = 3
+    )
+  expect_false(is.matrix(reduced$model_df$model[[1]]$fit$y))
+  expect_equal(reduced$model_df$model[[1]]$fit$call, rlang::call2("dummy_call"))
+  expect_equal(reduced$model_df$model[[1]]$fit$residuals, numeric(0))
+
+  set.seed(36323)
+  full <-
+    bagger(
+      mpg ~ .,
+      data = mtcars,
+      base_model = "MARS",
+      times = 3,
+      control = control_bag(reduce = FALSE)
+    )
+
+  expect_true(is.matrix(full$model_df$model[[1]]$fit$y))
+  expect_true(is.call(full$model_df$model[[1]]$fit$call))
+  expect_true(is.matrix(full$model_df$model[[1]]$fit$residuals))
+
+})
+

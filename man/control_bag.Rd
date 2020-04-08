@@ -4,7 +4,12 @@
 \alias{control_bag}
 \title{Controlling the bagging process}
 \usage{
-control_bag(var_imp = TRUE, allow_parallel = TRUE, sampling = "none")
+control_bag(
+  var_imp = TRUE,
+  allow_parallel = TRUE,
+  sampling = "none",
+  reduce = TRUE
+)
 }
 \arguments{
 \item{var_imp}{A single logical: should variable importance scores be calculated?}
@@ -15,6 +20,8 @@ parallel (even if a parallel \code{plan()} has been created)?}
 \item{sampling}{Either "none" or "down". For classification only. The
 training data, after bootstrapping, will be sampled down within each class
 (with replacement) to the size of the smallest class.}
+
+\item{reduce}{Should models be modified to reduce their size on disk?}
 }
 \value{
 A list.

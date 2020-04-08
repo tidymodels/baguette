@@ -171,5 +171,8 @@ validate_control <- function(x) {
   if (length(x$sampling) != 1 || !is.character(x$sampling) || !any(samps == x$sampling)) {
     rlang::abort("`sampling` should be either 'none' or 'down'.")
   }
+  if (length(x$reduce) != 1 || !is.logical(x$reduce)) {
+    rlang::abort("`reduce` should be a single logical value.")
+  }
   x
 }
