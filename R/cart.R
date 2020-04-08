@@ -28,8 +28,13 @@ cart_bagger <- function(rs, opt, control, extract, ...) {
 
   rs <-
     rs %>%
-    replace_parsnip_terms() %>%
-    mutate(model = map(model, axe_cart))
+    replace_parsnip_terms()
+
+  if (control$reduce) {
+    rs <-
+      rs %>%
+      mutate(model = map(model, axe_cart))
+  }
 
   list(model = rs, imp = imps)
 }
@@ -85,7 +90,7 @@ make_cart_spec <- function(classif, opt) {
 }
 
 
-cart_fit  <- function(split, spec, control = bag_control()) {
+cart_fit  <- function(split, spec, control = control_bag()) {
 
   dat <- rsample::analysis(split)
 

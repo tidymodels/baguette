@@ -27,8 +27,13 @@ mars_bagger <- function(rs, opt, control, extract, ...) {
 
   rs <-
     rs %>%
-    replace_parsnip_terms() %>%
-    mutate(model = map(model, axe_mars))
+    replace_parsnip_terms()
+
+  if (control$reduce) {
+    rs <-
+     rs %>%
+      mutate(model = map(model, axe_mars))
+  }
 
   list(model = rs, imp = imps)
 }
@@ -65,7 +70,7 @@ make_mars_spec <- function(classif, opt) {
 
 
 
-mars_fit  <- function(split, spec, control = bag_control()) {
+mars_fit  <- function(split, spec, control = control_bag()) {
   ctrl <- parsnip::fit_control(catch = TRUE)
 
   dat <- rsample::analysis(split)

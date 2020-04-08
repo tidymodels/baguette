@@ -108,7 +108,7 @@ check_for_disaster <- function(x) {
     } else msg <- ""
 
 
-    rlang::abort("All of the models failed. ", msg)
+    rlang::abort(paste0("All of the models failed. ", msg))
   }
   x
 }
@@ -158,7 +158,7 @@ validate_importance <- function(x) {
 
 validate_control <- function(x) {
   if (!is.list(x)) {
-    rlang::abort("The control object should be a list created by `bag_control()`.")
+    rlang::abort("The control object should be a list created by `control_bag()`.")
   }
   samps <- c("none", "down")
 
@@ -170,6 +170,9 @@ validate_control <- function(x) {
   }
   if (length(x$sampling) != 1 || !is.character(x$sampling) || !any(samps == x$sampling)) {
     rlang::abort("`sampling` should be either 'none' or 'down'.")
+  }
+  if (length(x$reduce) != 1 || !is.logical(x$reduce)) {
+    rlang::abort("`reduce` should be a single logical value.")
   }
   x
 }
