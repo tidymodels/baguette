@@ -53,3 +53,12 @@ test_that('formula execution', {
 
   expect_true(all(unlist(mod$model_df$extras)))
 })
+
+# ------------------------------------------------------------------------------
+
+test_that('var_imp', {
+  mod <- bagger(mpg ~ ., data = mtcars, base_model = "MARS", times = 2)
+  expect_true(tibble::is_tibble(var_imp(mod)))
+  expect_equal(names(var_imp(mod)), c("term", "value", "std.error", "used"))
+  expect_equal(var_imp(mod), mod$imp)
+})

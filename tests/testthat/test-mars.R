@@ -95,3 +95,66 @@ test_that('check model reduction', {
 
 })
 
+# ------------------------------------------------------------------------------
+
+test_that('check MARS parsnip interface', {
+  set.seed(4779)
+  expect_error(
+    reg_mod <- bag_mars(num_terms = 5, prod_degree = 2) %>%
+      set_engine("earth", times = 3) %>%
+      set_mode("regression") %>%
+      fit(mpg ~ ., data = mtcars),
+    regexp = NA
+  )
+  expect_true(
+    all(purrr::map_lgl(reg_mod$fit$model_df$model, ~ inherits(.x, "model_fit")))
+  )
+  expect_true(
+    all(purrr::map_lgl(reg_mod$fit$model_df$model, ~ inherits(.x$fit, "earth")))
+  )
+  expect_error(
+    reg_mod_pred <- predict(reg_mod, mtcars[1:5, -1]),
+    regexp = NA
+  )
+  expect_true(tibble::is_tibble(reg_mod_pred))
+  expect_equal(nrow(reg_mod_pred), 5)
+  expect_equal(names(reg_mod_pred), ".pred")
+
+  # ----------------------------------------------------------------------------
+
+  set.seed(4779)
+  expect_error(
+    reg_class <- bag_mars(num_terms = 5, prod_degree = 2) %>%
+      set_engine("earth", times = 3) %>%
+      set_mode("classification") %>%
+      fit(Class ~ ., data = two_class_dat),
+    regexp = NA
+  )
+  expect_true(
+    all(purrr::map_lgl(reg_class$fit$model_df$model, ~ inherits(.x, "model_fit")))
+  )
+  expect_true(
+    all(purrr::map_lgl(reg_class$fit$model_df$model, ~ inherits(.x$fit, "earth")))
+  )
+  expect_error(
+    reg_class_pred <- predict(reg_class, two_class_dat[1:5, -3]),
+    regexp = NA
+  )
+  expect_true(tibble::is_tibble(reg_class_pred))
+  expect_equal(nrow(reg_class_pred), 5)
+  expect_equal(names(reg_class_pred), ".pred_class")
+
+  expect_error(
+    reg_class_prob <- predict(reg_class, two_class_dat[1:5, -3], type = "prob"),
+    regexp = NA
+  )
+  expect_true(tibble::is_tibble(reg_class_prob))
+  expect_equal(nrow(reg_class_prob), 5)
+  expect_equal(names(reg_class_prob), c(".pred_Class1", ".pred_Class2"))
+
+  expect_output(print(bag_mars(num_terms = 3)))
+  expect_equal(update(bag_mars(), num_terms = 3), bag_mars(num_terms = 3))
+  expect_equal(update(bag_mars(), prod_degree = 1), bag_mars(prod_degree = 1))
+  expect_equal(update(bag_mars(), prune_method = "none"), bag_mars(prune_method = "none"))
+})
+

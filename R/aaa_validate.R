@@ -108,7 +108,7 @@ check_for_disaster <- function(x) {
     } else msg <- ""
 
 
-    rlang::abort("All of the models failed. ", msg)
+    rlang::abort(paste0("All of the models failed. ", msg))
   }
   x
 }

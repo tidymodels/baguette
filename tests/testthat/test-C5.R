@@ -4,6 +4,10 @@ context("C5.0 models")
 
 # ------------------------------------------------------------------------------
 
+data("two_class_dat", package = "modeldata")
+
+# ------------------------------------------------------------------------------
+
 test_that('check C5.0 opt', {
   check_rules <- function(x, ...) {
     x$tree == "" & nchar(x$rules) > 10
@@ -68,3 +72,81 @@ test_that('check model reduction', {
   expect_true(nchar(full$model_df$model[[1]]$fit$output) > 10)
 
 })
+
+# ------------------------------------------------------------------------------
+
+test_that('check C5 parsnip interface', {
+
+  set.seed(4779)
+  expect_error(
+    class_mod <- bag_tree(min_n = 3) %>%
+      set_engine("C5.0", times = 3) %>%
+      set_mode("classification") %>%
+      fit(Class ~ ., data = two_class_dat),
+    regexp = NA
+  )
+  expect_true(
+    all(purrr::map_lgl(class_mod$fit$model_df$model, ~ inherits(.x, "model_fit")))
+  )
+  expect_true(
+    all(purrr::map_lgl(class_mod$fit$model_df$model, ~ inherits(.x$fit, "C5.0")))
+  )
+  expect_error(
+    class_mod_pred <- predict(class_mod, two_class_dat[1:5, -3]),
+    regexp = NA
+  )
+  expect_true(tibble::is_tibble(class_mod_pred))
+  expect_equal(nrow(class_mod_pred), 5)
+  expect_equal(names(class_mod_pred), ".pred_class")
+
+  expect_error(
+    class_mod_prob <- predict(class_mod, two_class_dat[1:5, -3], type = "prob"),
+    regexp = NA
+  )
+  expect_true(tibble::is_tibble(class_mod_prob))
+  expect_equal(nrow(class_mod_prob), 5)
+  expect_equal(names(class_mod_prob), c(".pred_Class1", ".pred_Class2"))
+
+  set.seed(4779)
+  expect_error(
+    class_cost <- bag_tree(min_n = 3, class_cost = 2) %>%
+      set_engine("C5.0", times = 3) %>%
+      set_mode("classification") %>%
+      fit(Class ~ ., data = two_class_dat),
+    regexp = NA
+  )
+  expect_true(
+    all(purrr::map_lgl(class_cost$fit$model_df$model, ~ inherits(.x, "model_fit")))
+  )
+  expect_true(
+    all(purrr::map_lgl(class_cost$fit$model_df$model, ~ inherits(.x$fit, "C5.0")))
+  )
+  expect_error(
+    class_cost_pred <- predict(class_cost, two_class_dat[1:5, -3]),
+    regexp = NA
+  )
+  expect_true(tibble::is_tibble(class_cost_pred))
+  expect_equal(nrow(class_cost_pred), 5)
+  expect_equal(names(class_cost_pred), ".pred_class")
+
+  expect_error(
+    class_cost_prob <- predict(class_cost, two_class_dat[1:5, -3], type = "prob"),
+    regexp = NA
+  )
+  expect_true(tibble::is_tibble(class_cost_prob))
+  expect_equal(nrow(class_cost_prob), 5)
+  expect_equal(names(class_cost_prob), c(".pred_Class1", ".pred_Class2"))
+
+
+  expect_output(print(bag_tree(min_n = 3)))
+  expect_equal(update(bag_tree(), min_n = 3), bag_tree(min_n = 3))
+  expect_equal(update(bag_tree(), cost_complexity = 3), bag_tree(cost_complexity = 3))
+  expect_equal(update(bag_tree(), tree_depth = 3), bag_tree(tree_depth = 3))
+  expect_equal(update(bag_tree(), class_cost = 3), bag_tree(class_cost = 3))
+
+  expect_equal(class_cost(c(1, 5))$range$lower, 1)
+  expect_equal(class_cost(c(1, 5))$range$upper, 5)
+
+})
+
+

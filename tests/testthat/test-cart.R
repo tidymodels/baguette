@@ -6,6 +6,10 @@ context("CART models")
 
 # ------------------------------------------------------------------------------
 
+data("two_class_dat", package = "modeldata")
+
+# ------------------------------------------------------------------------------
+
 num_leaves <- function(x, ...) {
   sum(x$frame$var == "<leaf>")
 }
@@ -96,3 +100,93 @@ test_that('check model reduction', {
   )
 
 })
+
+
+# ------------------------------------------------------------------------------
+
+test_that('check CART parsnip interface', {
+  set.seed(4779)
+  expect_error(
+    reg_mod <- bag_tree(cost_complexity = .001, min_n = 3) %>%
+      set_engine("rpart", times = 3) %>%
+      set_mode("regression") %>%
+      fit(mpg ~ ., data = mtcars),
+    regexp = NA
+  )
+  expect_true(
+    all(purrr::map_lgl(reg_mod$fit$model_df$model, ~ inherits(.x, "model_fit")))
+  )
+  expect_true(
+    all(purrr::map_lgl(reg_mod$fit$model_df$model, ~ inherits(.x$fit, "rpart")))
+  )
+  expect_error(
+    reg_mod_pred <- predict(reg_mod, mtcars[1:5, -1]),
+    regexp = NA
+  )
+  expect_true(tibble::is_tibble(reg_mod_pred))
+  expect_equal(nrow(reg_mod_pred), 5)
+  expect_equal(names(reg_mod_pred), ".pred")
+
+  set.seed(4779)
+  expect_error(
+    class_cost <- bag_tree(min_n = 3, class_cost = 2) %>%
+      set_engine("rpart", times = 3) %>%
+      set_mode("classification") %>%
+      fit(Class ~ ., data = two_class_dat),
+    regexp = NA
+  )
+  expect_true(
+    all(purrr::map_lgl(class_cost$fit$model_df$model, ~ inherits(.x, "model_fit")))
+  )
+  expect_true(
+    all(purrr::map_lgl(class_cost$fit$model_df$model, ~ inherits(.x$fit, "rpart")))
+  )
+  expect_error(
+    class_cost_pred <- predict(class_cost, two_class_dat[1:5, -3]),
+    regexp = NA
+  )
+  expect_true(tibble::is_tibble(class_cost_pred))
+  expect_equal(nrow(class_cost_pred), 5)
+  expect_equal(names(class_cost_pred), ".pred_class")
+
+  expect_error(
+    class_cost_prob <- predict(class_cost, two_class_dat[1:5, -3], type = "prob"),
+    regexp = NA
+  )
+  expect_true(tibble::is_tibble(class_cost_prob))
+  expect_equal(nrow(class_cost_prob), 5)
+  expect_equal(names(class_cost_prob), c(".pred_Class1", ".pred_Class2"))
+
+  # ----------------------------------------------------------------------------
+
+  set.seed(4779)
+  expect_error(
+    class_mod <- bag_tree(cost_complexity = .001, min_n = 3) %>%
+      set_engine("rpart", times = 3) %>%
+      set_mode("classification") %>%
+      fit(Class ~ ., data = two_class_dat),
+    regexp = NA
+  )
+  expect_true(
+    all(purrr::map_lgl(class_mod$fit$model_df$model, ~ inherits(.x, "model_fit")))
+  )
+  expect_true(
+    all(purrr::map_lgl(class_mod$fit$model_df$model, ~ inherits(.x$fit, "rpart")))
+  )
+  expect_error(
+    class_mod_pred <- predict(class_mod, two_class_dat[1:5, -3]),
+    regexp = NA
+  )
+  expect_true(tibble::is_tibble(class_mod_pred))
+  expect_equal(nrow(class_mod_pred), 5)
+  expect_equal(names(class_mod_pred), ".pred_class")
+
+  expect_error(
+    class_mod_prob <- predict(class_mod, two_class_dat[1:5, -3], type = "prob"),
+    regexp = NA
+  )
+  expect_true(tibble::is_tibble(class_mod_prob))
+  expect_equal(nrow(class_mod_prob), 5)
+  expect_equal(names(class_mod_prob), c(".pred_Class1", ".pred_Class2"))
+})
+
