@@ -131,7 +131,9 @@ test_that('bad inputs', {
             type = "potato"),
     "`type` should be 'numeric'"
   )
-  expect_warning(RNGkind(sample.kind = "Rounding"))
+  if (compareVersion(as.character(getRversion()), "3.6.0") > 0) {
+    expect_warning(RNGkind(sample.kind = "Rounding"))
+  }
   set.seed(3983)
   expect_warning(
     expect_error(
@@ -150,7 +152,9 @@ test_that('model failures inputs', {
   bad_iris <- iris
   bad_iris$a <- factor("a", levels = letters[1:2])
 
-  expect_warning(RNGkind(sample.kind = "Rounding"))
+  if (compareVersion(as.character(getRversion()), "3.6.0") > 0) {
+    expect_warning(RNGkind(sample.kind = "Rounding"))
+  }
   set.seed(459394)
   expect_error(
     bagger(a ~ ., data = bad_iris, base_model = "CART", times = 3),

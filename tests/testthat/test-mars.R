@@ -47,7 +47,10 @@ test_that('check mars opt', {
   }
 
   # For correct random numbers
-  skip_if(compareVersion(as.character(getRversion()), "3.6.0") < 0)
+  if (compareVersion(as.character(getRversion()), "3.6.0") > 0) {
+    expect_warning(RNGkind(sample.kind = "Rounding"))
+  }
+  set.seed(2234)
   expect_warning(
     mod_3 <-
       bagger(
