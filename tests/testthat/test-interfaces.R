@@ -24,8 +24,7 @@ test_that('recipe execution', {
         rec,
         data = iris,
         base_model = "CART",
-        extract = check_ranges,
-        control = control_bag(reduce = FALSE),
+        control = control_bag(reduce = FALSE, extract = check_ranges),
         model = TRUE
       ),
     regexp = NA)

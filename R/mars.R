@@ -1,5 +1,5 @@
 
-mars_bagger <- function(rs, control, extract, ...) {
+mars_bagger <- function(rs, control, ...) {
 
   opt <- rlang::dots_list(...)
   is_classif <- is.factor(rs$splits[[1]]$data$.outcome)
@@ -22,7 +22,7 @@ mars_bagger <- function(rs, control, extract, ...) {
 
   rs <- filter_rs(rs)
 
-  rs <- extractor(rs, extract)
+  rs <- extractor(rs, control$extract)
 
   imps <- compute_imp(rs, mars_imp, control$var_imp)
 

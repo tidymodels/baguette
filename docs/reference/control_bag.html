@@ -111,7 +111,13 @@
     <p><code>control_bag()</code> can set options for ancillary aspects of the bagging process.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>control_bag</span>(<span class='kw'>var_imp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>allow_parallel</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>sampling</span> <span class='kw'>=</span> <span class='st'>"none"</span>)</pre>
+    <pre class="usage"><span class='fu'>control_bag</span>(
+  <span class='kw'>var_imp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>allow_parallel</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>sampling</span> <span class='kw'>=</span> <span class='st'>"none"</span>,
+  <span class='kw'>reduce</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>extract</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -131,12 +137,47 @@ parallel (even if a parallel <code>plan()</code> has been created)?</p></td>
 training data, after bootstrapping, will be sampled down within each class
 (with replacement) to the size of the smallest class.</p></td>
     </tr>
+    <tr>
+      <th>reduce</th>
+      <td><p>Should models be modified to reduce their size on disk?</p></td>
+    </tr>
+    <tr>
+      <th>extract</th>
+      <td><p>A function (or NULL) that can extract model-related aspects
+of each ensemble member. See Details and example below.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A list.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
+    <p>Any arbitrary item can be saved from the model object (including the model
+object itself) using the <code>extract</code> argument, which should be a function with
+arguments <code>x</code> (for the model object), and <code>...</code>. The results of this
+function are saved into a list column called <code>extras</code> (see the example below).</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Extracting model components</span>
+
+<span class='no'>num_term_nodes</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>...</span>) {
+  <span class='kw pkg'>tibble</span><span class='kw ns'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(<span class='kw'>num_nodes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>x</span>$<span class='no'>frame</span>$<span class='no'>var</span> <span class='kw'>==</span> <span class='st'>"&lt;leaf&gt;"</span>))
+}
+
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>7687</span>)
+<span class='no'>with_extras</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bagger.html'>bagger</a></span>(<span class='no'>mpg</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>,
+                      <span class='kw'>base_model</span> <span class='kw'>=</span> <span class='st'>"CART"</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+                      <span class='kw'>control</span> <span class='kw'>=</span> <span class='fu'>control_bag</span>(<span class='kw'>extract</span> <span class='kw'>=</span> <span class='no'>num_term_nodes</span>))
+
+<span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span>(<span class='no'>with_extras</span>$<span class='no'>model_df</span>$<span class='no'>extras</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 1</span><span>
+#&gt;   num_nodes
+#&gt;       </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>         3
+#&gt; </span><span style='color: #555555;'>2</span><span>         3
+#&gt; </span><span style='color: #555555;'>3</span><span>         3
+#&gt; </span><span style='color: #555555;'>4</span><span>         3
+#&gt; </span><span style='color: #555555;'>5</span><span>         2</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

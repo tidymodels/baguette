@@ -1,4 +1,4 @@
-validate_args <- function(model, times, control, cost, extract) {
+validate_args <- function(model, times, control, cost) {
   if (!is.character(model) || length(model) != 1) {
     rlang::abort("`base_model` should be a single character value.")
   }
@@ -29,12 +29,6 @@ validate_args <- function(model, times, control, cost, extract) {
   # ----------------------------------------------------------------------------
 
   validate_control(control)
-
-  # ----------------------------------------------------------------------------
-
-  if (!is.null(extract) && !is.function(extract)) {
-    rlang::abort("`extract` should be NULL or a function.")
-  }
 
   # ----------------------------------------------------------------------------
 
@@ -154,5 +148,9 @@ validate_control <- function(x) {
   if (length(x$reduce) != 1 || !is.logical(x$reduce)) {
     rlang::abort("`reduce` should be a single logical value.")
   }
+  if (!is.null(x$extract) && !is.function(x$extract)) {
+    rlang::abort("`extract` should be NULL or a function.")
+  }
+
   x
 }

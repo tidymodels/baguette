@@ -14,7 +14,6 @@ test_that('good values', {
       model = "MARS",
       times = 5L,
       control = control_bag(),
-      extract = NULL,
       cost = NULL
     ),
     regexp = NA
@@ -27,7 +26,6 @@ test_that('bad values', {
       model = "mars",
       times = 5L,
       control = control_bag(),
-      extract = NULL,
       cost = NULL
     ),
     regexp = "`base_model`",
@@ -38,7 +36,6 @@ test_that('bad values', {
       model = "MARS",
       times = 1,
       control = control_bag(),
-      extract = NULL,
       cost = NULL
     ),
     regexp = "integer"
@@ -48,7 +45,6 @@ test_that('bad values', {
       model = "MARS",
       times = -1L,
       control = control_bag(),
-      extract = NULL,
       cost = NULL
     ),
     regexp = "integer"
@@ -58,7 +54,6 @@ test_that('bad values', {
       model = "MARS",
       times = 5L,
       control = 2,
-      extract = NULL,
       cost = NULL
     ),
     regexp = "should be a list"
@@ -119,7 +114,7 @@ test_that('bad inputs', {
     "`cost` should be non-negative"
   )
   expect_error(
-    bagger(mpg ~ ., data = mtcars, base_model = "MARS", extract = 2),
+    bagger(mpg ~ ., data = mtcars, base_model = "MARS", control = control_bag(extract = 2)),
     "`extract` should be NULL or a function"
   )
   expect_error(

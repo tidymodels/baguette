@@ -75,9 +75,17 @@ following \emph{engines}:
 }
 }
 \examples{
-# bag_mars(num_terms = 5) \%>\% set_mode("regression")
-#model <- bag_mars(num_terms = 10, prune_method = "none")
-#model
-#update(model, num_terms = 2)
-#update(model, num_terms = 2, fresh = TRUE)
+library(parsnip)
+
+set.seed(7396)
+bag_mars(num_terms = 7) \%>\%
+  set_mode("regression") \%>\%
+  set_engine("earth", times = 3) \%>\%
+  fit(mpg ~ ., data = mtcars)
+
+
+model <- bag_mars(num_terms = 10, prune_method = "none")
+model
+update(model, num_terms = 2)
+update(model, num_terms = 2, fresh = TRUE)
 }

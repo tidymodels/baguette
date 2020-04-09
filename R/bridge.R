@@ -1,4 +1,4 @@
-bagger_bridge <- function(processed, base_model, seed, times, control, cost, extract, ...) {
+bagger_bridge <- function(processed, base_model, seed, times, control, cost, ...) {
   validate_outcomes_are_univariate(processed$outcomes)
   if (base_model %in% c("C5.0")) {
     validate_outcomes_are_factors(processed$outcomes)
@@ -14,15 +14,15 @@ bagger_bridge <- function(processed, base_model, seed, times, control, cost, ext
   if (is.null(cost)) {
     res <- switch(
       base_model,
-      CART = cart_bagger(rs, control, extract, ...),
-      C5.0 =   c5_bagger(rs, control, extract, ...),
-      MARS = mars_bagger(rs, control, extract, ...)
+      CART = cart_bagger(rs, control, ...),
+      C5.0 =   c5_bagger(rs, control, ...),
+      MARS = mars_bagger(rs, control, ...)
     )
   } else {
     res <- switch(
       base_model,
-      CART = cost_sens_cart_bagger(rs, control, cost, extract, ...),
-      C5.0 =   cost_sens_c5_bagger(rs, control, cost, extract, ...)
+      CART = cost_sens_cart_bagger(rs, control, cost, ...),
+      C5.0 =   cost_sens_c5_bagger(rs, control, cost, ...)
     )
   }
 

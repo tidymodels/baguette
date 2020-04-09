@@ -46,7 +46,13 @@
 #'  machines.
 #' @importFrom purrr map_lgl
 #' @examples
-#' # bag_tree(tree_depth = 5) %>% set_mode("classification")
+#' library(parsnip)
+#'
+#' set.seed(9952)
+#' bag_tree(tree_depth = 5) %>%
+#'   set_mode("classification") %>%
+#'   set_engine("rpart", times = 3) %>%
+#'   fit(Species ~ ., data = iris)
 #' @export
 
 bag_tree <-
@@ -96,10 +102,12 @@ print.bag_tree <- function(x, ...) {
 #' @param fresh A logical for whether the arguments should be
 #'  modified in-place of or replaced wholesale.
 #' @examples
-#' #model <- bag_tree(cost_complexity = 10, min_n = 3)
-#' #model
-#' #update(model, cost_complexity = 1)
-#' #update(model, cost_complexity = 1, fresh = TRUE)
+#'
+#'
+#' model <- bag_tree(cost_complexity = 10, min_n = 3)
+#' model
+#' update(model, cost_complexity = 1)
+#' update(model, cost_complexity = 1, fresh = TRUE)
 #' @method update bag_tree
 #' @rdname bag_tree
 #' @export

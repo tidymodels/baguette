@@ -20,7 +20,6 @@ bagger(x, ...)
   times = 11L,
   control = control_bag(),
   cost = NULL,
-  extract = NULL,
   ...
 )
 
@@ -31,7 +30,6 @@ bagger(x, ...)
   times = 11L,
   control = control_bag(),
   cost = NULL,
-  extract = NULL,
   ...
 )
 
@@ -42,7 +40,6 @@ bagger(x, ...)
   times = 11L,
   control = control_bag(),
   cost = NULL,
-  extract = NULL,
   ...
 )
 
@@ -53,7 +50,6 @@ bagger(x, ...)
   times = 11L,
   control = control_bag(),
   cost = NULL,
-  extract = NULL,
   ...
 )
 }
@@ -75,9 +71,6 @@ samples/ensemble members (some model fits might fail).}
 
 \item{cost}{A non-negative scale (for two class problems) or a cost matrix.}
 
-\item{extract}{A function (or NULL) that can extract model-related aspects
-of each ensemble member. See Details and example below.}
-
 \item{formula}{An object of class "formula" (or one that can be coerced to
 that class): a symbolic description of the model to be fitted. Note that
 this package does not support multivariate outcomes and that, if some
@@ -96,11 +89,6 @@ prediction function for each model object is encoded in an R expression and
 the original model object is discarded. When making predictions, each
 prediction formula is evaluated on the new data and aggregated using the
 mean.
-
-Any arbitrary item can be saved from the model object (including the model
-object itself) using the \code{extract} argument, which should be a function with
-arguments \code{x} (for the model object), and \code{...}. The results of this
-function are saved into a list column called \code{extras} (see the example below).
 
 Variable importance scores are calculated using implementations in each
 package. When requested, the results are in a tibble with column names
@@ -139,12 +127,13 @@ ctrl <- control_bag(var_imp = TRUE)
 set.seed(7687)
 mars_bag <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
                    base_model = "MARS", times = 5, control = ctrl)
+mars_bag
 var_imp(mars_bag)
 
 set.seed(7687)
 cart_bag <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
                    base_model = "CART", times = 5, control = ctrl)
-
+cart_bag
 
 # ------------------------------------------------------------------------------
 # Other interfaces
@@ -163,17 +152,5 @@ cart_pca_bag
 # Using formulas
 mars_bag <- bagger(HHV ~ ., data = biomass_tr, base_model = "MARS", times = 5,
                    control = ctrl)
-
-# ------------------------------------------------------------------------------
-# Extracting model components
-
-num_term_nodes <- function(x, ...) {
-  tibble(num_nodes = sum(x$frame$var == "<leaf>"))
-}
-
-set.seed(7687)
-with_extras <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
-                      base_model = "CART", times = 5, extract = num_term_nodes)
-
-dplyr::bind_rows(with_extras$model_df$extras)
+mars_bag
 }

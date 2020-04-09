@@ -35,7 +35,13 @@
 #'
 #' @importFrom purrr map_lgl
 #' @examples
-#' # bag_mars(num_terms = 5) %>% set_mode("regression")
+#' library(parsnip)
+#'
+#' set.seed(7396)
+#' bag_mars(num_terms = 7) %>%
+#'   set_mode("regression") %>%
+#'   set_engine("earth", times = 3) %>%
+#'   fit(mpg ~ ., data = mtcars)
 #' @export
 
 bag_mars <-
@@ -81,10 +87,12 @@ print.bag_mars <- function(x, ...) {
 #' @param fresh A logical for whether the arguments should be
 #'  modified in-place of or replaced wholesale.
 #' @examples
-#' #model <- bag_mars(num_terms = 10, prune_method = "none")
-#' #model
-#' #update(model, num_terms = 2)
-#' #update(model, num_terms = 2, fresh = TRUE)
+#'
+#'
+#' model <- bag_mars(num_terms = 10, prune_method = "none")
+#' model
+#' update(model, num_terms = 2)
+#' update(model, num_terms = 2, fresh = TRUE)
 #' @method update bag_mars
 #' @rdname bag_mars
 #' @export
