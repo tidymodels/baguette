@@ -1,13 +1,7 @@
-# TODO add ... in here somewhere
-
-new_bagger <- function(model_df, imp, control, cost, opt, base_model, blueprint) {
+new_bagger <- function(model_df, imp, control, cost, base_model, blueprint) {
 
   if (!is_tibble(model_df)) {
     rlang::abort("`model_df` should be a tibble.")
-  }
-
-  if (!is.list(opt) & !is.null(opt)) {
-    rlang::abort("`opt` should be a list or NULL.")
   }
 
   if (is.numeric(blueprint$ptypes$outcomes[[1]])) {

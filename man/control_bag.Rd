@@ -8,7 +8,8 @@ control_bag(
   var_imp = TRUE,
   allow_parallel = TRUE,
   sampling = "none",
-  reduce = TRUE
+  reduce = TRUE,
+  extract = NULL
 )
 }
 \arguments{
@@ -22,10 +23,33 @@ training data, after bootstrapping, will be sampled down within each class
 (with replacement) to the size of the smallest class.}
 
 \item{reduce}{Should models be modified to reduce their size on disk?}
+
+\item{extract}{A function (or NULL) that can extract model-related aspects
+of each ensemble member. See Details and example below.}
 }
 \value{
 A list.
 }
 \description{
 \code{control_bag()} can set options for ancillary aspects of the bagging process.
+}
+\details{
+Any arbitrary item can be saved from the model object (including the model
+object itself) using the \code{extract} argument, which should be a function with
+arguments \code{x} (for the model object), and \code{...}. The results of this
+function are saved into a list column called \code{extras} (see the example below).
+}
+\examples{
+# Extracting model components
+
+num_term_nodes <- function(x, ...) {
+  tibble::tibble(num_nodes = sum(x$frame$var == "<leaf>"))
+}
+
+set.seed(7687)
+with_extras <- bagger(mpg ~ ., data = mtcars,
+                      base_model = "CART", times = 5,
+                      control = control_bag(extract = num_term_nodes))
+
+dplyr::bind_rows(with_extras$model_df$extras)
 }

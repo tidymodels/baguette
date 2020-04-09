@@ -33,16 +33,16 @@ test_that('check CART opt', {
       Sepal.Width ~ .,
       data = iris,
       base_model = "CART",
-      opt = list(method = "anova"),
-      extract = get_method
+      control = control_bag(extract = get_method),
+      method = "anova"
     )
   mod_2 <-
     bagger(
       Sepal.Width ~ .,
       data = iris,
       base_model = "CART",
-      opt = list(maxdepth = 1),
-      extract = num_leaves
+      control = control_bag(extract = num_leaves),
+      maxdepth = 1
     )
   lmat <- matrix(c(0, 1, 2, 0), byrow = TRUE, nrow = 2)
   mod_3 <-
@@ -50,9 +50,8 @@ test_that('check CART opt', {
       Class ~ .,
       data = two_class_dat,
       base_model = "CART",
-      opt = list(parms = list(loss = lmat)),
-      control = control_bag(var_imp = TRUE),
-      extract = get_loss
+      control = control_bag(var_imp = TRUE, extract = get_loss),
+      parms = list(loss = lmat)
     )
 
   expect_true(all(unlist(mod_1$model_df$extras) == "anova"))

@@ -19,8 +19,10 @@ cost_matrix <- function(x, lvl, truth_is_row = TRUE) {
   x
 }
 
-cost_sens_cart_bagger <- function(rs, opt, control, cost, extract, ...) {
+cost_sens_cart_bagger <- function(rs, control, cost, ...) {
+
   # capture dots
+  opt <- rlang::dots_list(...)
   nms <- names(opt)
   lvl <- levels(rs$splits[[1]]$data$.outcome)
 
@@ -34,13 +36,15 @@ cost_sens_cart_bagger <- function(rs, opt, control, cost, extract, ...) {
     opt$parms <- list(loss = cost)
   }
 
-  cart_bagger(rs = rs, opt = opt, control = control, extract = extract)
+  cart_bagger(rs = rs, control = control, !!!opt)
 }
 
 
 
-cost_sens_c5_bagger <- function(rs, opt, control, cost, extract, ...) {
+cost_sens_c5_bagger <- function(rs, control, cost, ...) {
+
   # capture dots
+  opt <- rlang::dots_list(...)
   nms <- names(opt)
   lvl <- levels(rs$splits[[1]]$data$.outcome)
 
@@ -49,5 +53,5 @@ cost_sens_c5_bagger <- function(rs, opt, control, cost, extract, ...) {
   # Attach cost matrix to options
   opt$costs <-  cost
 
-  c5_bagger(rs = rs, opt = opt, control = control, extract = extract)
+  c5_bagger(rs = rs, control = control, !!!opt)
 }

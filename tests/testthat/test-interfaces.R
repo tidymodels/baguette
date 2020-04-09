@@ -12,10 +12,10 @@ test_that('recipe execution', {
     step_log(starts_with("Petal")) %>%
     step_sqrt(Sepal.Length, skip = TRUE)
 
-  check_ranges <- function(x, ...) {
-    max(x$model$Petal.Width) <= log(max(iris$Petal.Width)) &
-      max(x$model$Petal.Length) <= log(max(iris$Petal.Length)) &
-      max(x$model$.outcome) <= sqrt(max(iris$Sepal.Length))
+  check_ranges <- function(x) {
+    all(max(x$model$Petal.Width) <= log(max(iris$Petal.Width))) &
+      all(max(x$model$Petal.Length) <= log(max(iris$Petal.Length))) &
+      all(max(x$model$.outcome) <= sqrt(max(iris$Sepal.Length)))
   }
 
   expect_error(
@@ -24,32 +24,10 @@ test_that('recipe execution', {
         rec,
         data = iris,
         base_model = "CART",
-        extract = check_ranges
+        control = control_bag(reduce = FALSE, extract = check_ranges),
+        model = TRUE
       ),
     regexp = NA)
-
-  expect_true(all(unlist(mod$model_df$extras)))
-})
-
-
-test_that('formula execution', {
-  skip("change `model` argument name")
-  # check to make sure that appropriate data are given to model
-  check_columns <- function(x, ...) {
-    max(x$model$`log(Sepal.Width)`) <= log(max(iris$Sepal.Width)) &
-    is.factor(x$model$Species)
-  }
-
-  expect_error(
-    mod <-
-      bagger(
-        Sepal.Length ~ log(Sepal.Width) + Species,
-        data = iris,
-        base_model = "CART",
-        model = TRUE,
-        extract = check_columns
-      ),
-    regex = NA)
 
   expect_true(all(unlist(mod$model_df$extras)))
 })

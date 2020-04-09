@@ -1,5 +1,6 @@
 
-cart_bagger <- function(rs, opt, control, extract, ...) {
+cart_bagger <- function(rs, control, ...) {
+  opt <- rlang::dots_list(...)
   is_classif <- is.factor(rs$splits[[1]]$data$.outcome)
   mod_spec <- make_cart_spec(is_classif, opt)
 
@@ -22,7 +23,7 @@ cart_bagger <- function(rs, opt, control, extract, ...) {
 
   rs <- filter_rs(rs)
 
-  rs <- extractor(rs, extract)
+  rs <- extractor(rs, control$extract)
 
   imps <- compute_imp(rs, cart_imp, control$var_imp)
 

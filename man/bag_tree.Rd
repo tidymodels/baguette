@@ -89,9 +89,17 @@ greater than 30 \code{rpart} will give nonsense results on 32-bit
 machines.
 }
 \examples{
-# bag_tree(tree_depth = 5) \%>\% set_mode("classification")
-#model <- bag_tree(cost_complexity = 10, min_n = 3)
-#model
-#update(model, cost_complexity = 1)
-#update(model, cost_complexity = 1, fresh = TRUE)
+library(parsnip)
+
+set.seed(9952)
+bag_tree(tree_depth = 5) \%>\%
+  set_mode("classification") \%>\%
+  set_engine("rpart", times = 3) \%>\%
+  fit(Species ~ ., data = iris)
+
+
+model <- bag_tree(cost_complexity = 10, min_n = 3)
+model
+update(model, cost_complexity = 1)
+update(model, cost_complexity = 1, fresh = TRUE)
 }
