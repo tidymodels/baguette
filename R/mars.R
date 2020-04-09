@@ -1,6 +1,7 @@
 
-mars_bagger <- function(rs, opt, control, extract, ...) {
+mars_bagger <- function(rs, control, extract, ...) {
 
+  opt <- rlang::dots_list(...)
   is_classif <- is.factor(rs$splits[[1]]$data$.outcome)
   mod_spec <- make_mars_spec(is_classif, opt)
 

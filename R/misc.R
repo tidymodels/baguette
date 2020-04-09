@@ -36,7 +36,7 @@ compute_imp <- function(rs, .fn, compute) {
 
 extractor <- function(rs, extract) {
   if (!is.null(extract)) {
-    rs <- rs %>% dplyr::mutate(extras = map(model, ~ extract(.x$fit, ...)))
+    rs <- rs %>% dplyr::mutate(extras = map(model, ~ extract(.x$fit)))
   }
   rs
 }

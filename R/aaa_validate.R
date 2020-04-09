@@ -1,4 +1,4 @@
-validate_args <- function(model, times, opt, control, cost, extract) {
+validate_args <- function(model, times, control, cost, extract) {
   if (!is.character(model) || length(model) != 1) {
     rlang::abort("`base_model` should be a single character value.")
   }
@@ -12,13 +12,8 @@ validate_args <- function(model, times, opt, control, cost, extract) {
     rlang::abort("`base_model` should be either 'CART' or 'C5.0'")
   }
   if (!is.null(cost)) {
-    if (is.numeric(cost) && cost < 0) {
+    if (is.numeric(cost) && any(cost < 0)) {
       rlang::abort("`cost` should be non-negative.")
-    }
-    if (is.matrix(cost)) {
-      if (any(cost) < 0) {
-        rlang::abort("`cost` should be non-negative.")
-      }
     }
   }
 
@@ -33,27 +28,12 @@ validate_args <- function(model, times, opt, control, cost, extract) {
 
   # ----------------------------------------------------------------------------
 
-  if (!is.null(opt) & !is.list(opt)) {
-    rlang::abort("`opt` should be NULL or a named list.")
-  }
-
-  # TODO test for names, check args vs list
-
-  # ----------------------------------------------------------------------------
-
   validate_control(control)
 
   # ----------------------------------------------------------------------------
 
   if (!is.null(extract) && !is.function(extract)) {
     rlang::abort("`extract` should be NULL or a function.")
-  }
-  if (!is.null(extract)) {
-    extract_nms <- names(formals(extract))
-    if (length(extract_nms) != 2)
-      rlang::abort("`extract` should have two arguments.")
-    if (extract_nms[2] != "...")
-      rlang::abort("The 2nd arg of `extract` should be `...`.")
   }
 
   # ----------------------------------------------------------------------------

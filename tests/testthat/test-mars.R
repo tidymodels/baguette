@@ -19,9 +19,9 @@ test_that('check mars opt', {
       mpg ~ .,
       data = mtcars,
       base_model = "MARS",
-      opt = list(pmethod = "backward"),
       control = control_bag(var_imp = FALSE),
-      extract = check_pruning
+      extract = check_pruning,
+      pmethod = "backward"
     )
   expect_true(all(unlist(mod_1$model_df$extras)))
   expect_true(is.null(mod_1$imp))
@@ -36,9 +36,10 @@ test_that('check mars opt', {
       mpg ~ .,
       data = mtcars,
       base_model = "MARS",
-      opt = list(nfold = 5, pmethod = "backward"),
       control = control_bag(var_imp = TRUE),
-      extract = check_folds
+      extract = check_folds,
+      nfold = 5,
+      pmethod = "backward"
     )
   expect_true(all(unlist(mod_2$model_df$extras)))
   expect_true(inherits(mod_2$imp, "tbl_df"))

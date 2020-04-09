@@ -12,7 +12,6 @@ test_that('good values', {
   expect_error(
     baguette:::validate_args(
       model = "MARS",
-      opt = NULL,
       times = 5L,
       control = control_bag(),
       extract = NULL,
@@ -26,7 +25,6 @@ test_that('bad values', {
   expect_error(
     baguette:::validate_args(
       model = "mars",
-      opt = NULL,
       times = 5L,
       control = control_bag(),
       extract = NULL,
@@ -38,7 +36,6 @@ test_that('bad values', {
   expect_error(
     baguette:::validate_args(
       model = "MARS",
-      opt = NULL,
       times = 1,
       control = control_bag(),
       extract = NULL,
@@ -49,7 +46,6 @@ test_that('bad values', {
   expect_error(
     baguette:::validate_args(
       model = "MARS",
-      opt = NULL,
       times = -1L,
       control = control_bag(),
       extract = NULL,
@@ -60,35 +56,12 @@ test_that('bad values', {
   expect_error(
     baguette:::validate_args(
       model = "MARS",
-      opt = NULL,
       times = 5L,
       control = 2,
       extract = NULL,
       cost = NULL
     ),
     regexp = "should be a list"
-  )
-  expect_error(
-    baguette:::validate_args(
-      model = "MARS",
-      opt = NULL,
-      times = 5L,
-      control = control_bag(),
-      extract = function(x, y) 2,
-      cost = NULL
-    ),
-    regexp = "2nd"
-  )
-  expect_error(
-    baguette:::validate_args(
-      model = "MARS",
-      opt = NULL,
-      times = 5L,
-      control = control_bag(),
-      extract = function(x) 2,
-      cost = NULL
-    ),
-    regexp = "two arguments"
   )
   expect_error(
     bagger(Sepal.Length ~ ., data = iris, times = 2L, base_model = "CART", cost = 2),
@@ -163,11 +136,16 @@ test_that('bad inputs', {
             type = "potato"),
     "`type` should be 'numeric'"
   )
-  expect_error(
-    predict(bagger(Class ~ ., data = two_class_dat, base_model = "MARS"),
-            two_class_dat[1:2, -3],
-            type = "topepo"),
-    "`type` should be either 'class' or 'prob'"
+  expect_warning(RNGkind(sample.kind = "Rounding"))
+  set.seed(3983)
+  expect_warning(
+    expect_error(
+      predict(bagger(Class ~ ., data = two_class_dat, base_model = "MARS"),
+              two_class_dat[1:2, -3],
+              type = "topepo"),
+      "`type` should be either 'class' or 'prob'"
+    ),
+    "fitted probabilities numerically 0 or 1 occurred"
   )
 })
 
@@ -177,6 +155,8 @@ test_that('model failures inputs', {
   bad_iris <- iris
   bad_iris$a <- factor("a", levels = letters[1:2])
 
+  expect_warning(RNGkind(sample.kind = "Rounding"))
+  set.seed(459394)
   expect_error(
     bagger(a ~ ., data = bad_iris, base_model = "CART", times = 3),
     "All of the models failed"

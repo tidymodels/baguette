@@ -1,6 +1,7 @@
 
-c5_bagger <- function(rs, opt, control, extract, ...) {
+c5_bagger <- function(rs, control, extract, ...) {
 
+  opt <- rlang::dots_list(...)
   mod_spec <- make_c5_spec(opt)
 
   iter <- get_iterator(control)
