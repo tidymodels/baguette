@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>General Interface for Bagged MARS Models — bag_mars • baguette</title>
+<title>General Interface for Bagged Decision Tree Models — bag_tree • baguette</title>
 
 
 <!-- jquery -->
@@ -34,18 +34,18 @@
 
 
 
-<meta property="og:title" content="General Interface for Bagged MARS Models — bag_mars" />
-<meta property="og:description" content="bag_mars() is a way to generate a specification of a model
+<meta property="og:title" content="General Interface for Bagged Decision Tree Models — bag_tree" />
+<meta property="og:description" content="bag_tree() is a way to generate a specification of a model
 before fitting and allows the model to be created using
 different packages in R. The main arguments for the
 model are:
-num_terms: The number of features that will be retained in the
-final model.
-prod_degree: The highest possible degree of interaction between
-features. A value of 1 indicates and additive model while a value of 2
-allows, but does not guarantee, two-way interactions between features.
-prune_method: The type of pruning. Possible values are listed
-in ?earth.
+cost_complexity: The cost/complexity parameter (a.k.a. Cp)
+used by CART models (rpart only).
+tree_depth: The maximum depth of a tree (rpart).
+min_n: The minimum number of data points in a node
+that are required for the node to be split further.
+class_cost: A cost value to asign to the class corresponding to the
+first factor level (for 2-class models, rpart and C5.0 only).
 These arguments are converted to their specific names at the
 time that the model is fit. Other options and argument can be
 set using set_engine(). If left to their defaults
@@ -55,7 +55,7 @@ in lieu of recreating the object from scratch." />
 <meta name="twitter:card" content="summary" />
 
 
-
+<meta name="robots" content="noindex">
 
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
@@ -97,7 +97,7 @@ in lieu of recreating the object from scratch." />
         <a class="navbar-brand" href="../index.html">baguette</a>
         <div class="info">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.1.9000</span>
         </div>
       </div>
     </div>
@@ -128,23 +128,23 @@ in lieu of recreating the object from scratch." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>General Interface for Bagged MARS Models</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidymodels/baguette/blob/master/R/bag_mars.R'><code>R/bag_mars.R</code></a></small>
-    <div class="hidden name"><code>bag_mars.Rd</code></div>
+    <h1>General Interface for Bagged Decision Tree Models</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/baguette/blob/master/R/bag_tree.R'><code>R/bag_tree.R</code></a></small>
+    <div class="hidden name"><code>bag_tree.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>bag_mars()</code> is a way to generate a <em>specification</em> of a model
+    <p><code>bag_tree()</code> is a way to generate a <em>specification</em> of a model
 before fitting and allows the model to be created using
 different packages in R. The main arguments for the
 model are:</p><ul>
-<li><p><code>num_terms</code>: The number of features that will be retained in the
-final model.</p></li>
-<li><p><code>prod_degree</code>: The highest possible degree of interaction between
-features. A value of 1 indicates and additive model while a value of 2
-allows, but does not guarantee, two-way interactions between features.</p></li>
-<li><p><code>prune_method</code>: The type of pruning. Possible values are listed
-in <code>?earth</code>.</p></li>
+<li><p><code>cost_complexity</code>: The cost/complexity parameter (a.k.a. <code>Cp</code>)
+used by CART models (<code>rpart</code> only).</p></li>
+<li><p><code>tree_depth</code>: The <em>maximum</em> depth of a tree (<code>rpart</code>).</p></li>
+<li><p><code>min_n</code>: The minimum number of data points in a node
+that are required for the node to be split further.</p></li>
+<li><p><code>class_cost</code>: A cost value to asign to the class corresponding to the
+first factor level (for 2-class models, <code>rpart</code> and <code>C5.0</code> only).</p></li>
 </ul><p>These arguments are converted to their specific names at the
 time that the model is fit. Other options and argument can be
 set using <code>set_engine()</code>. If left to their defaults
@@ -153,20 +153,22 @@ functions. If parameters need to be modified, <code><a href='https://rdrr.io/r/s
 in lieu of recreating the object from scratch.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bag_mars</span>(
+    <pre class="usage"><span class='fu'>bag_tree</span>(
   <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"unknown"</span>,
-  <span class='kw'>num_terms</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>prod_degree</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>prune_method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+  <span class='kw'>cost_complexity</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>tree_depth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>min_n</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>class_cost</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )
 
-<span class='co'># S3 method for bag_mars</span>
+<span class='co'># S3 method for bag_tree</span>
 <span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span>(
   <span class='no'>object</span>,
   <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>num_terms</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>prod_degree</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>prune_method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cost_complexity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>tree_depth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>min_n</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>class_cost</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>fresh</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
 )</pre>
@@ -181,21 +183,29 @@ Possible values for this model are "unknown", "regression", or
 "classification".</p></td>
     </tr>
     <tr>
-      <th>num_terms</th>
-      <td><p>The number of features that will be retained in the
-final model, including the intercept.</p></td>
+      <th>cost_complexity</th>
+      <td><p>A positive number for the the cost/complexity
+parameter (a.k.a. <code>Cp</code>) used by CART models (<code>rpart</code> only).</p></td>
     </tr>
     <tr>
-      <th>prod_degree</th>
-      <td><p>The highest possible interaction degree.</p></td>
+      <th>tree_depth</th>
+      <td><p>An integer for maximum depth of the tree.</p></td>
     </tr>
     <tr>
-      <th>prune_method</th>
-      <td><p>The pruning method.</p></td>
+      <th>min_n</th>
+      <td><p>An integer for the minimum number of data points
+in a node that are required for the node to be split further.</p></td>
+    </tr>
+    <tr>
+      <th>class_cost</th>
+      <td><p>A non-negative scalar for a class cost (where a cost of 1
+means no extra cost). This is useful for when the first level of the outcome
+factor is the minority class. If this is not the case, values between zero
+and one can be used to bias to the second level of the factor.</p></td>
     </tr>
     <tr>
       <th>object</th>
-      <td><p>A bagged MARS model specification.</p></td>
+      <td><p>A bagged tree model specification.</p></td>
     </tr>
     <tr>
       <th>parameters</th>
@@ -219,53 +229,53 @@ modified in-place of or replaced wholesale.</p></td>
 
     <p>The model can be created using the <code><a href='https://rdrr.io/pkg/parsnip/man/reexports.html'>fit()</a></code> function using the
 following <em>engines</em>:</p><ul>
-<li><p><span class="pkg">R</span>:  <code>"earth"</code>  (the default)</p></li>
+<li><p><span class="pkg">R</span>:  <code>"rpart"</code> (the default) or <code>"C5.0"</code> (classification only)</p></li>
 </ul>
 
+<p>Note that, for <code>rpart</code> models, but <code>cost_complexity</code> and
+<code>tree_depth</code> can be both be specified but the package will give
+precedence to <code>cost_complexity</code>. Also, <code>tree_depth</code> values
+greater than 30 <code>rpart</code> will give nonsense results on 32-bit
+machines.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parsnip</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>7396</span>)
-<span class='fu'>bag_mars</span>(<span class='kw'>num_terms</span> <span class='kw'>=</span> <span class='fl'>7</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/set_args.html'>set_mode</a></span>(<span class='st'>"regression"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/set_engine.html'>set_engine</a></span>(<span class='st'>"earth"</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>3</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/reexports.html'>fit</a></span>(<span class='no'>mpg</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: package ‘purrr’ was built under R version 3.6.2</span></div><div class='output co'>#&gt; parsnip model object
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>9952</span>)
+<span class='fu'>bag_tree</span>(<span class='kw'>tree_depth</span> <span class='kw'>=</span> <span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/set_args.html'>set_mode</a></span>(<span class='st'>"classification"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/set_engine.html'>set_engine</a></span>(<span class='st'>"rpart"</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>3</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/reexports.html'>fit</a></span>(<span class='no'>Species</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><div class='output co'>#&gt; parsnip model object
 #&gt; 
-#&gt; Fit time:  573ms 
-#&gt; Bagged MARS (regression with 3 members)
+#&gt; Fit time:  555ms 
+#&gt; Bagged CART (classification with 3 members)
 #&gt; 
 #&gt; Variable importance scores include:
 #&gt; 
-#&gt; <span style='color: #555555;'># A tibble: 9 x 4</span><span>
-#&gt;   term        value std.error  used
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> disp        66.7      0         2
-#&gt; </span><span style='color: #555555;'>2</span><span> hp          33.3      0         1
-#&gt; </span><span style='color: #555555;'>3</span><span> wt          14.8      3.85      2
-#&gt; </span><span style='color: #555555;'>4</span><span> carb        12.6      0.843     2
-#&gt; </span><span style='color: #555555;'>5</span><span> am           5.67     0         1
-#&gt; </span><span style='color: #555555;'>6</span><span> gear         5.37     0         1
-#&gt; </span><span style='color: #555555;'>7</span><span> gear-unused  2.98     0         1
-#&gt; </span><span style='color: #555555;'>8</span><span> hp-unused    2.98     0         1
-#&gt; </span><span style='color: #555555;'>9</span><span> qsec-unused  2.01     0         1
+#&gt; <span style='color: #555555;'># A tibble: 4 x 4</span><span>
+#&gt;   term         value std.error  used
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> Petal.Length  88.9      1.05     3
+#&gt; </span><span style='color: #555555;'>2</span><span> Petal.Width   88.5      2.78     3
+#&gt; </span><span style='color: #555555;'>3</span><span> Sepal.Length  65.4      3.08     3
+#&gt; </span><span style='color: #555555;'>4</span><span> Sepal.Width   44.8      2.01     3
 #&gt; </div><div class='input'>
 
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'>bag_mars</span>(<span class='kw'>num_terms</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>prune_method</span> <span class='kw'>=</span> <span class='st'>"none"</span>)
-<span class='no'>model</span></div><div class='output co'>#&gt; Bagged MARS Model Specification (unknown)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'>bag_tree</span>(<span class='kw'>cost_complexity</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>min_n</span> <span class='kw'>=</span> <span class='fl'>3</span>)
+<span class='no'>model</span></div><div class='output co'>#&gt; Bagged Decision Tree Model Specification (unknown)
 #&gt; 
 #&gt; Main Arguments:
-#&gt;   num_terms = 10
-#&gt;   prune_method = none
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span>(<span class='no'>model</span>, <span class='kw'>num_terms</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; Bagged MARS Model Specification (unknown)
+#&gt;   cost_complexity = 10
+#&gt;   min_n = 3
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span>(<span class='no'>model</span>, <span class='kw'>cost_complexity</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; Bagged Decision Tree Model Specification (unknown)
 #&gt; 
 #&gt; Main Arguments:
-#&gt;   num_terms = 2
-#&gt;   prune_method = none
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span>(<span class='no'>model</span>, <span class='kw'>num_terms</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>fresh</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Bagged MARS Model Specification (unknown)
+#&gt;   cost_complexity = 1
+#&gt;   min_n = 3
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span>(<span class='no'>model</span>, <span class='kw'>cost_complexity</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>fresh</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Bagged Decision Tree Model Specification (unknown)
 #&gt; 
 #&gt; Main Arguments:
-#&gt;   num_terms = 2
+#&gt;   cost_complexity = 1
 #&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -67,6 +67,16 @@ in lieu of recreating the object from scratch." />
 <![endif]-->
 
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-115082821-1');
+</script>
+
 
   </head>
 
@@ -237,7 +247,7 @@ machines.</p>
   <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/set_engine.html'>set_engine</a></span>(<span class='st'>"rpart"</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>3</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/reexports.html'>fit</a></span>(<span class='no'>Species</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><div class='output co'>#&gt; parsnip model object
 #&gt; 
-#&gt; Fit time:  472ms 
+#&gt; Fit time:  531ms 
 #&gt; Bagged CART (classification with 3 members)
 #&gt; 
 #&gt; Variable importance scores include:

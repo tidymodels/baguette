@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • baguette</title>
+<title>Obtain variable importance scores — var_imp.bagger • baguette</title>
 
 
 <!-- jquery -->
@@ -34,10 +34,12 @@
 
 
 
-<meta property="og:title" content="Changelog" />
+<meta property="og:title" content="Obtain variable importance scores — var_imp.bagger" />
+<meta property="og:description" content="Obtain variable importance scores" />
+<meta name="twitter:card" content="summary" />
 
 
-
+<meta name="robots" content="noindex">
 
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
@@ -63,7 +65,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-news">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -79,7 +81,7 @@
         <a class="navbar-brand" href="../index.html">baguette</a>
         <div class="info">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.1.9000</span>
         </div>
       </div>
     </div>
@@ -110,29 +112,75 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/tidymodels/baguette/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+    <h1>Obtain variable importance scores</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/baguette/blob/master/R/var_imp.R'><code>R/var_imp.R</code></a></small>
+    <div class="hidden name"><code>var_imp.bagger.Rd</code></div>
     </div>
 
-    <div id="baguette-development-version" class="section level1">
-<h1 class="page-header" data-toc-text="development version">
-<a href="#baguette-development-version" class="anchor"></a>baguette (development version)<small> Unreleased </small>
-</h1>
-</div>
-    <div id="baguette-0009000" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.0.9000">
-<a href="#baguette-0009000" class="anchor"></a>baguette 0.0.0.9000<small> Unreleased </small>
-</h1>
-<p>Development version</p>
-</div>
-  </div>
+    <div class="ref-description">
+    <p>Obtain variable importance scores</p>
+    </div>
 
+    <pre class="usage"><span class='co'># S3 method for bagger</span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/var_imp.html'>var_imp</a></span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>object</th>
+      <td><p>An object.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Not currently used.</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A tibble with columns for <code>term</code> (the predictor), <code>value</code> (the
+mean importance score), <code>std.error</code> (the standard error), and <code>used</code> (the
+occurrences of the predictors).</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p><code>baguette</code> can compute different variable importance scores for
+each model in the ensemble. The <code><a href='https://rdrr.io/pkg/generics/man/var_imp.html'>var_imp()</a></code> function returns the average
+importance score for each model. Additionally, the function returns the
+number of times that each predictor is included in the final prediction
+equation.</p>
+<p>Specific methods used by the models are:</p>
+<p><em>CART</em>: The model accumulates the improvement of the model that occurs when
+a predictor is used in a split. These values are taken form the <code>rpart</code>
+object. See <code><a href='https://rdrr.io/pkg/rpart/man/rpart.object.html'>rpart::rpart.object()</a></code>.</p>
+<p><em>MARS</em>: MARS models include a backwards elimination feature selection
+routine that looks at reductions in the generalized cross-validation (GCV)
+estimate of error. The <code>earth()</code> function tracks the changes in model
+statistics, such as the GCV, for each predictor and accumulates the
+reduction in the statistic when each predictor's feature is added to the
+model. This total reduction is used as the variable importance measure. If a
+predictor was never used in any of the MARS basis functions in the final
+model (after pruning), it has an importance value of zero. <code>baguette</code> wraps
+<code><a href='https://rdrr.io/pkg/earth/man/evimp.html'>earth::evimp()</a></code>.</p>
+<p><em>C5.0</em>: <code>C5.0</code> measures predictor importance by determining the percentage
+of training set samples that fall into all the terminal nodes after the
+split. For example, the predictor in the first split automatically has an
+importance measurement of 100 percent since all samples are affected by this
+split. Other predictors may be used frequently in splits, but if the
+terminal nodes cover only a handful of training set samples, the importance
+scores may be close to zero.</p>
+<p>Note that the <code>value</code> column that is the average of the importance scores
+form each model. The divisor of this average (and the corresponding standard
+error) is the number of models (as opposed to the number of models that
+used the predictor). This means that the importance scores for a predictor
+that was not used in the model has an implicit zero importance.</p>
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
-
 </div>
 
 
