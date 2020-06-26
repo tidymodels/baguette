@@ -1,3 +1,9 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -6,6 +12,7 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
+
 # baguette
 
 <!-- badges: start -->
@@ -19,9 +26,28 @@ The goal of baguette is to provide efficient functions that can be used to creat
 
 ## Installation
 
-For now:
+You can install the released version of baguette from [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
-devtools::install_github("tidymodels/baguette")
+install.packages("baguette")
 ```
+
+Install the development version from GitHub with:
+
+``` r
+require("devtools")
+install_github("tidymodels/baguette")
+```
+
+## Contributing
+
+This project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+
+- For questions and discussions about tidymodels packages, modeling, and machine learning, [join us on RStudio Community](https://rstd.io/tidymodels-community).
+
+- If you think you have encountered a bug, please [submit an issue](https://github.com/tidymodels/baguette/issues).
+
+- Either way, learn how to create and share a [reprex](https://rstd.io/reprex) (a minimal, reproducible example), to clearly communicate about your code.
+
+- Check out further details on [contributing guidelines for tidymodels packages](https://www.tidymodels.org/contribute/) and [how to get help](https://www.tidymodels.org/help/).
 
