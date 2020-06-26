@@ -9,3 +9,4 @@
 ^pkgdown$
 ^codecov\.yml$
 ^\.covrignore$
+^CODE_OF_CONDUCT\.md$
