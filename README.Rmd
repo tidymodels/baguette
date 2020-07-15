@@ -1,3 +1,9 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -6,6 +12,7 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
+
 # baguette
 
 <!-- badges: start -->
@@ -15,13 +22,62 @@ knitr::opts_chunk$set(
 [![R build status](https://github.com/tidymodels/baguette/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/baguette/actions)
 <!-- badges: end -->
 
-The goal of baguette is to provide efficient functions that can be used to create ensemble models via bagging. 
+## Introduction
+
+The goal of baguette is to provide efficient functions for bagging (aka [bootstrap aggregating](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C7&q=bagging+predictors+breiman+1996&oq=Bagging+predictors+)) ensemble models.
+
+The model objects produced by baguette are kept smaller than they would otherwise be through two operations:
+
+- The [butcher](https://tidymodels.github.io/butcher/) package is used to remove object elements that are not crucial to using the models. For example, some models contain copies of the training set or model residuals when created. These are removed to save space.
+
+- For ensembles whose base models use a formula method, there is a built-in redundancy because each model has an identical terms object. However, each one of these takes up separate space in memory and can be quite large when there are many predictors. The baguette package solves this problem by replacing each terms object with the object from the first model in the ensemble. Since the other terms objects are not modified, we get the same functional capabilities using far less memory to save the ensemble.
 
 ## Installation
 
-For now:
+You can install the released version of baguette from [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
-devtools::install_github("tidymodels/baguette")
+install.packages("baguette")
 ```
+
+Install the development version from GitHub with:
+
+``` r
+require("devtools")
+install_github("tidymodels/baguette")
+```
+
+## Example
+
+Let's build a bagged decision tree model to predict a continuous outcome.
+
+```{r}
+library(baguette)
+
+bag_tree() %>% 
+  set_engine("rpart") # C5.0 is also available here
+
+set.seed(123)
+bag_cars <- 
+  bag_tree() %>% 
+  set_engine("rpart", times = 25) %>% # 25 ensemble members 
+  set_mode("regression") %>% 
+  fit(mpg ~ ., data = mtcars)
+
+bag_cars
+```
+
+The models also return aggregated variable importance scores.
+
+## Contributing
+
+This project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+
+- For questions and discussions about tidymodels packages, modeling, and machine learning, please [post on RStudio Community](https://rstd.io/tidymodels-community).
+
+- If you think you have encountered a bug, please [submit an issue](https://github.com/tidymodels/baguette/issues).
+
+- Either way, learn how to create and share a [reprex](https://rstd.io/reprex) (a minimal, reproducible example), to clearly communicate about your code.
+
+- Check out further details on [contributing guidelines for tidymodels packages](https://www.tidymodels.org/contribute/) and [how to get help](https://www.tidymodels.org/help/).
 
