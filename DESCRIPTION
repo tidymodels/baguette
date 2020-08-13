@@ -48,4 +48,4 @@ Imports:
     dials
 URL: https://github.com/tidymodels/baguette
 BugReports: https://github.com/tidymodels/baguette/issues
-RoxygenNote: 7.1.0.9000
+RoxygenNote: 7.1.1
