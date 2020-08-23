@@ -16,6 +16,7 @@ make_bag_mars <- function() {
   parsnip::set_model_engine("bag_mars", "classification", "earth")
   parsnip::set_model_engine("bag_mars", "regression", "earth")
   parsnip::set_dependency("bag_mars", "earth", "earth")
+  parsnip::set_dependency("bag_mars", "earth", "baguette")
 
   parsnip::set_model_arg(
     model = "bag_mars",

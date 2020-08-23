@@ -16,6 +16,7 @@ make_bag_tree <- function() {
   parsnip::set_model_engine("bag_tree", "classification", "rpart")
   parsnip::set_model_engine("bag_tree", "regression", "rpart")
   parsnip::set_dependency("bag_tree", "rpart", "rpart")
+  parsnip::set_dependency("bag_tree", "rpart", "baguette")
 
   parsnip::set_model_arg(
     model = "bag_tree",
@@ -124,6 +125,7 @@ make_bag_tree <- function() {
 
   parsnip::set_model_engine("bag_tree", "classification", "C5.0")
   parsnip::set_dependency("bag_tree", "C5.0", "C50")
+  parsnip::set_dependency("bag_tree", "C5.0", "baguette")
 
   parsnip::set_fit(
     model = "bag_tree",
