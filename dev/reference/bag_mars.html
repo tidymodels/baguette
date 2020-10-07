@@ -159,23 +159,23 @@ functions. If parameters need to be modified, <code><a href='https://rdrr.io/r/s
 in lieu of recreating the object from scratch.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bag_mars</span>(
-  mode = <span class='st'>"unknown"</span>,
-  num_terms = <span class='kw'>NULL</span>,
-  prod_degree = <span class='kw'>NULL</span>,
-  prune_method = <span class='kw'>NULL</span>
-)
+    <pre class="usage"><span class='fu'>bag_mars</span><span class='op'>(</span>
+  mode <span class='op'>=</span> <span class='st'>"unknown"</span>,
+  num_terms <span class='op'>=</span> <span class='cn'>NULL</span>,
+  prod_degree <span class='op'>=</span> <span class='cn'>NULL</span>,
+  prune_method <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for bag_mars</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span>(
-  <span class='kw'>object</span>,
-  parameters = <span class='kw'>NULL</span>,
-  num_terms = <span class='kw'>NULL</span>,
-  prod_degree = <span class='kw'>NULL</span>,
-  prune_method = <span class='kw'>NULL</span>,
-  fresh = <span class='fl'>FALSE</span>,
-  <span class='kw'>...</span>
-)</pre>
+<span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
+  num_terms <span class='op'>=</span> <span class='cn'>NULL</span>,
+  prod_degree <span class='op'>=</span> <span class='cn'>NULL</span>,
+  prune_method <span class='op'>=</span> <span class='cn'>NULL</span>,
+  fresh <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -230,15 +230,16 @@ following <em>engines</em>:</p><ul>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://parsnip.tidymodels.org'>parsnip</a></span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://parsnip.tidymodels.org'>parsnip</a></span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>7396</span>)
-<span class='fu'>bag_mars</span>(num_terms = <span class='fl'>7</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_args.html'>set_mode</a></span>(<span class='st'>"regression"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span>(<span class='st'>"earth"</span>, times = <span class='fl'>3</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>mtcars</span>)</div><div class='output co'>#&gt; parsnip model object
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>7396</span><span class='op'>)</span>
+<span class='fu'>bag_mars</span><span class='op'>(</span>num_terms <span class='op'>=</span> <span class='fl'>7</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_args.html'>set_mode</a></span><span class='op'>(</span><span class='st'>"regression"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span><span class='op'>(</span><span class='st'>"earth"</span>, times <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; parsnip model object
 #&gt; 
-#&gt; Fit time:  737ms 
+#&gt; Fit time:  752ms 
 #&gt; Bagged MARS (regression with 3 members)
 #&gt; 
 #&gt; Variable importance scores include:
@@ -257,18 +258,21 @@ following <em>engines</em>:</p><ul>
 #&gt; </span><span style='color: #555555;'>9</span><span> qsec-unused  2.01     0         1
 #&gt; </div><div class='input'>
 
-<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'>bag_mars</span>(num_terms = <span class='fl'>10</span>, prune_method = <span class='st'>"none"</span>)
-<span class='kw'>model</span></div><div class='output co'>#&gt; Bagged MARS Model Specification (unknown)
+<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>bag_mars</span><span class='op'>(</span>num_terms <span class='op'>=</span> <span class='fl'>10</span>, prune_method <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span>
+<span class='va'>model</span>
+</div><div class='output co'>#&gt; Bagged MARS Model Specification (unknown)
 #&gt; 
 #&gt; Main Arguments:
 #&gt;   num_terms = 10
 #&gt;   prune_method = none
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span>(<span class='kw'>model</span>, num_terms = <span class='fl'>2</span>)</div><div class='output co'>#&gt; Bagged MARS Model Specification (unknown)
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span><span class='op'>(</span><span class='va'>model</span>, num_terms <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Bagged MARS Model Specification (unknown)
 #&gt; 
 #&gt; Main Arguments:
 #&gt;   num_terms = 2
 #&gt;   prune_method = none
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span>(<span class='kw'>model</span>, num_terms = <span class='fl'>2</span>, fresh = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Bagged MARS Model Specification (unknown)
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span><span class='op'>(</span><span class='va'>model</span>, num_terms <span class='op'>=</span> <span class='fl'>2</span>, fresh <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Bagged MARS Model Specification (unknown)
 #&gt; 
 #&gt; Main Arguments:
 #&gt;   num_terms = 2

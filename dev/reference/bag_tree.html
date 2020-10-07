@@ -159,25 +159,25 @@ functions. If parameters need to be modified, <code><a href='https://rdrr.io/r/s
 in lieu of recreating the object from scratch.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bag_tree</span>(
-  mode = <span class='st'>"unknown"</span>,
-  cost_complexity = <span class='fl'>0</span>,
-  tree_depth = <span class='kw'>NULL</span>,
-  min_n = <span class='fl'>2</span>,
-  class_cost = <span class='kw'>NULL</span>
-)
+    <pre class="usage"><span class='fu'>bag_tree</span><span class='op'>(</span>
+  mode <span class='op'>=</span> <span class='st'>"unknown"</span>,
+  cost_complexity <span class='op'>=</span> <span class='fl'>0</span>,
+  tree_depth <span class='op'>=</span> <span class='cn'>NULL</span>,
+  min_n <span class='op'>=</span> <span class='fl'>2</span>,
+  class_cost <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for bag_tree</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span>(
-  <span class='kw'>object</span>,
-  parameters = <span class='kw'>NULL</span>,
-  cost_complexity = <span class='kw'>NULL</span>,
-  tree_depth = <span class='kw'>NULL</span>,
-  min_n = <span class='kw'>NULL</span>,
-  class_cost = <span class='kw'>NULL</span>,
-  fresh = <span class='fl'>FALSE</span>,
-  <span class='kw'>...</span>
-)</pre>
+<span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
+  cost_complexity <span class='op'>=</span> <span class='cn'>NULL</span>,
+  tree_depth <span class='op'>=</span> <span class='cn'>NULL</span>,
+  min_n <span class='op'>=</span> <span class='cn'>NULL</span>,
+  class_cost <span class='op'>=</span> <span class='cn'>NULL</span>,
+  fresh <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -245,15 +245,16 @@ greater than 30 <code>rpart</code> will give nonsense results on 32-bit
 machines.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://parsnip.tidymodels.org'>parsnip</a></span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://parsnip.tidymodels.org'>parsnip</a></span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>9952</span>)
-<span class='fu'>bag_tree</span>(tree_depth = <span class='fl'>5</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_args.html'>set_mode</a></span>(<span class='st'>"classification"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span>(<span class='st'>"rpart"</span>, times = <span class='fl'>3</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span>(<span class='kw'>Species</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>)</div><div class='output co'>#&gt; parsnip model object
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>9952</span><span class='op'>)</span>
+<span class='fu'>bag_tree</span><span class='op'>(</span>tree_depth <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_args.html'>set_mode</a></span><span class='op'>(</span><span class='st'>"classification"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span><span class='op'>(</span><span class='st'>"rpart"</span>, times <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>Species</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; parsnip model object
 #&gt; 
-#&gt; Fit time:  609ms 
+#&gt; Fit time:  649ms 
 #&gt; Bagged CART (classification with 3 members)
 #&gt; 
 #&gt; Variable importance scores include:
@@ -267,18 +268,21 @@ machines.</p>
 #&gt; </span><span style='color: #555555;'>4</span><span> Sepal.Width   44.8      2.01     3
 #&gt; </div><div class='input'>
 
-<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'>bag_tree</span>(cost_complexity = <span class='fl'>10</span>, min_n = <span class='fl'>3</span>)
-<span class='kw'>model</span></div><div class='output co'>#&gt; Bagged Decision Tree Model Specification (unknown)
+<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>bag_tree</span><span class='op'>(</span>cost_complexity <span class='op'>=</span> <span class='fl'>10</span>, min_n <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+<span class='va'>model</span>
+</div><div class='output co'>#&gt; Bagged Decision Tree Model Specification (unknown)
 #&gt; 
 #&gt; Main Arguments:
 #&gt;   cost_complexity = 10
 #&gt;   min_n = 3
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span>(<span class='kw'>model</span>, cost_complexity = <span class='fl'>1</span>)</div><div class='output co'>#&gt; Bagged Decision Tree Model Specification (unknown)
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span><span class='op'>(</span><span class='va'>model</span>, cost_complexity <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Bagged Decision Tree Model Specification (unknown)
 #&gt; 
 #&gt; Main Arguments:
 #&gt;   cost_complexity = 1
 #&gt;   min_n = 3
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span>(<span class='kw'>model</span>, cost_complexity = <span class='fl'>1</span>, fresh = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Bagged Decision Tree Model Specification (unknown)
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span><span class='op'>(</span><span class='va'>model</span>, cost_complexity <span class='op'>=</span> <span class='fl'>1</span>, fresh <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Bagged Decision Tree Model Specification (unknown)
 #&gt; 
 #&gt; Main Arguments:
 #&gt;   cost_complexity = 1
