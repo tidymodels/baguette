@@ -13,6 +13,7 @@ status](https://www.r-pkg.org/badges/version/baguette)](https://cran.r-project.o
 coverage](https://codecov.io/gh/tidymodels/baguette/branch/master/graph/badge.svg)](https://codecov.io/gh/tidymodels/baguette?branch=master)
 [![R build
 status](https://github.com/tidymodels/baguette/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/baguette/actions)
+[![R-CMD-check](https://github.com/tidymodels/baguette/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/baguette/actions)
 <!-- badges: end -->
 
 ## Introduction
@@ -84,7 +85,7 @@ bag_cars <-
 bag_cars
 #> parsnip model object
 #> 
-#> Fit time:  3.3s 
+#> Fit time:  3.6s 
 #> Bagged CART (regression with 25 members)
 #> 
 #> Variable importance scores include:

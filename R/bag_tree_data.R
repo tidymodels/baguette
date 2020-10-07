@@ -65,6 +65,18 @@ make_bag_tree <- function() {
     )
   )
 
+  parsnip::set_encoding(
+    model = "bag_tree",
+    eng = "rpart",
+    mode = "regression",
+    options = list(
+      predictor_indicators = "none",
+      compute_intercept = FALSE,
+      remove_intercept = FALSE,
+      allow_sparse_x = FALSE
+    )
+  )
+
   parsnip::set_fit(
     model = "bag_tree",
     eng = "rpart",
@@ -74,6 +86,18 @@ make_bag_tree <- function() {
       protect = c("formula", "data", "weights"),
       func = c(pkg = "baguette", fun = "bagger"),
       defaults = list(base_model = "CART")
+    )
+  )
+
+  parsnip::set_encoding(
+    model = "bag_tree",
+    eng = "rpart",
+    mode = "classification",
+    options = list(
+      predictor_indicators = "none",
+      compute_intercept = FALSE,
+      remove_intercept = FALSE,
+      allow_sparse_x = FALSE
     )
   )
 
@@ -139,6 +163,17 @@ make_bag_tree <- function() {
     )
   )
 
+  parsnip::set_encoding(
+    model = "bag_tree",
+    eng = "C5.0",
+    mode = "classification",
+    options = list(
+      predictor_indicators = "none",
+      compute_intercept = FALSE,
+      remove_intercept = FALSE,
+      allow_sparse_x = FALSE
+    )
+  )
 
   parsnip::set_model_arg(
     model = "bag_tree",

@@ -20,6 +20,7 @@ knitr::opts_chunk$set(
 [![CRAN status](https://www.r-pkg.org/badges/version/baguette)](https://cran.r-project.org/package=baguette)
 [![Codecov test coverage](https://codecov.io/gh/tidymodels/baguette/branch/master/graph/badge.svg)](https://codecov.io/gh/tidymodels/baguette?branch=master)
 [![R build status](https://github.com/tidymodels/baguette/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/baguette/actions)
+[![R-CMD-check](https://github.com/tidymodels/baguette/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/baguette/actions)
 <!-- badges: end -->
 
 ## Introduction
