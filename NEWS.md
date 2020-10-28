@@ -1,3 +1,5 @@
+# baguette (development version)
+
 # baguette 0.1.0
 
 * Added encoding information to work with current version of `parsnip`. 
