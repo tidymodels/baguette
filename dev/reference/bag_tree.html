@@ -84,9 +84,15 @@ in lieu of recreating the object from scratch." />
   gtag('config', 'UA-115082821-1');
 </script>
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -117,7 +123,7 @@ in lieu of recreating the object from scratch." />
 </li>
         <li>
   <a href="https://github.com/tidymodels/baguette/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -233,7 +239,7 @@ modified in-place of or replaced wholesale.</p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The model can be created using the <code><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit()</a></code> function using the
+    <p>The model can be created using the <code><a href='https://generics.r-lib.org/reference/fit.html'>fit()</a></code> function using the
 following <em>engines</em>:</p><ul>
 <li><p><span class="pkg">R</span>:  <code>"rpart"</code> (the default) or <code>"C5.0"</code> (classification only)</p></li>
 </ul>
@@ -251,21 +257,21 @@ machines.</p>
 <span class='fu'>bag_tree</span><span class='op'>(</span>tree_depth <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_args.html'>set_mode</a></span><span class='op'>(</span><span class='st'>"classification"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span><span class='op'>(</span><span class='st'>"rpart"</span>, times <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>Species</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
+  <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>Species</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; parsnip model object
 #&gt; 
-#&gt; Fit time:  665ms 
+#&gt; Fit time:  743ms 
 #&gt; Bagged CART (classification with 3 members)
 #&gt; 
 #&gt; Variable importance scores include:
 #&gt; 
-#&gt; <span style='color: #555555;'># A tibble: 4 x 4</span><span>
+#&gt; <span style='color: #949494;'># A tibble: 4 x 4</span><span>
 #&gt;   term         value std.error  used
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Petal.Length  88.9      1.05     3
-#&gt; </span><span style='color: #555555;'>2</span><span> Petal.Width   88.5      2.78     3
-#&gt; </span><span style='color: #555555;'>3</span><span> Sepal.Length  65.4      3.08     3
-#&gt; </span><span style='color: #555555;'>4</span><span> Sepal.Width   44.8      2.01     3
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Petal.Length  88.9      1.05     3
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Petal.Width   88.5      2.78     3
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Sepal.Length  65.4      3.08     3
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Sepal.Width   44.8      2.01     3
 #&gt; </div><div class='input'>
 
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>bag_tree</span><span class='op'>(</span>cost_complexity <span class='op'>=</span> <span class='fl'>10</span>, min_n <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
@@ -313,6 +319,8 @@ machines.</p>
 
   
 
+
+  
 
   </body>
 </html>
