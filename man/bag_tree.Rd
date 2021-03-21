@@ -84,7 +84,7 @@ following \emph{engines}:
 
 Note that, for \code{rpart} models, both \code{cost_complexity} and
 \code{tree_depth} can be specified but the package will give
-precedence to \code{cost_complexity}. Also, \code{tree_depth} values
+precedence to \code{cost_complexity}. Also, for \code{tree_depth} values
 greater than 30 \code{rpart} will give nonsense results on 32-bit
 machines.
 }
