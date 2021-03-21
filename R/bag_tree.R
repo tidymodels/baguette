@@ -39,8 +39,8 @@
 #' \item \pkg{R}:  `"rpart"` (the default) or `"C5.0"` (classification only)
 #' }
 #'
-#' Note that, for `rpart` models, but `cost_complexity` and
-#'  `tree_depth` can be both be specified but the package will give
+#' Note that, for `rpart` models, both `cost_complexity` and
+#'  `tree_depth` can be specified but the package will give
 #'  precedence to `cost_complexity`. Also, `tree_depth` values
 #'  greater than 30 `rpart` will give nonsense results on 32-bit
 #'  machines.
