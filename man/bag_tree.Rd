@@ -82,9 +82,9 @@ following \emph{engines}:
 \item \pkg{R}:  \code{"rpart"} (the default) or \code{"C5.0"} (classification only)
 }
 
-Note that, for \code{rpart} models, but \code{cost_complexity} and
-\code{tree_depth} can be both be specified but the package will give
-precedence to \code{cost_complexity}. Also, \code{tree_depth} values
+Note that, for \code{rpart} models, both \code{cost_complexity} and
+\code{tree_depth} can be specified but the package will give
+precedence to \code{cost_complexity}. Also, for \code{tree_depth} values
 greater than 30 \code{rpart} will give nonsense results on 32-bit
 machines.
 }
