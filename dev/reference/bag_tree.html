@@ -244,9 +244,9 @@ following <em>engines</em>:</p><ul>
 <li><p><span class="pkg">R</span>:  <code>"rpart"</code> (the default) or <code>"C5.0"</code> (classification only)</p></li>
 </ul>
 
-<p>Note that, for <code>rpart</code> models, but <code>cost_complexity</code> and
-<code>tree_depth</code> can be both be specified but the package will give
-precedence to <code>cost_complexity</code>. Also, <code>tree_depth</code> values
+<p>Note that, for <code>rpart</code> models, both <code>cost_complexity</code> and
+<code>tree_depth</code> can be specified but the package will give
+precedence to <code>cost_complexity</code>. Also, for <code>tree_depth</code> values
 greater than 30 <code>rpart</code> will give nonsense results on 32-bit
 machines.</p>
 
@@ -260,7 +260,7 @@ machines.</p>
   <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>Species</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; parsnip model object
 #&gt; 
-#&gt; Fit time:  743ms 
+#&gt; Fit time:  715ms 
 #&gt; Bagged CART (classification with 3 members)
 #&gt; 
 #&gt; Variable importance scores include:
