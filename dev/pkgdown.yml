@@ -1,8 +1,8 @@
 pandoc: 2.7.3
-pkgdown: 1.6.1.9000
-pkgdown_sha: e40993723ae67dbca8a13a13a8c9954c46b528f9
+pkgdown: 1.6.1.9001
+pkgdown_sha: 51268b0d9cb0588d7a6404a2b8ef4ee19c435e89
 articles: {}
-last_built: 2021-03-22T14:27Z
+last_built: 2021-06-29T17:49Z
 urls:
   reference: https://baguette.tidymodels.org/reference
   article: https://baguette.tidymodels.org/articles
