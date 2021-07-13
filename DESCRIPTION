@@ -29,7 +29,7 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 Imports: 
-    hardhat,
+    hardhat (>= 0.1.4),
     butcher,
     rpart,
     C50,
