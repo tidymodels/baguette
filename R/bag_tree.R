@@ -10,7 +10,7 @@
 #'   \item \code{tree_depth}: The _maximum_ depth of a tree (`rpart`).
 #'   \item \code{min_n}: The minimum number of data points in a node
 #'   that are required for the node to be split further.
-#'   \item \code{class_cost}: A cost value to asign to the class corresponding to the
+#'   \item \code{class_cost}: A cost value to assign to the class corresponding to the
 #'   first factor level (for 2-class models, `rpart` and `C5.0` only).
 #' }
 #' These arguments are converted to their specific names at the
@@ -104,10 +104,10 @@ print.bag_tree <- function(x, ...) {
 #' @examples
 #'
 #'
-#' model <- bag_tree(cost_complexity = 10, min_n = 3)
+#' model <- bag_tree(cost_complexity = 0.001, min_n = 3)
 #' model
-#' update(model, cost_complexity = 1)
-#' update(model, cost_complexity = 1, fresh = TRUE)
+#' update(model, cost_complexity = 0.1)
+#' update(model, cost_complexity = 0.1, fresh = TRUE)
 #' @method update bag_tree
 #' @rdname bag_tree
 #' @export

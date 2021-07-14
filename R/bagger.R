@@ -9,7 +9,7 @@
 #'  that class): a symbolic description of the model to be fitted. Note that
 #'  this package does not support multivariate outcomes and that, if some
 #'  predictors are factors, dummy variables will _not_ be created unless by the
-#'  underyling model function.
+#'  underlying model function.
 #' @param data A data frame containing the variables used in the formula or
 #'  recipe.
 #' @param base_model A single character value for the model being bagged. Possible

@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/baguette)](https://cran.r-project.org/package=baguette)
 [![Codecov test
@@ -26,12 +26,12 @@ ensemble models.
 The model objects produced by baguette are kept smaller than they would
 otherwise be through two operations:
 
-  - The [butcher](https://tidymodels.github.io/butcher/) package is used
-    to remove object elements that are not crucial to using the models.
-    For example, some models contain copies of the training set or model
+-   The [butcher](https://butcher.tidymodels.org/) package is used to
+    remove object elements that are not crucial to using the models. For
+    example, some models contain copies of the training set or model
     residuals when created. These are removed to save space.
 
-  - For ensembles whose base models use a formula method, there is a
+-   For ensembles whose base models use a formula method, there is a
     built-in redundancy because each model has an identical terms
     object. However, each one of these takes up separate space in memory
     and can be quite large when there are many predictors. The baguette
@@ -85,7 +85,7 @@ bag_cars <-
 bag_cars
 #> parsnip model object
 #> 
-#> Fit time:  3.6s 
+#> Fit time:  4s 
 #> Bagged CART (regression with 25 members)
 #> 
 #> Variable importance scores include:
@@ -113,17 +113,18 @@ This project is released with a [Contributor Code of
 Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
 
-  - For questions and discussions about tidymodels packages, modeling,
+-   For questions and discussions about tidymodels packages, modeling,
     and machine learning, please [post on RStudio
-    Community](https://rstd.io/tidymodels-community).
+    Community](https://community.rstudio.com/new-topic?category_id=15&tags=tidymodels,question).
 
-  - If you think you have encountered a bug, please [submit an
+-   If you think you have encountered a bug, please [submit an
     issue](https://github.com/tidymodels/baguette/issues).
 
-  - Either way, learn how to create and share a
-    [reprex](https://rstd.io/reprex) (a minimal, reproducible example),
-    to clearly communicate about your code.
+-   Either way, learn how to create and share a
+    [reprex](https://reprex.tidyverse.org/articles/articles/learn-reprex.html)
+    (a minimal, reproducible example), to clearly communicate about your
+    code.
 
-  - Check out further details on [contributing guidelines for tidymodels
+-   Check out further details on [contributing guidelines for tidymodels
     packages](https://www.tidymodels.org/contribute/) and [how to get
     help](https://www.tidymodels.org/help/).

@@ -24,7 +24,8 @@ Suggests:
     recipes,
     modeldata,
     covr,
-    yardstick
+    yardstick,
+    spelling
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -51,3 +52,4 @@ Remotes:
 URL: https://baguette.tidymodels.org, https://github.com/tidymodels/baguette
 BugReports: https://github.com/tidymodels/baguette/issues
 RoxygenNote: 7.1.1.9000
+Language: en-US
