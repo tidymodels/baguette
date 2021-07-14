@@ -1,4 +1,6 @@
-# baguette (development version)
+# baguette 0.1.1
+
+* Bug fix for cases where CART cannot find a split (#37)
 
 * Updated internal usage of a soft-deprecated argument to `hardhat::default_formula_blueprint()`.
 
