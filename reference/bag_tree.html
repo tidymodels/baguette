@@ -52,7 +52,7 @@ used by CART models (rpart only).
 tree_depth: The maximum depth of a tree (rpart).
 min_n: The minimum number of data points in a node
 that are required for the node to be split further.
-class_cost: A cost value to asign to the class corresponding to the
+class_cost: A cost value to assign to the class corresponding to the
 first factor level (for 2-class models, rpart and C5.0 only).
 These arguments are converted to their specific names at the
 time that the model is fit. Other options and argument can be
@@ -103,7 +103,7 @@ in lieu of recreating the object from scratch." />
         <a class="navbar-brand" href="../index.html">baguette</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
         </div>
       </div>
     </div>
@@ -117,7 +117,7 @@ in lieu of recreating the object from scratch." />
 </li>
         <li>
   <a href="https://github.com/tidymodels/baguette/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -149,7 +149,7 @@ used by CART models (<code>rpart</code> only).</p></li>
 <li><p><code>tree_depth</code>: The <em>maximum</em> depth of a tree (<code>rpart</code>).</p></li>
 <li><p><code>min_n</code>: The minimum number of data points in a node
 that are required for the node to be split further.</p></li>
-<li><p><code>class_cost</code>: A cost value to asign to the class corresponding to the
+<li><p><code>class_cost</code>: A cost value to assign to the class corresponding to the
 first factor level (for 2-class models, <code>rpart</code> and <code>C5.0</code> only).</p></li>
 </ul><p>These arguments are converted to their specific names at the
 time that the model is fit. Other options and argument can be
@@ -233,14 +233,14 @@ modified in-place of or replaced wholesale.</p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The model can be created using the <code><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit()</a></code> function using the
+    <p>The model can be created using the <code><a href='https://generics.r-lib.org/reference/fit.html'>fit()</a></code> function using the
 following <em>engines</em>:</p><ul>
 <li><p><span class="pkg">R</span>:  <code>"rpart"</code> (the default) or <code>"C5.0"</code> (classification only)</p></li>
 </ul>
 
-<p>Note that, for <code>rpart</code> models, but <code>cost_complexity</code> and
-<code>tree_depth</code> can be both be specified but the package will give
-precedence to <code>cost_complexity</code>. Also, <code>tree_depth</code> values
+<p>Note that, for <code>rpart</code> models, both <code>cost_complexity</code> and
+<code>tree_depth</code> can be specified but the package will give
+precedence to <code>cost_complexity</code>. Also, for <code>tree_depth</code> values
 greater than 30 <code>rpart</code> will give nonsense results on 32-bit
 machines.</p>
 
@@ -251,42 +251,42 @@ machines.</p>
 <span class='fu'>bag_tree</span><span class='op'>(</span>tree_depth <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_args.html'>set_mode</a></span><span class='op'>(</span><span class='st'>"classification"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span><span class='op'>(</span><span class='st'>"rpart"</span>, times <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>Species</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
+  <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>Species</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; parsnip model object
 #&gt; 
-#&gt; Fit time:  615ms 
+#&gt; Fit time:  662ms 
 #&gt; Bagged CART (classification with 3 members)
 #&gt; 
 #&gt; Variable importance scores include:
 #&gt; 
-#&gt; <span style='color: #555555;'># A tibble: 4 x 4</span><span>
+#&gt; <span style='color: #949494;'># A tibble: 4 x 4</span>
 #&gt;   term         value std.error  used
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Petal.Length  88.9      1.05     3
-#&gt; </span><span style='color: #555555;'>2</span><span> Petal.Width   88.5      2.78     3
-#&gt; </span><span style='color: #555555;'>3</span><span> Sepal.Length  65.4      3.08     3
-#&gt; </span><span style='color: #555555;'>4</span><span> Sepal.Width   44.8      2.01     3
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> Petal.Length  88.9      1.05     3
+#&gt; <span style='color: #BCBCBC;'>2</span> Petal.Width   88.5      2.78     3
+#&gt; <span style='color: #BCBCBC;'>3</span> Sepal.Length  65.4      3.08     3
+#&gt; <span style='color: #BCBCBC;'>4</span> Sepal.Width   44.8      2.01     3
 #&gt; </div><div class='input'>
 
-<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>bag_tree</span><span class='op'>(</span>cost_complexity <span class='op'>=</span> <span class='fl'>10</span>, min_n <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>bag_tree</span><span class='op'>(</span>cost_complexity <span class='op'>=</span> <span class='fl'>0.001</span>, min_n <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
 <span class='va'>model</span>
 </div><div class='output co'>#&gt; Bagged Decision Tree Model Specification (unknown)
 #&gt; 
 #&gt; Main Arguments:
-#&gt;   cost_complexity = 10
+#&gt;   cost_complexity = 0.001
 #&gt;   min_n = 3
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span><span class='op'>(</span><span class='va'>model</span>, cost_complexity <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span><span class='op'>(</span><span class='va'>model</span>, cost_complexity <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Bagged Decision Tree Model Specification (unknown)
 #&gt; 
 #&gt; Main Arguments:
-#&gt;   cost_complexity = 1
+#&gt;   cost_complexity = 0.1
 #&gt;   min_n = 3
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span><span class='op'>(</span><span class='va'>model</span>, cost_complexity <span class='op'>=</span> <span class='fl'>1</span>, fresh <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span><span class='op'>(</span><span class='va'>model</span>, cost_complexity <span class='op'>=</span> <span class='fl'>0.1</span>, fresh <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Bagged Decision Tree Model Specification (unknown)
 #&gt; 
 #&gt; Main Arguments:
-#&gt;   cost_complexity = 1
-#&gt; </div></span></pre>
+#&gt;   cost_complexity = 0.1
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

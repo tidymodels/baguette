@@ -103,7 +103,7 @@ in lieu of recreating the object from scratch." />
         <a class="navbar-brand" href="../index.html">baguette</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
         </div>
       </div>
     </div>
@@ -117,7 +117,7 @@ in lieu of recreating the object from scratch." />
 </li>
         <li>
   <a href="https://github.com/tidymodels/baguette/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -223,7 +223,7 @@ modified in-place of or replaced wholesale.</p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The model can be created using the <code><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit()</a></code> function using the
+    <p>The model can be created using the <code><a href='https://generics.r-lib.org/reference/fit.html'>fit()</a></code> function using the
 following <em>engines</em>:</p><ul>
 <li><p><span class="pkg">R</span>:  <code>"earth"</code>  (the default)</p></li>
 </ul>
@@ -236,26 +236,26 @@ following <em>engines</em>:</p><ul>
 <span class='fu'>bag_mars</span><span class='op'>(</span>num_terms <span class='op'>=</span> <span class='fl'>7</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_args.html'>set_mode</a></span><span class='op'>(</span><span class='st'>"regression"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span><span class='op'>(</span><span class='st'>"earth"</span>, times <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
+  <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; parsnip model object
 #&gt; 
-#&gt; Fit time:  728ms 
+#&gt; Fit time:  723ms 
 #&gt; Bagged MARS (regression with 3 members)
 #&gt; 
 #&gt; Variable importance scores include:
 #&gt; 
-#&gt; <span style='color: #555555;'># A tibble: 9 x 4</span><span>
+#&gt; <span style='color: #949494;'># A tibble: 9 x 4</span>
 #&gt;   term        value std.error  used
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> disp        66.7      0         2
-#&gt; </span><span style='color: #555555;'>2</span><span> hp          33.3      0         1
-#&gt; </span><span style='color: #555555;'>3</span><span> wt          14.8      3.85      2
-#&gt; </span><span style='color: #555555;'>4</span><span> carb        12.6      0.843     2
-#&gt; </span><span style='color: #555555;'>5</span><span> am           5.67     0         1
-#&gt; </span><span style='color: #555555;'>6</span><span> gear         5.37     0         1
-#&gt; </span><span style='color: #555555;'>7</span><span> gear-unused  2.98     0         1
-#&gt; </span><span style='color: #555555;'>8</span><span> hp-unused    2.98     0         1
-#&gt; </span><span style='color: #555555;'>9</span><span> qsec-unused  2.01     0         1
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> disp        66.7      0         2
+#&gt; <span style='color: #BCBCBC;'>2</span> hp          33.3      0         1
+#&gt; <span style='color: #BCBCBC;'>3</span> wt          14.8      3.85      2
+#&gt; <span style='color: #BCBCBC;'>4</span> carb        12.6      0.843     2
+#&gt; <span style='color: #BCBCBC;'>5</span> am           5.67     0         1
+#&gt; <span style='color: #BCBCBC;'>6</span> gear         5.37     0         1
+#&gt; <span style='color: #BCBCBC;'>7</span> gear-unused  2.98     0         1
+#&gt; <span style='color: #BCBCBC;'>8</span> hp-unused    2.98     0         1
+#&gt; <span style='color: #BCBCBC;'>9</span> qsec-unused  2.01     0         1
 #&gt; </div><div class='input'>
 
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>bag_mars</span><span class='op'>(</span>num_terms <span class='op'>=</span> <span class='fl'>10</span>, prune_method <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span>
@@ -276,7 +276,7 @@ following <em>engines</em>:</p><ul>
 #&gt; 
 #&gt; Main Arguments:
 #&gt;   num_terms = 2
-#&gt; </div></span></pre>
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

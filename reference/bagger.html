@@ -87,7 +87,7 @@
         <a class="navbar-brand" href="../index.html">baguette</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
         </div>
       </div>
     </div>
@@ -101,7 +101,7 @@
 </li>
         <li>
   <a href="https://github.com/tidymodels/baguette/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -216,7 +216,7 @@ samples/ensemble members (some model fits might fail).</p></td>
 that class): a symbolic description of the model to be fitted. Note that
 this package does not support multivariate outcomes and that, if some
 predictors are factors, dummy variables will <em>not</em> be created unless by the
-underyling model function.</p></td>
+underlying model function.</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -281,23 +281,23 @@ multiply the memory requirements required to fit the models.</p>
 #&gt; 
 #&gt; Variable importance scores include:
 #&gt; 
-#&gt; <span style='color: #555555;'># A tibble: 5 x 4</span><span>
+#&gt; <span style='color: #949494;'># A tibble: 5 x 4</span>
 #&gt;   term      value std.error  used
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> carbon   100        0         5
-#&gt; </span><span style='color: #555555;'>2</span><span> hydrogen  18.1      2.66      5
-#&gt; </span><span style='color: #555555;'>3</span><span> oxygen    11.6      2.53      4
-#&gt; </span><span style='color: #555555;'>4</span><span> sulfur     1.56     0         1
-#&gt; </span><span style='color: #555555;'>5</span><span> nitrogen   1.09     0.757     2
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/var_imp.html'>var_imp</a></span><span class='op'>(</span><span class='va'>mars_bag</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 4</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> carbon   100        0         5
+#&gt; <span style='color: #BCBCBC;'>2</span> hydrogen  18.1      2.66      5
+#&gt; <span style='color: #BCBCBC;'>3</span> oxygen    11.6      2.53      4
+#&gt; <span style='color: #BCBCBC;'>4</span> sulfur     1.56     0         1
+#&gt; <span style='color: #BCBCBC;'>5</span> nitrogen   1.09     0.757     2
+#&gt; </div><div class='input'><span class='fu'><a href='https://generics.r-lib.org/reference/var_imp.html'>var_imp</a></span><span class='op'>(</span><span class='va'>mars_bag</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 x 4</span>
 #&gt;   term      value std.error  used
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> carbon   100        0         5
-#&gt; </span><span style='color: #555555;'>2</span><span> hydrogen  18.1      2.66      5
-#&gt; </span><span style='color: #555555;'>3</span><span> oxygen    11.6      2.53      4
-#&gt; </span><span style='color: #555555;'>4</span><span> sulfur     1.56     0         1
-#&gt; </span><span style='color: #555555;'>5</span><span> nitrogen   1.09     0.757     2</div><div class='input'>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> carbon   100        0         5
+#&gt; <span style='color: #BCBCBC;'>2</span> hydrogen  18.1      2.66      5
+#&gt; <span style='color: #BCBCBC;'>3</span> oxygen    11.6      2.53      4
+#&gt; <span style='color: #BCBCBC;'>4</span> sulfur     1.56     0         1
+#&gt; <span style='color: #BCBCBC;'>5</span> nitrogen   1.09     0.757     2</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>7687</span><span class='op'>)</span>
 <span class='va'>cart_bag</span> <span class='op'>&lt;-</span> <span class='fu'>bagger</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>[</span>, <span class='op'>-</span><span class='fl'>6</span><span class='op'>]</span>, y <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>$</span><span class='va'>HHV</span>,
                    base_model <span class='op'>=</span> <span class='st'>"CART"</span>, times <span class='op'>=</span> <span class='fl'>5</span>, control <span class='op'>=</span> <span class='va'>ctrl</span><span class='op'>)</span>
@@ -306,14 +306,14 @@ multiply the memory requirements required to fit the models.</p>
 #&gt; 
 #&gt; Variable importance scores include:
 #&gt; 
-#&gt; </span><span style='color: #555555;'># A tibble: 5 x 4</span><span>
+#&gt; <span style='color: #949494;'># A tibble: 5 x 4</span>
 #&gt;   term     value std.error  used
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> carbon   </span><span style='text-decoration: underline;'>5</span><span>716.     226.      5
-#&gt; </span><span style='color: #555555;'>2</span><span> oxygen   </span><span style='text-decoration: underline;'>3</span><span>190.     110.      5
-#&gt; </span><span style='color: #555555;'>3</span><span> hydrogen </span><span style='text-decoration: underline;'>2</span><span>297.     283.      5
-#&gt; </span><span style='color: #555555;'>4</span><span> sulfur    464.      63.2     5
-#&gt; </span><span style='color: #555555;'>5</span><span> nitrogen  268.      12.3     5
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> carbon   <span style='text-decoration: underline;'>5</span>716.     226.      5
+#&gt; <span style='color: #BCBCBC;'>2</span> oxygen   <span style='text-decoration: underline;'>3</span>190.     110.      5
+#&gt; <span style='color: #BCBCBC;'>3</span> hydrogen <span style='text-decoration: underline;'>2</span>297.     283.      5
+#&gt; <span style='color: #BCBCBC;'>4</span> sulfur    464.      63.2     5
+#&gt; <span style='color: #BCBCBC;'>5</span> nitrogen  268.      12.3     5
 #&gt; </div><div class='input'>
 <span class='co'># ------------------------------------------------------------------------------</span>
 <span class='co'># Other interfaces</span>
@@ -332,14 +332,14 @@ multiply the memory requirements required to fit the models.</p>
 #&gt; 
 #&gt; Variable importance scores include:
 #&gt; 
-#&gt; </span><span style='color: #555555;'># A tibble: 5 x 4</span><span>
+#&gt; <span style='color: #949494;'># A tibble: 5 x 4</span>
 #&gt;   term  value std.error  used
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> PC2   </span><span style='text-decoration: underline;'>4</span><span>500.     245.      5
-#&gt; </span><span style='color: #555555;'>2</span><span> PC1   </span><span style='text-decoration: underline;'>3</span><span>559.     156.      5
-#&gt; </span><span style='color: #555555;'>3</span><span> PC3   </span><span style='text-decoration: underline;'>1</span><span>107.     210.      5
-#&gt; </span><span style='color: #555555;'>4</span><span> PC5    648.     137.      5
-#&gt; </span><span style='color: #555555;'>5</span><span> PC4    468.      71.6     5
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> PC2   <span style='text-decoration: underline;'>4</span>500.     245.      5
+#&gt; <span style='color: #BCBCBC;'>2</span> PC1   <span style='text-decoration: underline;'>3</span>559.     156.      5
+#&gt; <span style='color: #BCBCBC;'>3</span> PC3   <span style='text-decoration: underline;'>1</span>107.     210.      5
+#&gt; <span style='color: #BCBCBC;'>4</span> PC5    648.     137.      5
+#&gt; <span style='color: #BCBCBC;'>5</span> PC4    468.      71.6     5
 #&gt; </div><div class='input'>
 <span class='co'># Using formulas</span>
 <span class='va'>mars_bag</span> <span class='op'>&lt;-</span> <span class='fu'>bagger</span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>biomass_tr</span>, base_model <span class='op'>=</span> <span class='st'>"MARS"</span>, times <span class='op'>=</span> <span class='fl'>5</span>,
@@ -349,15 +349,15 @@ multiply the memory requirements required to fit the models.</p>
 #&gt; 
 #&gt; Variable importance scores include:
 #&gt; 
-#&gt; </span><span style='color: #555555;'># A tibble: 5 x 4</span><span>
+#&gt; <span style='color: #949494;'># A tibble: 5 x 4</span>
 #&gt;   term      value std.error  used
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> carbon   100         0        5
-#&gt; </span><span style='color: #555555;'>2</span><span> oxygen    22.4       3.09     5
-#&gt; </span><span style='color: #555555;'>3</span><span> hydrogen  17.2       1.45     5
-#&gt; </span><span style='color: #555555;'>4</span><span> sulfur     2.22      2.10     2
-#&gt; </span><span style='color: #555555;'>5</span><span> nitrogen   1.39      0        1
-#&gt; </div></span></pre>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> carbon   100         0        5
+#&gt; <span style='color: #BCBCBC;'>2</span> oxygen    22.4       3.09     5
+#&gt; <span style='color: #BCBCBC;'>3</span> hydrogen  17.2       1.45     5
+#&gt; <span style='color: #BCBCBC;'>4</span> sulfur     2.22      2.10     2
+#&gt; <span style='color: #BCBCBC;'>5</span> nitrogen   1.39      0        1
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
