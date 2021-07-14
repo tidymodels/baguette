@@ -86,7 +86,7 @@
 <p>The goal of baguette is to provide efficient functions for bagging (aka <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C7&amp;q=bagging+predictors+breiman+1996&amp;oq=Bagging+predictors+">bootstrap aggregating</a>) ensemble models.</p>
 <p>The model objects produced by baguette are kept smaller than they would otherwise be through two operations:</p>
 <ul>
-<li><p>The <a href="https://tidymodels.github.io/butcher/">butcher</a> package is used to remove object elements that are not crucial to using the models. For example, some models contain copies of the training set or model residuals when created. These are removed to save space.</p></li>
+<li><p>The <a href="https://butcher.tidymodels.org/">butcher</a> package is used to remove object elements that are not crucial to using the models. For example, some models contain copies of the training set or model residuals when created. These are removed to save space.</p></li>
 <li><p>For ensembles whose base models use a formula method, there is a built-in redundancy because each model has an identical terms object. However, each one of these takes up separate space in memory and can be quite large when there are many predictors. The baguette package solves this problem by replacing each terms object with the object from the first model in the ensemble. Since the other terms objects are not modified, we get the same functional capabilities using far less memory to save the ensemble.</p></li>
 </ul>
 </div>
@@ -129,7 +129,7 @@
 <span class="va">bag_cars</span>
 <span class="co">#&gt; parsnip model object</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Fit time:  3.6s </span>
+<span class="co">#&gt; Fit time:  4s </span>
 <span class="co">#&gt; Bagged CART (regression with 25 members)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Variable importance scores include:</span>
@@ -154,9 +154,9 @@
 <a href="#contributing" class="anchor"></a>Contributing</h2>
 <p>This project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 <ul>
-<li><p>For questions and discussions about tidymodels packages, modeling, and machine learning, please <a href="https://rstd.io/tidymodels-community">post on RStudio Community</a>.</p></li>
+<li><p>For questions and discussions about tidymodels packages, modeling, and machine learning, please <a href="https://community.rstudio.com/new-topic?category_id=15&amp;tags=tidymodels,question">post on RStudio Community</a>.</p></li>
 <li><p>If you think you have encountered a bug, please <a href="https://github.com/tidymodels/baguette/issues">submit an issue</a>.</p></li>
-<li><p>Either way, learn how to create and share a <a href="https://rstd.io/reprex">reprex</a> (a minimal, reproducible example), to clearly communicate about your code.</p></li>
+<li><p>Either way, learn how to create and share a <a href="https://reprex.tidyverse.org/articles/articles/learn-reprex.html">reprex</a> (a minimal, reproducible example), to clearly communicate about your code.</p></li>
 <li><p>Check out further details on <a href="https://www.tidymodels.org/contribute/">contributing guidelines for tidymodels packages</a> and <a href="https://www.tidymodels.org/help/">how to get help</a>.</p></li>
 </ul>
 </div>
@@ -199,7 +199,7 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
 <li><a href="https://cran.r-project.org/package=baguette"><img src="https://www.r-pkg.org/badges/version/baguette" alt="CRAN status"></a></li>
 <li><a href="https://codecov.io/gh/tidymodels/baguette?branch=master"><img src="https://codecov.io/gh/tidymodels/baguette/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://github.com/tidymodels/baguette/actions"><img src="https://github.com/tidymodels/baguette/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>

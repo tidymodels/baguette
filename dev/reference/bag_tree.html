@@ -52,7 +52,7 @@ used by CART models (rpart only).
 tree_depth: The maximum depth of a tree (rpart).
 min_n: The minimum number of data points in a node
 that are required for the node to be split further.
-class_cost: A cost value to asign to the class corresponding to the
+class_cost: A cost value to assign to the class corresponding to the
 first factor level (for 2-class models, rpart and C5.0 only).
 These arguments are converted to their specific names at the
 time that the model is fit. Other options and argument can be
@@ -149,7 +149,7 @@ used by CART models (<code>rpart</code> only).</p></li>
 <li><p><code>tree_depth</code>: The <em>maximum</em> depth of a tree (<code>rpart</code>).</p></li>
 <li><p><code>min_n</code>: The minimum number of data points in a node
 that are required for the node to be split further.</p></li>
-<li><p><code>class_cost</code>: A cost value to asign to the class corresponding to the
+<li><p><code>class_cost</code>: A cost value to assign to the class corresponding to the
 first factor level (for 2-class models, <code>rpart</code> and <code>C5.0</code> only).</p></li>
 </ul><p>These arguments are converted to their specific names at the
 time that the model is fit. Other options and argument can be
@@ -254,7 +254,7 @@ machines.</p>
   <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>Species</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; parsnip model object
 #&gt; 
-#&gt; Fit time:  710ms 
+#&gt; Fit time:  699ms 
 #&gt; Bagged CART (classification with 3 members)
 #&gt; 
 #&gt; Variable importance scores include:
@@ -268,24 +268,24 @@ machines.</p>
 #&gt; <span style='color: #BCBCBC;'>4</span> Sepal.Width   44.8      2.01     3
 #&gt; </div><div class='input'>
 
-<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>bag_tree</span><span class='op'>(</span>cost_complexity <span class='op'>=</span> <span class='fl'>10</span>, min_n <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>bag_tree</span><span class='op'>(</span>cost_complexity <span class='op'>=</span> <span class='fl'>0.001</span>, min_n <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
 <span class='va'>model</span>
 </div><div class='output co'>#&gt; Bagged Decision Tree Model Specification (unknown)
 #&gt; 
 #&gt; Main Arguments:
-#&gt;   cost_complexity = 10
+#&gt;   cost_complexity = 0.001
 #&gt;   min_n = 3
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span><span class='op'>(</span><span class='va'>model</span>, cost_complexity <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span><span class='op'>(</span><span class='va'>model</span>, cost_complexity <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Bagged Decision Tree Model Specification (unknown)
 #&gt; 
 #&gt; Main Arguments:
-#&gt;   cost_complexity = 1
+#&gt;   cost_complexity = 0.1
 #&gt;   min_n = 3
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span><span class='op'>(</span><span class='va'>model</span>, cost_complexity <span class='op'>=</span> <span class='fl'>1</span>, fresh <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span><span class='op'>(</span><span class='va'>model</span>, cost_complexity <span class='op'>=</span> <span class='fl'>0.1</span>, fresh <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Bagged Decision Tree Model Specification (unknown)
 #&gt; 
 #&gt; Main Arguments:
-#&gt;   cost_complexity = 1
+#&gt;   cost_complexity = 0.1
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
