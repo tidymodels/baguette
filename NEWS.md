@@ -1,3 +1,5 @@
+# baguette (development version)
+
 # baguette 0.1.1
 
 * Bug fix for cases where CART cannot find a split (#37)
