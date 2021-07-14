@@ -14,10 +14,9 @@
 <script src="pkgdown.js"></script><link href="tidyverse-2.css" rel="stylesheet">
 <!--optional theme--><link href="tidymodels.css" rel="stylesheet">
 <meta property="og:title" content="Efficient Model Functions for Bagging">
-<meta property="og:description" content="Tree- and rule-based models can be bagged using 
-    this package and their predictions equations are stored 
-    in an efficient format to reduce the model objects size 
-    and speed. ">
+<meta property="og:description" content="Tree- and rule-based models can be bagged using this package
+    and their predictions equations are stored in an efficient format to
+    reduce the model objects size and speed.">
 <meta name="twitter:card" content="summary">
 <meta name="robots" content="noindex">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -32,8 +31,6 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -85,35 +82,35 @@
 
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
-<a href="#introduction" class="anchor" aria-hidden="true"></a>Introduction</h2>
-<p>The goal of baguette is to provide efficient functions for bagging (aka <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C7&amp;q=bagging+predictors+breiman+1996&amp;oq=Bagging+predictors+" class="external-link">bootstrap aggregating</a>) ensemble models.</p>
+<a href="#introduction" class="anchor"></a>Introduction</h2>
+<p>The goal of baguette is to provide efficient functions for bagging (aka <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C7&amp;q=bagging+predictors+breiman+1996&amp;oq=Bagging+predictors+">bootstrap aggregating</a>) ensemble models.</p>
 <p>The model objects produced by baguette are kept smaller than they would otherwise be through two operations:</p>
 <ul>
-<li><p>The <a href="https://tidymodels.github.io/butcher/" class="external-link">butcher</a> package is used to remove object elements that are not crucial to using the models. For example, some models contain copies of the training set or model residuals when created. These are removed to save space.</p></li>
+<li><p>The <a href="https://tidymodels.github.io/butcher/">butcher</a> package is used to remove object elements that are not crucial to using the models. For example, some models contain copies of the training set or model residuals when created. These are removed to save space.</p></li>
 <li><p>For ensembles whose base models use a formula method, there is a built-in redundancy because each model has an identical terms object. However, each one of these takes up separate space in memory and can be quite large when there are many predictors. The baguette package solves this problem by replacing each terms object with the object from the first model in the ensemble. Since the other terms objects are not modified, we get the same functional capabilities using far less memory to save the ensemble.</p></li>
 </ul>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#installation" class="anchor" aria-hidden="true"></a>Installation</h2>
-<p>You can install the released version of baguette from <a href="https://CRAN.R-project.org" class="external-link">CRAN</a> with:</p>
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>You can install the released version of baguette from <a href="https://CRAN.R-project.org">CRAN</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"baguette"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"baguette"</span><span class="op">)</span></code></pre></div>
 <p>Install the development version from GitHub with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
 <span class="fu">install_github</span><span class="op">(</span><span class="st">"tidymodels/baguette"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
-<a href="#example" class="anchor" aria-hidden="true"></a>Example</h2>
+<a href="#example" class="anchor"></a>Example</h2>
 <p>Let’s build a bagged decision tree model to predict a continuous outcome.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://baguette.tidymodels.org">baguette</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://baguette.tidymodels.org">baguette</a></span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: parsnip</span>
 
-<span class="fu"><a href="reference/bag_tree.html">bag_tree</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/set_engine.html" class="external-link">set_engine</a></span><span class="op">(</span><span class="st">"rpart"</span><span class="op">)</span> <span class="co"># C5.0 is also available here</span>
+<span class="fu"><a href="reference/bag_tree.html">bag_tree</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">set_engine</span><span class="op">(</span><span class="st">"rpart"</span><span class="op">)</span> <span class="co"># C5.0 is also available here</span>
 <span class="co">#&gt; Bagged Decision Tree Model Specification (unknown)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Main Arguments:</span>
@@ -122,12 +119,12 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Computational engine: rpart</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span>
 <span class="va">bag_cars</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="reference/bag_tree.html">bag_tree</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/set_engine.html" class="external-link">set_engine</a></span><span class="op">(</span><span class="st">"rpart"</span>, times <span class="op">=</span> <span class="fl">25</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># 25 ensemble members </span>
-  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/set_args.html" class="external-link">set_mode</a></span><span class="op">(</span><span class="st">"regression"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span>
+  <span class="fu"><a href="reference/bag_tree.html">bag_tree</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">set_engine</span><span class="op">(</span><span class="st">"rpart"</span>, times <span class="op">=</span> <span class="fl">25</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># 25 ensemble members </span>
+  <span class="fu">set_mode</span><span class="op">(</span><span class="st">"regression"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">fit</span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span>
 
 <span class="va">bag_cars</span>
 <span class="co">#&gt; parsnip model object</span>
@@ -154,13 +151,13 @@
 </div>
 <div id="contributing" class="section level2">
 <h2 class="hasAnchor">
-<a href="#contributing" class="anchor" aria-hidden="true"></a>Contributing</h2>
-<p>This project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+<a href="#contributing" class="anchor"></a>Contributing</h2>
+<p>This project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 <ul>
-<li><p>For questions and discussions about tidymodels packages, modeling, and machine learning, please <a href="https://rstd.io/tidymodels-community" class="external-link">post on RStudio Community</a>.</p></li>
-<li><p>If you think you have encountered a bug, please <a href="https://github.com/tidymodels/baguette/issues" class="external-link">submit an issue</a>.</p></li>
-<li><p>Either way, learn how to create and share a <a href="https://rstd.io/reprex" class="external-link">reprex</a> (a minimal, reproducible example), to clearly communicate about your code.</p></li>
-<li><p>Check out further details on <a href="https://www.tidymodels.org/contribute/" class="external-link">contributing guidelines for tidymodels packages</a> and <a href="https://www.tidymodels.org/help/" class="external-link">how to get help</a>.</p></li>
+<li><p>For questions and discussions about tidymodels packages, modeling, and machine learning, please <a href="https://rstd.io/tidymodels-community">post on RStudio Community</a>.</p></li>
+<li><p>If you think you have encountered a bug, please <a href="https://github.com/tidymodels/baguette/issues">submit an issue</a>.</p></li>
+<li><p>Either way, learn how to create and share a <a href="https://rstd.io/reprex">reprex</a> (a minimal, reproducible example), to clearly communicate about your code.</p></li>
+<li><p>Check out further details on <a href="https://www.tidymodels.org/contribute/">contributing guidelines for tidymodels packages</a> and <a href="https://www.tidymodels.org/help/">how to get help</a>.</p></li>
 </ul>
 </div>
 </div>
@@ -168,7 +165,7 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2 data-toc-skip>Links</h2>
+<h2>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=baguette">https://​cloud.r-project.org/​package=baguette</a>
 </li>
@@ -178,42 +175,38 @@
 </li>
 </ul>
 </div>
-
 <div class="license">
-<h2 data-toc-skip>License</h2>
+<h2>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
 <li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
-
 <div class="community">
-<h2 data-toc-skip>Community</h2>
+<h2>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
-
 <div class="developers">
-<h2 data-toc-skip>Developers</h2>
+<h2>Developers</h2>
 <ul class="list-unstyled">
 <li>Max Kuhn <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-2402-136X" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li><a href="authors.html">More on authors...</a></li>
+<li><a href="authors.html">All authors...</a></li>
 </ul>
 </div>
 
-<div class="dev-status">
-<h2 data-toc-skip>Dev status</h2>
+  <div class="dev-status">
+<h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.tidyverse.org/lifecycle/#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
-<li><a href="https://cran.r-project.org/package=baguette" class="external-link"><img src="https://www.r-pkg.org/badges/version/baguette" alt="CRAN status"></a></li>
-<li><a href="https://codecov.io/gh/tidymodels/baguette?branch=master" class="external-link"><img src="https://codecov.io/gh/tidymodels/baguette/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://github.com/tidymodels/baguette/actions" class="external-link"><img src="https://github.com/tidymodels/baguette/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://github.com/tidymodels/baguette/actions" class="external-link"><img src="https://github.com/tidymodels/baguette/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://cran.r-project.org/package=baguette"><img src="https://www.r-pkg.org/badges/version/baguette" alt="CRAN status"></a></li>
+<li><a href="https://codecov.io/gh/tidymodels/baguette?branch=master"><img src="https://codecov.io/gh/tidymodels/baguette/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/tidymodels/baguette/actions"><img src="https://github.com/tidymodels/baguette/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://github.com/tidymodels/baguette/actions"><img src="https://github.com/tidymodels/baguette/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
-
-  </div>
+</div>
 </div>
 
 
@@ -233,8 +226,6 @@
 
   
 
-
-  
 
   </body>
 </html>
