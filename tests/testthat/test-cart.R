@@ -22,8 +22,6 @@ get_loss <- function(x, ...) {
   x$parms$loss
 }
 
-data("two_class_dat", package = "modeldata")
-
 # ------------------------------------------------------------------------------
 
 test_that('check CART opt', {
@@ -59,6 +57,29 @@ test_that('check CART opt', {
   expect_true(all(map_lgl(mod_3$model_df$extras, ~ is.matrix(.x))))
   expect_true(inherits(mod_3$imp, "tbl_df"))
   expect_true(isTRUE(all(sort(mod_3$imp$term) == LETTERS[1:2])))
+
+  # Check for models with no importances
+  rm_imp <- function(x) {
+    x$fit$variable.importance <- NULL
+    x
+  }
+  one_missing <- mod_1$model_df
+  one_missing$model[[1]] <- rm_imp(one_missing$model[[1]])
+  expect_error(
+    one_missing_stats <-
+      baguette:::compute_imp(one_missing, baguette:::cart_imp, compute = TRUE),
+    regex = NA
+  )
+  expect_true(all(one_missing_stats$used <= 10))
+
+  all_missing <- mod_1$model_df
+  all_missing$model <- purrr::map(one_missing$model, rm_imp)
+  expect_error(
+    all_missing_stats <-
+      baguette:::compute_imp(all_missing, baguette:::cart_imp, compute = TRUE),
+    regex = NA
+  )
+  expect_true(nrow(all_missing_stats) == 0)
 })
 
 # ------------------------------------------------------------------------------
