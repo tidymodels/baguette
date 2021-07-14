@@ -42,6 +42,7 @@ Suggests:
     modeldata,
     recipes,
     rmarkdown,
+    spelling,
     testthat,
     yardstick
 Config/Needs/website: tidyverse/tidytemplate
