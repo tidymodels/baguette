@@ -105,12 +105,20 @@ cart_fit  <- function(split, spec, control = control_bag()) {
 }
 
 cart_imp <- function(x) {
-  x <-
-    tibble::tibble(
-      predictor = names(x$fit$variable.importance),
-      importance = unname(x$fit$variable.importance)
-    )
-  x <- x[x$importance > 0,]
+  if (!any(names(x$fit) == "variable.importance")) {
+    x <-
+      tibble::tibble(
+        predictor = rlang::na_chr,
+        importance = rlang::na_dbl
+      )
+  } else {
+    x <-
+      tibble::tibble(
+        predictor = names(x$fit$variable.importance),
+        importance = unname(x$fit$variable.importance)
+      )
+    x <- x[x$importance > 0,]
+  }
   x
 }
 

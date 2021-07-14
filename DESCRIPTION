@@ -1,55 +1,52 @@
 Package: baguette
 Title: Efficient Model Functions for Bagging
 Version: 0.1.0.9000
-Authors@R: c(
-    person(
-        given = "Max",
-        family = "Kuhn",
-        email = "max@rstudio.com",
-        comment = c(ORCID = "0000-0003-2402-136X"),
-        role = c("aut", "cre")
-    ),
-    person("RStudio", role = "cph")
-    )
-Description: Tree- and rule-based models can be bagged using 
-    this package and their predictions equations are stored 
-    in an efficient format to reduce the model objects size 
-    and speed. 
+Authors@R: 
+    c(person(given = "Max",
+             family = "Kuhn",
+             role = c("aut", "cre"),
+             email = "max@rstudio.com",
+             comment = c(ORCID = "0000-0003-2402-136X")),
+      person(given = "RStudio",
+             role = "cph"))
+Description: Tree- and rule-based models can be bagged using this package
+    and their predictions equations are stored in an efficient format to
+    reduce the model objects size and speed.
 License: MIT + file LICENSE
+URL: https://baguette.tidymodels.org,
+    https://github.com/tidymodels/baguette
+BugReports: https://github.com/tidymodels/baguette/issues
 Depends: 
     parsnip (>= 0.1.3.9000)
+Imports: 
+    butcher,
+    C50,
+    dials,
+    dplyr,
+    earth,
+    furrr,
+    generics,
+    hardhat (>= 0.1.4),
+    magrittr,
+    purrr,
+    rlang,
+    rpart,
+    rsample,
+    tibble,
+    tidyr,
+    utils,
+    withr
 Suggests: 
-    testthat,
     AmesHousing,
-    recipes,
-    modeldata,
     covr,
-    yardstick,
-    spelling
+    modeldata,
+    recipes,
+    rmarkdown,
+    testthat,
+    yardstick
+Config/Needs/website: tidyverse/tidytemplate
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-Imports: 
-    hardhat (>= 0.1.4),
-    butcher,
-    rpart,
-    C50,
-    withr,
-    rsample,
-    dplyr,
-    purrr,
-    furrr,
-    tibble,
-    tidyr,
-    rlang,
-    earth,
-    magrittr,
-    utils,
-    generics,
-    dials
-Remotes: 
-    topepo/C5.0    
-URL: https://baguette.tidymodels.org, https://github.com/tidymodels/baguette
-BugReports: https://github.com/tidymodels/baguette/issues
 RoxygenNote: 7.1.1.9000
 Language: en-US
