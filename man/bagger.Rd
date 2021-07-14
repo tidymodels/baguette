@@ -75,7 +75,7 @@ samples/ensemble members (some model fits might fail).}
 that class): a symbolic description of the model to be fitted. Note that
 this package does not support multivariate outcomes and that, if some
 predictors are factors, dummy variables will \emph{not} be created unless by the
-underyling model function.}
+underlying model function.}
 
 \item{data}{A data frame containing the variables used in the formula or
 recipe.}

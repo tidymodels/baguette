@@ -19,7 +19,7 @@ transformation, \code{NULL}.}
 Used in \code{bag_treer()}.
 }
 \details{
-This parameter reflects the cost of a mis-classified sample relative to a
+This parameter reflects the cost of a misclassified sample relative to a
 baseline cost of 1.0. For example, if the first level of an outcome factor
 occurred rarely, it might help if this parameter were set to values greater
 than 1.0. If the second level of the outcome factor is in the minority,
