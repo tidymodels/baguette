@@ -176,7 +176,7 @@ bagger.formula <-
 
     validate_args(base_model, times, control, cost)
 
-    bp <- hardhat::default_formula_blueprint(indicators = FALSE)
+    bp <- hardhat::default_formula_blueprint(indicators = "none")
     processed <- hardhat::mold(formula, data, blueprint = bp)
     res <-
       bagger_bridge(processed,
