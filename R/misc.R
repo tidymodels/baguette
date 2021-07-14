@@ -14,17 +14,29 @@ compute_imp <- function(rs, .fn, compute) {
     num_mod <- nrow(rs)
     imps <-
       purrr::map_df(rs$model, .fn) %>%
-      dplyr::group_by(predictor) %>%
-      dplyr::summarize(
-        value = sum(importance, na.rm = TRUE)/num_mod,
-        sds = sd(importance, na.rm = TRUE),
-        sds = ifelse(length(predictor) == 1, 0, sds),
-        std.error = sds/sqrt(num_mod),
-        used = length(predictor)
-      ) %>%
-      dplyr::select(-sds) %>%
-      dplyr::arrange(desc(value)) %>%
-      dplyr::rename(term = predictor)
+      dplyr::filter(!is.na(predictor) & !is.na(importance))
+    if (nrow(imps) > 0) {
+      imps <-
+        imps %>%
+        dplyr::group_by(predictor) %>%
+        dplyr::summarize(
+          value = sum(importance, na.rm = TRUE)/num_mod,
+          sds = sd(importance, na.rm = TRUE),
+          sds = ifelse(length(predictor) == 1, 0, sds),
+          std.error = sds/sqrt(num_mod),
+          used = length(predictor)
+        ) %>%
+        dplyr::select(-sds) %>%
+        dplyr::arrange(desc(value)) %>%
+        dplyr::rename(term = predictor)
+    } else {
+      imps <- tibble(
+        term = character(0),
+        value = numeric(0),
+        std.error = numeric(0),
+        used = integer(0)
+      )
+    }
   } else {
     imps <- NULL
   }
