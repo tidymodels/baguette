@@ -237,7 +237,7 @@ package. When requested, the results are in a tibble with column names
 <code>term</code> (the predictor), <code>value</code> (the importance score), and <code>used</code> (the
 percentage of times that the variable was in the prediction equation).</p>
 <p>The models can be fit in parallel using the <span class="pkg">future</span> package. The
-enable parallelism, use the <code><a href='https://rdrr.io/pkg/future/man/plan.html'>future::plan()</a></code> function to declare <em>how</em> the
+enable parallelism, use the <code><a href='https://future.futureverse.org/reference/plan.html'>future::plan()</a></code> function to declare <em>how</em> the
 computations should be distributed. Note that this will almost certainly
 multiply the memory requirements required to fit the models.</p>
 
@@ -281,7 +281,7 @@ multiply the memory requirements required to fit the models.</p>
 #&gt; 
 #&gt; Variable importance scores include:
 #&gt; 
-#&gt; <span style='color: #949494;'># A tibble: 5 x 4</span>
+#&gt; <span style='color: #949494;'># A tibble: 5 × 4</span>
 #&gt;   term      value std.error  used
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
 #&gt; <span style='color: #BCBCBC;'>1</span> carbon   100        0         5
@@ -290,7 +290,7 @@ multiply the memory requirements required to fit the models.</p>
 #&gt; <span style='color: #BCBCBC;'>4</span> sulfur     1.56     0         1
 #&gt; <span style='color: #BCBCBC;'>5</span> nitrogen   1.09     0.757     2
 #&gt; </div><div class='input'><span class='fu'><a href='https://generics.r-lib.org/reference/var_imp.html'>var_imp</a></span><span class='op'>(</span><span class='va'>mars_bag</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 x 4</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 × 4</span>
 #&gt;   term      value std.error  used
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
 #&gt; <span style='color: #BCBCBC;'>1</span> carbon   100        0         5
@@ -306,7 +306,7 @@ multiply the memory requirements required to fit the models.</p>
 #&gt; 
 #&gt; Variable importance scores include:
 #&gt; 
-#&gt; <span style='color: #949494;'># A tibble: 5 x 4</span>
+#&gt; <span style='color: #949494;'># A tibble: 5 × 4</span>
 #&gt;   term     value std.error  used
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
 #&gt; <span style='color: #BCBCBC;'>1</span> carbon   <span style='text-decoration: underline;'>5</span>716.     226.      5
@@ -332,7 +332,7 @@ multiply the memory requirements required to fit the models.</p>
 #&gt; 
 #&gt; Variable importance scores include:
 #&gt; 
-#&gt; <span style='color: #949494;'># A tibble: 5 x 4</span>
+#&gt; <span style='color: #949494;'># A tibble: 5 × 4</span>
 #&gt;   term  value std.error  used
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
 #&gt; <span style='color: #BCBCBC;'>1</span> PC2   <span style='text-decoration: underline;'>4</span>500.     245.      5
@@ -349,7 +349,7 @@ multiply the memory requirements required to fit the models.</p>
 #&gt; 
 #&gt; Variable importance scores include:
 #&gt; 
-#&gt; <span style='color: #949494;'># A tibble: 5 x 4</span>
+#&gt; <span style='color: #949494;'># A tibble: 5 × 4</span>
 #&gt;   term      value std.error  used
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
 #&gt; <span style='color: #BCBCBC;'>1</span> carbon   100         0        5
