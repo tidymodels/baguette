@@ -1,6 +1,6 @@
 Package: baguette
 Title: Efficient Model Functions for Bagging
-Version: 0.1.1
+Version: 0.1.1.9000
 Authors@R: 
     c(person(given = "Max",
              family = "Kuhn",
@@ -17,7 +17,7 @@ URL: https://baguette.tidymodels.org,
     https://github.com/tidymodels/baguette
 BugReports: https://github.com/tidymodels/baguette/issues
 Depends: 
-    parsnip (>= 0.1.3.9000)
+    parsnip (>= 0.1.7.9000)
 Imports: 
     butcher,
     C50,
@@ -45,8 +45,10 @@ Suggests:
     spelling,
     testthat,
     yardstick
+Remotes:
+    tidymodels/parsnip@model-migration
 Config/Needs/website: tidyverse/tidytemplate
 Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1.9000
 Language: en-US
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2

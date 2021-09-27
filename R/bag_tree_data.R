@@ -6,12 +6,6 @@
 # nocov
 
 make_bag_tree <- function() {
-  parsnip::set_new_model("bag_tree")
-
-  parsnip::set_model_mode("bag_tree", "classification")
-  parsnip::set_model_mode("bag_tree", "regression")
-
-  # ----------------------------------------------------------------------------
 
   parsnip::set_model_engine("bag_tree", "classification", "rpart")
   parsnip::set_model_engine("bag_tree", "regression", "rpart")
