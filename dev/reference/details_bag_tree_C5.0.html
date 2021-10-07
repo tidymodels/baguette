@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • baguette</title>
+<title>Bagged trees via C5.0 — details_bag_tree_C5.0 • baguette</title>
 
 
 <!-- jquery -->
@@ -42,7 +42,10 @@
 
 
 
-<meta property="og:title" content="Changelog" />
+<meta property="og:title" content="Bagged trees via C5.0 — details_bag_tree_C5.0" />
+<meta property="og:description" content="bagger() creates an collection of decision trees forming an
+ensemble. All trees in the ensemble are combined to produce a final prediction." />
+<meta name="twitter:card" content="summary" />
 
 
 <meta name="robots" content="noindex">
@@ -69,7 +72,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-news">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -116,49 +119,73 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/tidymodels/baguette/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+    <h1>Bagged trees via C5.0</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/baguette/blob/master/R/bag_tree_C5.0.R'><code>R/bag_tree_C5.0.R</code></a></small>
+    <div class="hidden name"><code>details_bag_tree_C5.0.Rd</code></div>
     </div>
 
-    <div id="baguette-development-version" class="section level1">
-<h1 class="page-header" data-toc-text="development version">
-<a href="#baguette-development-version" class="anchor"></a>baguette (development version)<small> Unreleased </small>
-</h1>
-<ul>
-<li>Model definitions were moved to parsnip (<a href='https://github.com/tidymodels/baguette/issues/47'>#47</a>)</li>
-</ul>
-</div>
-    <div id="baguette-011" class="section level1">
-<h1 class="page-header" data-toc-text="0.1.1">
-<a href="#baguette-011" class="anchor"></a>baguette 0.1.1<small> 2021-07-14 </small>
-</h1>
-<ul>
-<li><p>Bug fix for cases where CART cannot find a split (<a href='https://github.com/tidymodels/baguette/issues/37'>#37</a>)</p></li>
-<li><p>Updated internal usage of a soft-deprecated argument to <code><a href="https://rdrr.io/pkg/hardhat/man/default_formula_blueprint.html">hardhat::default_formula_blueprint()</a></code>.</p></li>
-</ul>
-</div>
-    <div id="baguette-010" class="section level1">
-<h1 class="page-header" data-toc-text="0.1.0">
-<a href="#baguette-010" class="anchor"></a>baguette 0.1.0<small> 2020-10-28 </small>
-</h1>
-<ul>
-<li>Added encoding information to work with current version of <code>parsnip</code>.</li>
-</ul>
-</div>
-    <div id="baguette-0009000" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.0.9000">
-<a href="#baguette-0009000" class="anchor"></a>baguette 0.0.0.9000<small> Unreleased </small>
-</h1>
-<p>Development version</p>
-</div>
-  </div>
+    <div class="ref-description">
+    <p><code><a href='bagger.html'>bagger()</a></code> creates an collection of decision trees forming an
+ensemble. All trees in the ensemble are combined to produce a final prediction.</p>
+    </div>
 
+
+
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>For this engine, there is a single mode: classification</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Tuning Parameters</h3>
+
+
+<p>This model has 2 tuning parameters:</p><ul>
+<li><p><code>class_cost</code>: Class Cost (type: double, default: NA)</p></li>
+<li><p><code>min_n</code>: Minimal Node Size (type: integer, default: 2L)</p></li>
+</ul>
+
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Translation from parsnip to the original package (classification)</h3>
+<p><div class="sourceCode r"></p><pre><span class='fu'>bag_tree</span><span class='op'>(</span>min_n <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>integer</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"C5.0"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>set_mode</span><span class='op'>(</span><span class='st'>"classification"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>translate</span><span class='op'>(</span><span class='op'>)</span>
+</pre><p></div></p><pre><span class='co'>## Bagged Decision Tree Model Specification (classification)</span>
+<span class='co'>## </span>
+<span class='co'>## Main Arguments:</span>
+<span class='co'>##   cost_complexity = 0</span>
+<span class='co'>##   min_n = integer()</span>
+<span class='co'>## </span>
+<span class='co'>## Computational engine: C5.0 </span>
+<span class='co'>## </span>
+<span class='co'>## Model fit template:</span>
+<span class='co'>## baguette::bagger(x = missing_arg(), y = missing_arg(), weights = missing_arg(), </span>
+<span class='co'>##     minCases = integer(), base_model = "C5.0")</span>
+</pre>
+
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Preprocessing requirements</h3>
+
+
+<p>This engine does not require any special encoding of the predictors.
+Categorical predictors can be partitioned into groups of factor levels
+(e.g. <code>{a, c}</code> vs <code>{b, d}</code>) when splitting at a node. Dummy variables
+are not required for this model.</p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>References</h3>
+
+<ul>
+<li><p>Breiman, L. 1996. “Bagging predictors”. Machine Learning. 24 (2):
+123-140</p></li>
+<li><p>Kuhn, M, and K Johnson. 2013. <em>Applied Predictive Modeling</em>.
+Springer.</p></li>
+</ul>
+
+
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
-
 </div>
 
 

@@ -4,12 +4,6 @@
     <loc>https://baguette.tidymodels.org/index.html</loc>
   </url>
   <url>
-    <loc>https://baguette.tidymodels.org/reference/bag_mars.html</loc>
-  </url>
-  <url>
-    <loc>https://baguette.tidymodels.org/reference/bag_tree.html</loc>
-  </url>
-  <url>
     <loc>https://baguette.tidymodels.org/reference/bagger.html</loc>
   </url>
   <url>
@@ -17,6 +11,15 @@
   </url>
   <url>
     <loc>https://baguette.tidymodels.org/reference/control_bag.html</loc>
+  </url>
+  <url>
+    <loc>https://baguette.tidymodels.org/reference/details_bag_mars_earth.html</loc>
+  </url>
+  <url>
+    <loc>https://baguette.tidymodels.org/reference/details_bag_tree_C5.0.html</loc>
+  </url>
+  <url>
+    <loc>https://baguette.tidymodels.org/reference/details_bag_tree_rpart.html</loc>
   </url>
   <url>
     <loc>https://baguette.tidymodels.org/reference/predict.bagger.html</loc>
