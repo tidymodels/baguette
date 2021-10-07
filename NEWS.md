@@ -1,5 +1,7 @@
 # baguette (development version)
 
+* Model definitions were moved to parsnip (#47)
+
 # baguette 0.1.1
 
 * Bug fix for cases where CART cannot find a split (#37)

@@ -6,12 +6,6 @@
 # nocov
 
 make_bag_mars <- function() {
-  parsnip::set_new_model("bag_mars")
-
-  parsnip::set_model_mode("bag_mars", "classification")
-  parsnip::set_model_mode("bag_mars", "regression")
-
-  # ----------------------------------------------------------------------------
 
   parsnip::set_model_engine("bag_mars", "classification", "earth")
   parsnip::set_model_engine("bag_mars", "regression", "earth")
