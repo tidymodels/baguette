@@ -10,7 +10,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![CRAN
 status](https://www.r-pkg.org/badges/version/baguette)](https://cran.r-project.org/package=baguette)
 [![Codecov test
-coverage](https://codecov.io/gh/tidymodels/baguette/branch/master/graph/badge.svg)](https://codecov.io/gh/tidymodels/baguette?branch=master)
+coverage](https://codecov.io/gh/tidymodels/baguette/branch/main/graph/badge.svg)](https://codecov.io/gh/tidymodels/baguette?branch=main)
 [![R build
 status](https://github.com/tidymodels/baguette/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/baguette/actions)
 [![R-CMD-check](https://github.com/tidymodels/baguette/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/baguette/actions)
