@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://baguette.tidymodels.org/CODE_OF_CONDUCT.html</loc>
+  </url>
+  <url>
+    <loc>https://baguette.tidymodels.org/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://baguette.tidymodels.org/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://baguette.tidymodels.org/authors.html</loc>
+  </url>
+  <url>
     <loc>https://baguette.tidymodels.org/index.html</loc>
+  </url>
+  <url>
+    <loc>https://baguette.tidymodels.org/news/index.html</loc>
   </url>
   <url>
     <loc>https://baguette.tidymodels.org/reference/bagger.html</loc>
@@ -20,6 +35,9 @@
   </url>
   <url>
     <loc>https://baguette.tidymodels.org/reference/details_bag_tree_rpart.html</loc>
+  </url>
+  <url>
+    <loc>https://baguette.tidymodels.org/reference/index.html</loc>
   </url>
   <url>
     <loc>https://baguette.tidymodels.org/reference/predict.bagger.html</loc>
