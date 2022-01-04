@@ -159,3 +159,18 @@ test_that('check MARS parsnip interface', {
   expect_equal(update(bag_mars(), prune_method = "none"), bag_mars(prune_method = "none"))
 })
 
+test_that('mode specific package dependencies', {
+  expect_identical(
+    get_from_env(paste0("bag_mars", "_pkgs")) %>%
+      dplyr::filter(engine == "earth", mode == "classification") %>%
+      dplyr::pull(pkg),
+    list(c("earth", "baguette"))
+  )
+
+  expect_identical(
+    get_from_env(paste0("bag_mars", "_pkgs")) %>%
+      dplyr::filter(engine == "earth", mode == "regression") %>%
+      dplyr::pull(pkg),
+    list(c("earth", "baguette"))
+  )
+})
