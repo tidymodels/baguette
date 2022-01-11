@@ -210,3 +210,18 @@ test_that('check CART parsnip interface', {
   expect_equal(names(class_mod_prob), c(".pred_Class1", ".pred_Class2"))
 })
 
+test_that('mode specific package dependencies', {
+  expect_identical(
+    get_from_env(paste0("bag_tree", "_pkgs")) %>%
+      dplyr::filter(engine == "rpart", mode == "classification") %>%
+      dplyr::pull(pkg),
+    list(c("rpart", "baguette"))
+  )
+
+  expect_identical(
+    get_from_env(paste0("bag_tree", "_pkgs")) %>%
+      dplyr::filter(engine == "rpart", mode == "regression") %>%
+      dplyr::pull(pkg),
+    list(c("rpart", "baguette"))
+  )
+})

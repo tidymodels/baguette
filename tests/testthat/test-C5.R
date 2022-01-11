@@ -149,4 +149,18 @@ test_that('check C5 parsnip interface', {
 
 })
 
+test_that('mode specific package dependencies', {
+  expect_identical(
+    get_from_env(paste0("bag_tree", "_pkgs")) %>%
+      dplyr::filter(engine == "C5.0", mode == "classification") %>%
+      dplyr::pull(pkg),
+    list(c("C50", "baguette"))
+  )
 
+  expect_identical(
+    get_from_env(paste0("bag_tree", "_pkgs")) %>%
+      dplyr::filter(engine == "C5.0", mode == "regression") %>%
+      dplyr::pull(pkg),
+    list()
+  )
+})
