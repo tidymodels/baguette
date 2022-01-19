@@ -46,7 +46,7 @@ Suggests:
     testthat,
     yardstick
 Remotes:
-    tidymodels/parsnip
+    tidymodels/parsnip#631
 Config/Needs/website: tidyverse/tidytemplate
 Encoding: UTF-8
 Language: en-US
