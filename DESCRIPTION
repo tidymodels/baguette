@@ -14,7 +14,8 @@ Description: Tree- and rule-based models can be bagged using this package
     reduce the model objects size and speed.
 License: MIT + file LICENSE
 URL: https://baguette.tidymodels.org,
-    https://github.com/tidymodels/baguette
+    https://github.com/tidymodels/baguette,
+    https://baguette.tidymodels.org/
 BugReports: https://github.com/tidymodels/baguette/issues
 Depends: 
     parsnip (>= 0.1.7.9000)

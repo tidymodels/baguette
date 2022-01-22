@@ -1,27 +1,12 @@
-url: https://baguette.tidymodels.org
-
 template:
   package: tidytemplate
-  params:
-    theme: tidymodels
-    part_of: <a href="https://tidymodels.org">tidymodels</a>
-    footer: <code>baguette</code> is a part of the <strong>tidymodels</strong> ecosystem, a collection of modeling packages designed with common APIs and a shared philosophy.
-    ganalytics: UA-20375833-29
-
-development:
-  mode: auto
-
-home:
-  strip_header: true
+  bootstrap: 5
+  bslib:
+    primary: "#CA225E"
+  includes:
+      in_header: |
+        <script defer data-domain="baguette.tidymodels.org,all.tidymodels.org" src="https://plausible.io/js/plausible.js"></script>
 
 figures:
   fig.width: 8
   fig.height: 5.75
-
-navbar:
-  left:
-  - text: News
-    href: news/index.html
-  - text: Reference
-    href: reference/index.html
-
