@@ -56,6 +56,19 @@ require("devtools")
 install_github("tidymodels/baguette")
 ```
 
+## Avaliable Engines
+
+The baguette package provides engines for the models in the following
+table.
+
+| model    | engine | mode           |
+|:---------|:-------|:---------------|
+| bag_mars | earth  | classification |
+| bag_mars | earth  | regression     |
+| bag_tree | rpart  | classification |
+| bag_tree | rpart  | regression     |
+| bag_tree | C5.0   | classification |
+
 ## Example
 
 Let’s build a bagged decision tree model to predict a continuous
@@ -63,7 +76,6 @@ outcome.
 
 ``` r
 library(baguette)
-#> Loading required package: parsnip
 
 bag_tree() %>% 
   set_engine("rpart") # C5.0 is also available here
@@ -85,12 +97,11 @@ bag_cars <-
 bag_cars
 #> parsnip model object
 #> 
-#> Fit time:  4s 
 #> Bagged CART (regression with 25 members)
 #> 
 #> Variable importance scores include:
 #> 
-#> # A tibble: 10 x 4
+#> # A tibble: 10 × 4
 #>    term  value std.error  used
 #>    <chr> <dbl>     <dbl> <int>
 #>  1 disp  905.       51.9    25

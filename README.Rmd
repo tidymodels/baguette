@@ -48,6 +48,30 @@ require("devtools")
 install_github("tidymodels/baguette")
 ```
 
+## Avaliable Engines
+
+The baguette package provides engines for the models in the following table.
+
+```{r, echo=FALSE, message=FALSE}
+library(parsnip)
+
+parsnip_models <- get_from_env("models") %>%
+  setNames(., .) %>%
+  purrr::map_dfr(get_from_env, .id = "model")
+
+library(baguette)
+
+baguette_models <- get_from_env("models") %>%
+  setNames(., .) %>%
+  purrr::map_dfr(get_from_env, .id = "model")
+
+dplyr::anti_join(
+  baguette_models, parsnip_models, 
+  by = c("model", "engine", "mode")
+) %>%
+  knitr::kable()
+```
+
 ## Example
 
 Let's build a bagged decision tree model to predict a continuous outcome.
