@@ -93,12 +93,50 @@
 <span class="fu">install_github</span><span class="op">(</span><span class="st">"tidymodels/baguette"</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="avaliable-engines">Avaliable Engines<a class="anchor" aria-label="anchor" href="#avaliable-engines"></a>
+</h2>
+<p>The baguette package provides engines for the models in the following table.</p>
+<table class="table">
+<thead><tr class="header">
+<th align="left">model</th>
+<th align="left">engine</th>
+<th align="left">mode</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">bag_mars</td>
+<td align="left">earth</td>
+<td align="left">classification</td>
+</tr>
+<tr class="even">
+<td align="left">bag_mars</td>
+<td align="left">earth</td>
+<td align="left">regression</td>
+</tr>
+<tr class="odd">
+<td align="left">bag_tree</td>
+<td align="left">rpart</td>
+<td align="left">classification</td>
+</tr>
+<tr class="even">
+<td align="left">bag_tree</td>
+<td align="left">rpart</td>
+<td align="left">regression</td>
+</tr>
+<tr class="odd">
+<td align="left">bag_tree</td>
+<td align="left">C5.0</td>
+<td align="left">classification</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <p>Let’s build a bagged decision tree model to predict a continuous outcome.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://baguette.tidymodels.org">baguette</a></span><span class="op">)</span>
-<span class="co">#&gt; Loading required package: parsnip</span>
 
 <span class="fu"><a href="https://parsnip.tidymodels.org/reference/bag_tree.html" class="external-link">bag_tree</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="https://parsnip.tidymodels.org/reference/set_engine.html" class="external-link">set_engine</a></span><span class="op">(</span><span class="st">"rpart"</span><span class="op">)</span> <span class="co"># C5.0 is also available here</span>
@@ -120,12 +158,11 @@
 <span class="va">bag_cars</span>
 <span class="co">#&gt; parsnip model object</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Fit time:  4s </span>
 <span class="co">#&gt; Bagged CART (regression with 25 members)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Variable importance scores include:</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; # A tibble: 10 x 4</span>
+<span class="co">#&gt; # A tibble: 10 × 4</span>
 <span class="co">#&gt;    term  value std.error  used</span>
 <span class="co">#&gt;    &lt;chr&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;int&gt;</span>
 <span class="co">#&gt;  1 disp  905.       51.9    25</span>
