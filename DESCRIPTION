@@ -18,7 +18,7 @@ URL: https://baguette.tidymodels.org,
     https://baguette.tidymodels.org/
 BugReports: https://github.com/tidymodels/baguette/issues
 Depends: 
-    parsnip (>= 0.1.7.9000)
+    parsnip (>= 0.2.0)
 Imports: 
     butcher,
     C50,
@@ -46,8 +46,6 @@ Suggests:
     spelling,
     testthat,
     yardstick
-Remotes:
-    tidymodels/parsnip
 Config/Needs/website: tidyverse/tidytemplate
 Encoding: UTF-8
 Language: en-US
