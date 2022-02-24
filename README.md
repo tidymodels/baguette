@@ -56,7 +56,7 @@ require("devtools")
 install_github("tidymodels/baguette")
 ```
 
-## Avaliable Engines
+## Available Engines
 
 The baguette package provides engines for the models in the following
 table.
