@@ -12,8 +12,7 @@ Description: Tree- and rule-based models can be bagged
     objects size and speed.
 License: MIT + file LICENSE
 URL: https://baguette.tidymodels.org,
-    https://github.com/tidymodels/baguette,
-    https://baguette.tidymodels.org/
+    https://github.com/tidymodels/baguette
 BugReports: https://github.com/tidymodels/baguette/issues
 Depends: 
     parsnip (>= 0.2.0)
