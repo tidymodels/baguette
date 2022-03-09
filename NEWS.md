@@ -1,4 +1,4 @@
-# baguette (development version)
+# baguette 0.2.0
 
 * Model definitions were moved to parsnip (#47)
 

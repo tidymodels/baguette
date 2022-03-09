@@ -10,7 +10,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![CRAN
 status](https://www.r-pkg.org/badges/version/baguette)](https://cran.r-project.org/package=baguette)
 [![Codecov test
-coverage](https://codecov.io/gh/tidymodels/baguette/branch/main/graph/badge.svg)](https://codecov.io/gh/tidymodels/baguette?branch=main)
+coverage](https://codecov.io/gh/tidymodels/baguette/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidymodels/baguette?branch=main)
 [![R build
 status](https://github.com/tidymodels/baguette/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/baguette/actions)
 [![R-CMD-check](https://github.com/tidymodels/baguette/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/baguette/actions)
@@ -56,7 +56,7 @@ require("devtools")
 install_github("tidymodels/baguette")
 ```
 
-## Avaliable Engines
+## Available Engines
 
 The baguette package provides engines for the models in the following
 table.
