@@ -103,8 +103,7 @@ bagger.default <- function(x, ...) {
 #' @export
 #' @rdname bagger
 bagger.data.frame <-
-  function(x,
-           y,
+  function(x, y, weights = NULL,
            base_model = "CART",
            times = 11L,
            control = control_bag(),
@@ -117,6 +116,7 @@ bagger.data.frame <-
     processed <- hardhat::mold(x, y)
     res <-
       bagger_bridge(processed,
+                    weights,
                     base_model,
                     seed,
                     times,
@@ -133,8 +133,7 @@ bagger.data.frame <-
 #' @export
 #' @rdname bagger
 bagger.matrix <-
-  function(x,
-           y,
+  function(x, y, weights = NULL,
            base_model = "CART",
            times = 11L,
            control = control_bag(),
@@ -148,6 +147,7 @@ bagger.matrix <-
     processed <- hardhat::mold(x, y)
     res <-
       bagger_bridge(processed,
+                    weights,
                     base_model,
                     seed,
                     times,
@@ -164,8 +164,7 @@ bagger.matrix <-
 #' @export
 #' @rdname bagger
 bagger.formula <-
-  function(formula,
-           data,
+  function(formula, data, weights = NULL,
            base_model = "CART",
            times = 11L,
            control = control_bag(),
@@ -180,6 +179,7 @@ bagger.formula <-
     processed <- hardhat::mold(formula, data, blueprint = bp)
     res <-
       bagger_bridge(processed,
+                    weights,
                     base_model,
                     seed,
                     times,
@@ -196,8 +196,7 @@ bagger.formula <-
 #' @export
 #' @rdname bagger
 bagger.recipe <-
-  function(x,
-           data,
+  function(x, data,
            base_model = "CART",
            times = 11L,
            control = control_bag(),
@@ -211,6 +210,7 @@ bagger.recipe <-
     processed <- hardhat::mold(x, data)
     res <-
       bagger_bridge(processed,
+                    weights = NULL,
                     base_model,
                     seed,
                     times,
