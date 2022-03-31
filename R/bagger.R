@@ -12,6 +12,8 @@
 #'  underlying model function.
 #' @param data A data frame containing the variables used in the formula or
 #'  recipe.
+#' @param weights A numeric vector of non-negative case weights. These values are
+#' not used during bootstrap resampling.
 #' @param base_model A single character value for the model being bagged. Possible
 #'  values are "CART", "MARS", and "C5.0" (classification only).
 #' @param times A single integer greater than 1 for the maximum number of bootstrap

@@ -225,3 +225,25 @@ test_that('mode specific package dependencies', {
     list(c("rpart", "baguette"))
   )
 })
+
+
+
+test_that('case weights', {
+  skip_if_not_installed("modeldata")
+  data("two_class_dat", package = "modeldata")
+  set.seed(1)
+  wts <- runif(nrow(two_class_dat))
+  wts <- ifelse(wts < 1/5, 0, 1)
+
+  expect_error({
+    set.seed(1)
+    wts_fit <- bagger(Class ~ A + B, data = two_class_dat, weights = wts)
+  },
+  regexp = NA
+  )
+
+  set.seed(1)
+  fit <- bagger(Class ~ A + B, data = two_class_dat)
+  expect_true(!identical(wts_fit$imp, fit$imp))
+})
+
