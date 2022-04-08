@@ -1,9 +1,4 @@
-library(testthat)
 library(recipes)
-
-context("model interfaces")
-
-# ------------------------------------------------------------------------------
 
 test_that('recipe execution', {
   # check to make sure that prepped data are given to model

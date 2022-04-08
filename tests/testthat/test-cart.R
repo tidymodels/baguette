@@ -1,11 +1,5 @@
-library(testthat)
 library(purrr)
 library(yardstick)
-
-context("CART models")
-
-# ------------------------------------------------------------------------------
-
 data("two_class_dat", package = "modeldata")
 
 # ------------------------------------------------------------------------------
