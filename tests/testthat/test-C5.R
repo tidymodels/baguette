@@ -1,7 +1,3 @@
-data("two_class_dat", package = "modeldata")
-
-# ------------------------------------------------------------------------------
-
 test_that('check C5.0 opt', {
   check_rules <- function(x, ...) {
     x$tree == "" & nchar(x$rules) > 10

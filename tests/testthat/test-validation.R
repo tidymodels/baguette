@@ -1,7 +1,3 @@
-data("two_class_dat", package = "modeldata")
-
-# ------------------------------------------------------------------------------
-
 test_that('good values', {
   expect_error(
     baguette:::validate_args(
@@ -129,15 +125,11 @@ test_that('bad inputs', {
     expect_warning(RNGkind(sample.kind = "Rounding"))
   }
   set.seed(3983)
-  expect_warning(
-    expect_error(
+  expect_snapshot_error(
       predict(bagger(Class ~ ., data = two_class_dat, base_model = "MARS"),
               two_class_dat[1:2, -3],
               type = "topepo"),
-      "`type` should be either 'class' or 'prob'"
-    ),
-    "fitted probabilities numerically 0 or 1 occurred"
-  )
+    )
 })
 
 # ------------------------------------------------------------------------------
