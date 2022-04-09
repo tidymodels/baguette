@@ -1,29 +1,3 @@
-library(testthat)
-library(purrr)
-library(yardstick)
-
-context("CART models")
-
-# ------------------------------------------------------------------------------
-
-data("two_class_dat", package = "modeldata")
-
-# ------------------------------------------------------------------------------
-
-num_leaves <- function(x, ...) {
-  sum(x$frame$var == "<leaf>")
-}
-
-get_method <- function(x, ...) {
-  x$method
-}
-
-get_loss <- function(x, ...) {
-  x$parms$loss
-}
-
-# ------------------------------------------------------------------------------
-
 test_that('check CART opt', {
 
   mod_1 <-

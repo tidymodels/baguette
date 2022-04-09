@@ -1,14 +1,3 @@
-library(testthat)
-library(rlang)
-
-context("MARS models")
-
-# ------------------------------------------------------------------------------
-
-data("two_class_dat", package = "modeldata")
-
-# ------------------------------------------------------------------------------
-
 test_that('check mars opt', {
   set.seed(36323)
   check_pruning <- function(x, ...) {
