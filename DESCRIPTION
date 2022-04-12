@@ -4,7 +4,7 @@ Version: 0.2.0.9000
 Authors@R: c(
     person("Max", "Kuhn", , "max@rstudio.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-2402-136X")),
-    person("RStudio", role = "cph")
+    person("RStudio", role = c("cph", "fnd"))
   )
 Description: Tree- and rule-based models can be bagged
     (<doi:10.1007/BF00058655>) using this package and their predictions
@@ -15,7 +15,8 @@ URL: https://baguette.tidymodels.org,
     https://github.com/tidymodels/baguette
 BugReports: https://github.com/tidymodels/baguette/issues
 Depends: 
-    parsnip (>= 0.2.0)
+    parsnip (>= 0.2.0),
+    R (>= 3.4)
 Imports: 
     butcher,
     C50,
@@ -41,7 +42,7 @@ Suggests:
     recipes,
     rmarkdown,
     spelling,
-    testthat,
+    testthat (>= 3.0.0),
     yardstick
 Config/Needs/website: tidyverse/tidytemplate
 Encoding: UTF-8
@@ -50,3 +51,4 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2.9000
 Remotes:
     tidymodels/parsnip#692
+Config/testthat/edition: 3
