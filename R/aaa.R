@@ -12,7 +12,7 @@
 #' @importFrom purrr map map2 map_df map_dfr map_lgl
 #' @importFrom tibble tibble as_tibble is_tibble
 #' @importFrom furrr future_map future_map2
-#' @importFrom stats setNames sd predict complete.cases
+#' @importFrom stats setNames sd predict complete.cases coef
 #' @importFrom C50 C5.0 C5.0Control C5imp as.party.C5.0
 #' @importFrom rpart rpart
 #' @importFrom withr with_seed

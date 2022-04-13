@@ -4,6 +4,7 @@ bagger_bridge <- function(processed, base_model, seed, times, control, cost, ...
     validate_outcomes_are_factors(processed$outcomes)
   }
 
+  # TODO no cost for nnet
   dat <- as.data.frame(processed$predictors)
   dat$.outcome <- processed$outcomes[[1]]
 
@@ -16,7 +17,8 @@ bagger_bridge <- function(processed, base_model, seed, times, control, cost, ...
       base_model,
       CART = cart_bagger(rs, control, ...),
       C5.0 =   c5_bagger(rs, control, ...),
-      MARS = mars_bagger(rs, control, ...)
+      MARS = mars_bagger(rs, control, ...),
+      nnet = nnet_bagger(rs, control, ...),
     )
   } else {
     res <- switch(

@@ -1,4 +1,4 @@
-baguette_models <- c("CART", "C5.0", "MARS")
+baguette_models <- c("CART", "C5.0", "MARS", "nnet")
 
 # We want to default some arguments for different models
 model_defaults <-
@@ -6,12 +6,13 @@ model_defaults <-
     CART = list(cp = 0, xval = 0, minsplit = 20, maxdepth = 30, model = FALSE),
     "model rules" = list(),
     "C5.0" = list(minCases = 2),
-    MARS = list(pmethod = "none", nprune = NULL, degree = 1)
+    MARS = list(pmethod = "none", nprune = NULL, degree = 1),
+    nnet = list()
   )
 
 # Enumerate the possible arguments in the fit or control functions that can
 # be modified by the user. This could be done programatically to protect against
-# changes but each of the underlying pacakges is pretty mature and there is a
+# changes but each of the underlying packages is pretty mature and there is a
 # small likelihood of them changing.
 
 model_args <-
@@ -26,6 +27,7 @@ model_args <-
                'CF', 'minCases', 'fuzzyThreshold', 'sample'),
     MARS = c('pmethod', 'trace', 'glm', 'degree', 'nprune', 'nfold', 'ncross',
              'stratify', 'varmod.method', 'varmod.exponent', 'varmod.conv',
-             'varmod.clamp', 'varmod.minspan', 'Scale.y')
+             'varmod.clamp', 'varmod.minspan', 'Scale.y'),
+    nnet = character()
   )
 

@@ -1,5 +1,7 @@
 # baguette (development version)
 
+* Bagged single layer, feed-forward neural networks can be used with `base_model = "nnet"`.
+
 # baguette 0.2.0
 
 * Model definitions were moved to parsnip (#47)
