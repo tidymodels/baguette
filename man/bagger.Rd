@@ -16,6 +16,7 @@ bagger(x, ...)
 \method{bagger}{data.frame}(
   x,
   y,
+  weights = NULL,
   base_model = "CART",
   times = 11L,
   control = control_bag(),
@@ -26,6 +27,7 @@ bagger(x, ...)
 \method{bagger}{matrix}(
   x,
   y,
+  weights = NULL,
   base_model = "CART",
   times = 11L,
   control = control_bag(),
@@ -36,6 +38,7 @@ bagger(x, ...)
 \method{bagger}{formula}(
   formula,
   data,
+  weights = NULL,
   base_model = "CART",
   times = 11L,
   control = control_bag(),
@@ -60,6 +63,9 @@ bagger(x, ...)
 
 \item{y}{A numeric or factor vector of outcomes. Categorical outcomes (i.e
 classes) should be represented as factors, not integers.}
+
+\item{weights}{A numeric vector of non-negative case weights. These values are
+not used during bootstrap resampling.}
 
 \item{base_model}{A single character value for the model being bagged. Possible
 values are "CART", "MARS", "C5.0" (classification only), or "nnet".}

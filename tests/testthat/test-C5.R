@@ -1,13 +1,3 @@
-library(testthat)
-
-context("C5.0 models")
-
-# ------------------------------------------------------------------------------
-
-data("two_class_dat", package = "modeldata")
-
-# ------------------------------------------------------------------------------
-
 test_that('check C5.0 opt', {
   check_rules <- function(x, ...) {
     x$tree == "" & nchar(x$rules) > 10
@@ -163,4 +153,25 @@ test_that('mode specific package dependencies', {
       dplyr::pull(pkg),
     list()
   )
+})
+
+
+
+test_that('case weights', {
+  skip_if_not_installed("modeldata")
+  data("two_class_dat", package = "modeldata")
+  set.seed(1)
+  wts <- runif(nrow(two_class_dat))
+  wts <- ifelse(wts < 1/5, 0, 1)
+
+  expect_error({
+    set.seed(1)
+    c5_wts_fit <- bagger(Class ~ A + B, data = two_class_dat,
+                         weights = wts, base_model = "C5.0")
+  },
+  regexp = NA
+  )
+
+  expect_true(all(purrr::map_lgl(c5_wts_fit$model_df$model, ~ .x$fit$caseWeights)))
+
 })

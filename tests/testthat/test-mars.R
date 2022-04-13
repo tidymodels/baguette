@@ -1,14 +1,3 @@
-library(testthat)
-library(rlang)
-
-context("MARS models")
-
-# ------------------------------------------------------------------------------
-
-data("two_class_dat", package = "modeldata")
-
-# ------------------------------------------------------------------------------
-
 test_that('check mars opt', {
   set.seed(36323)
   check_pruning <- function(x, ...) {
@@ -174,3 +163,23 @@ test_that('mode specific package dependencies', {
     list(c("earth", "baguette"))
   )
 })
+
+
+
+test_that('case weights', {
+  set.seed(1)
+  wts <- runif(nrow(mtcars))
+
+  expect_error({
+    set.seed(1)
+    wts_fit <- bagger(mpg ~ ., data = mtcars, weights = wts, base_model = "MARS")
+  },
+  regexp = NA
+  )
+
+  set.seed(1)
+  fit <- bagger(mpg ~ ., data = mtcars, base_model = "MARS")
+  expect_true(!identical(wts_fit$imp, fit$imp))
+})
+
+

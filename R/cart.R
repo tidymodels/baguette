@@ -98,9 +98,22 @@ cart_fit  <- function(split, spec, control = control_bag()) {
   if (control$sampling == "down") {
     dat <- down_sampler(dat)
   }
+  if (any(names(dat) == ".weights")) {
+    wts <- hardhat::importance_weights(dat$.weights)
+    dat$.weights <- NULL
+  } else {
+    wts <- NULL
+  }
 
   ctrl <- parsnip::fit_control(catch = TRUE)
-  mod <- parsnip::fit.model_spec(spec, .outcome ~ ., data = dat, control = ctrl)
+  mod <-
+    parsnip::fit.model_spec(
+      spec,
+      .outcome ~ .,
+      data = dat,
+      control = ctrl,
+      case_weights = wts
+    )
   mod
 }
 
