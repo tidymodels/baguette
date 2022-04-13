@@ -40,62 +40,74 @@
 #'
 #' For single layer, feed-forward neural networks used when `base_model = "nnet"`,
 #' the defaults use no weight decay and 10 hidden units. For variable importance,
-#' the method of Garson (1991) is used.
+#' the method of Garson (1991) is used. Note that, for this model, the
+#' predictors should be centered and scaled.
 #' @references Garson, G.D., 1991. "Interpreting neural network connection
 #' weights_. _Artificial Intelligence Expert_ 6, 47/51.
 #' @examples
-#' library(recipes)
-#' library(dplyr)
+#
+#' if (rlang::is_installed(c("recipes", "modeldata"))) {
+#'   library(recipes)
+#'   library(dplyr)
 #'
-#' data(biomass, package = "modeldata")
+#'   data(biomass, package = "modeldata")
 #'
-#' biomass_tr <-
-#'   biomass %>%
-#'   dplyr::filter(dataset == "Training") %>%
-#'   dplyr::select(-dataset, -sample)
+#'   biomass_tr <-
+#'     biomass %>%
+#'     dplyr::filter(dataset == "Training") %>%
+#'     dplyr::select(-dataset, -sample)
 #'
-#' biomass_te <-
-#'   biomass %>%
-#'   dplyr::filter(dataset == "Testing") %>%
-#'   dplyr::select(-dataset, -sample)
+#'   biomass_te <-
+#'     biomass %>%
+#'     dplyr::filter(dataset == "Testing") %>%
+#'     dplyr::select(-dataset, -sample)
 #'
-#' # ------------------------------------------------------------------------------
+#'   # ------------------------------------------------------------------------------
 #'
-#' ctrl <- control_bag(var_imp = TRUE)
+#'   ctrl <- control_bag(var_imp = TRUE)
 #'
-#' # ------------------------------------------------------------------------------
+#'   # ------------------------------------------------------------------------------
 #'
-#' # `times` is low to make the examples run faster
+#'   # `times` is low to make the examples run faster
 #'
-#' set.seed(7687)
-#' mars_bag <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
-#'                    base_model = "MARS", times = 5, control = ctrl)
-#' mars_bag
-#' var_imp(mars_bag)
+#'   set.seed(7687)
+#'   mars_bag <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
+#'                      base_model = "MARS", times = 5, control = ctrl)
+#'   mars_bag
+#'   var_imp(mars_bag)
 #'
-#' set.seed(7687)
-#' cart_bag <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
-#'                    base_model = "CART", times = 5, control = ctrl)
-#' cart_bag
+#'   set.seed(7687)
+#'   cart_bag <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
+#'                      base_model = "CART", times = 5, control = ctrl)
+#'   cart_bag
 #'
-#' # ------------------------------------------------------------------------------
-#' # Other interfaces
+#'   # ------------------------------------------------------------------------------
+#'   # Other interfaces
 #'
-#' # Recipes can be used
-#' biomass_rec <-
-#'   recipe(HHV ~ ., data = biomass_tr) %>%
-#'   step_pca(all_predictors())
+#'   # Recipes can be used
+#'   biomass_rec <-
+#'     recipe(HHV ~ ., data = biomass_tr) %>%
+#'     step_normalize(all_predictors()) %>%
+#'     step_pca(all_predictors())
 #'
-#' set.seed(7687)
-#' cart_pca_bag <- bagger(biomass_rec, data = biomass_tr, base_model = "CART",
-#'                        times = 5, control = ctrl)
+#'   set.seed(7687)
+#'   cart_pca_bag <- bagger(biomass_rec, data = biomass_tr, base_model = "CART",
+#'                          times = 5, control = ctrl)
 #'
-#' cart_pca_bag
+#'   cart_pca_bag
 #'
-#' # Using formulas
-#' mars_bag <- bagger(HHV ~ ., data = biomass_tr, base_model = "MARS", times = 5,
-#'                    control = ctrl)
-#' mars_bag
+#'   # Using formulas
+#'   mars_bag <- bagger(HHV ~ ., data = biomass_tr, base_model = "MARS", times = 5,
+#'                      control = ctrl)
+#'   mars_bag
+#'
+#'   # ------------------------------------------------------------------------------
+#'   # neural networks
+#'
+#'   set.seed(7687)
+#'   nnet_bag <- bagger(biomass_rec, data = biomass_tr, base_model = "nnet",
+#'                          times = 5, control = ctrl)
+#' }
 #' @export
 bagger <- function(x, ...) {
   UseMethod("bagger")

@@ -27,6 +27,7 @@ Imports:
     generics,
     hardhat (>= 0.1.4),
     magrittr,
+    nnet,
     purrr,
     rlang,
     rpart,
