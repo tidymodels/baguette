@@ -105,7 +105,7 @@ cart_fit  <- function(split, spec, control = control_bag()) {
     wts <- NULL
   }
 
-  ctrl <- parsnip::fit_control(catch = TRUE)
+  ctrl <- parsnip::control_parsnip(catch = TRUE)
   mod <-
     parsnip::fit.model_spec(
       spec,
