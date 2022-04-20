@@ -79,7 +79,7 @@ make_c5_spec <- function(opt) {
 
 
 c5_fit  <- function(split, spec, control = control_bag()) {
-  ctrl <- parsnip::fit_control(catch = TRUE)
+  ctrl <- parsnip::control_parsnip(catch = TRUE)
 
   dat <- rsample::analysis(split)
 
