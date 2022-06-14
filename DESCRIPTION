@@ -1,6 +1,6 @@
 Package: baguette
 Title: Efficient Model Functions for Bagging
-Version: 0.2.0.9000
+Version: 1.0.0
 Authors@R: c(
     person("Max", "Kuhn", , "max@rstudio.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-2402-136X")),
@@ -15,7 +15,7 @@ URL: https://baguette.tidymodels.org,
     https://github.com/tidymodels/baguette
 BugReports: https://github.com/tidymodels/baguette/issues
 Depends: 
-    parsnip (>= 0.2.0),
+    parsnip (>= 1.0.0),
     R (>= 3.4)
 Imports: 
     butcher,
@@ -25,7 +25,7 @@ Imports:
     earth,
     furrr,
     generics,
-    hardhat (>= 0.1.4),
+    hardhat (>= 1.1.0),
     magrittr,
     purrr,
     rlang,
@@ -44,11 +44,11 @@ Suggests:
     spelling,
     testthat (>= 3.0.0),
     yardstick
+Remotes:
+    tidymodels/parsnip
 Config/Needs/website: tidyverse/tidytemplate
+Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2.9000
-Remotes:
-    tidymodels/parsnip#692
-Config/testthat/edition: 3
