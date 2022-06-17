@@ -1,4 +1,4 @@
-# baguette (development version)
+# baguette 1.0.0
 
 * Enable case weights for `bagger()`. 
 
