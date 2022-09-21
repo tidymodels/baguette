@@ -109,8 +109,15 @@ axe_nnet <- function(x) {
 }
 
 
+#' Garson Importance Scores for neural Networks
+#' @param object A `model_fit` or `nnet` object
+#' @return A tibble.
+#' @export
+#' @keywords internal
 nnet_imp_garson<- function(object) {
-  object <- object$fit
+  if (inherits(object, "model_fit")) {
+    object <- object$fit
+  }
   beta <- coef(object)
   abeta <- abs(beta)
   nms <- names(beta)
