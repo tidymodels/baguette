@@ -68,7 +68,7 @@ classes) should be represented as factors, not integers.}
 not used during bootstrap resampling.}
 
 \item{base_model}{A single character value for the model being bagged. Possible
-values are "CART", "MARS", and "C5.0" (classification only).}
+values are "CART", "MARS", "nnet", and "C5.0" (classification only).}
 
 \item{times}{A single integer greater than 1 for the maximum number of bootstrap
 samples/ensemble members (some model fits might fail).}

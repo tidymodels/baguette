@@ -21,7 +21,8 @@ bagger_bridge <- function(processed, weights, base_model, seed, times, control, 
       base_model,
       CART = cart_bagger(rs, control, ...),
       C5.0 =   c5_bagger(rs, control, ...),
-      MARS = mars_bagger(rs, control, ...)
+      MARS = mars_bagger(rs, control, ...),
+      nnet = nnet_bagger(rs, control, ...)
     )
   } else {
     res <- switch(
