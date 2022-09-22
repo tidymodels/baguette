@@ -36,6 +36,13 @@
 #'  enable parallelism, use the `future::plan()` function to declare _how_ the
 #'  computations should be distributed. Note that this will almost certainly
 #'  multiply the memory requirements required to fit the models.
+#'
+#' For neural networks, variable importance is calculated using the method
+#' of Garson described in Gevrey _et al_ (2003)
+#'
+#' @references Gevrey, M., Dimopoulos, I., and Lek, S. (2003). Review and
+#' comparison of methods to study the contribution of variables in artificial
+#' neural network models. Ecological Modelling, 160(3), 249-264.
 #' @examples
 #' library(recipes)
 #' library(dplyr)

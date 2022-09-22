@@ -17,7 +17,8 @@
 #' @importFrom rpart rpart
 #' @importFrom withr with_seed
 #' @importFrom dials new_quant_param
-
+#' @importFrom stats coef
+#'
 # ------------------------------------------------------------------------------
 
 utils::globalVariables(
@@ -53,4 +54,5 @@ utils::globalVariables(
   # This defines model functions in the parsnip model database
   make_bag_tree()
   make_bag_mars()
+  make_bag_mlp()
 }
