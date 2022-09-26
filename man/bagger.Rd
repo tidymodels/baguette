@@ -68,7 +68,7 @@ classes) should be represented as factors, not integers.}
 not used during bootstrap resampling.}
 
 \item{base_model}{A single character value for the model being bagged. Possible
-values are "CART", "MARS", and "C5.0" (classification only).}
+values are "CART", "MARS", "nnet", and "C5.0" (classification only).}
 
 \item{times}{A single integer greater than 1 for the maximum number of bootstrap
 samples/ensemble members (some model fits might fail).}
@@ -105,6 +105,9 @@ The models can be fit in parallel using the \pkg{future} package. The
 enable parallelism, use the \code{future::plan()} function to declare \emph{how} the
 computations should be distributed. Note that this will almost certainly
 multiply the memory requirements required to fit the models.
+
+For neural networks, variable importance is calculated using the method
+of Garson described in Gevrey \emph{et al} (2003)
 }
 \examples{
 library(recipes)
@@ -159,4 +162,9 @@ cart_pca_bag
 mars_bag <- bagger(HHV ~ ., data = biomass_tr, base_model = "MARS", times = 5,
                    control = ctrl)
 mars_bag
+}
+\references{
+Gevrey, M., Dimopoulos, I., and Lek, S. (2003). Review and
+comparison of methods to study the contribution of variables in artificial
+neural network models. Ecological Modelling, 160(3), 249-264.
 }
