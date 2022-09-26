@@ -75,7 +75,7 @@ make_nnet_spec <- function(classif, opt) {
 }
 
 
-nnet_fit  <- function(split, spec, control = control_bag()) {
+nnet_fit <- function(split, spec, control = control_bag()) {
 
   dat <- rsample::analysis(split)
 
@@ -114,7 +114,7 @@ axe_nnet <- function(x) {
 #' @return A tibble.
 #' @export
 #' @keywords internal
-nnet_imp_garson<- function(object) {
+nnet_imp_garson <- function(object) {
   if (inherits(object, "model_fit")) {
     object <- object$fit
   }
@@ -126,16 +126,16 @@ nnet_imp_garson<- function(object) {
 
   for (hidden in 1:object$n[2]) {
     for (input in 1:object$n[1]) {
-      label <- paste("i", input, "->h", hidden,"$", sep = "")
+      label <- paste("i", input, "->h", hidden, "$", sep = "")
       i2h[hidden, input] <- abeta[grep(label, nms, fixed = FALSE)]
     }
   }
-  for(hidden in 1:object$n[2]){
-    for(output in 1:object$n[3]){
+  for(hidden in 1:object$n[2]) {
+    for(output in 1:object$n[3]) {
       label <- paste("h", hidden, "->o",
                      ifelse(object$n[3] == 1, "", output),
                      sep = "")
-      h2o[hidden,output] <- abeta[grep(label, nms, fixed = TRUE)]
+      h2o[hidden, output] <- abeta[grep(label, nms, fixed = TRUE)]
     }
   }
 
@@ -167,16 +167,16 @@ nnet_imp_garson<- function(object) {
   imp <- matrix(NA, nrow = object$n[1], ncol = object$n[3])
 
 
-  for(output in 1:object$n[3]) {
+  for (output in 1:object$n[3]) {
     Pij <- i2h * NA
-    for(hidden in 1:object$n[2]) Pij[hidden,] <- i2h[hidden,] * h2o[hidden,output]
+    for (hidden in 1:object$n[2]) Pij[hidden, ] <- i2h[hidden, ] * h2o[hidden, output]
 
     ## "For each hidden neuron, divide Pij by the sum for all the
     ## input variables to obtain Qij. For example for Hidden 1, Q11 =
     ## P11/(P11+P12+P13).
 
     Qij <- Pij * NA
-    for(hidden in 1:object$n[2]) Qij[hidden,] <- Pij[hidden,] / sum(Pij[hidden,])
+    for (hidden in 1:object$n[2]) Qij[hidden, ] <- Pij[hidden, ] / sum(Pij[hidden, ])
 
 
     ## "For each input neuron, sum the product Sj formed from the
@@ -191,12 +191,12 @@ nnet_imp_garson<- function(object) {
     ## input variable. For example, for the input neuron 1, the
     ## relative importance is equal to (S1/100)/(S1+S2+S3)"
 
-    imp[,output] <- Sj/sum(Sj)*100
+    imp[, output] <- Sj / sum(Sj) * 100
   }
 
   imp <- apply(imp, 1, mean)
 
-  if(!is.null(object$coefnames)) {
+  if (!is.null(object$coefnames)) {
     x_nms <- object$coefnames
   } else {
     ind <- format(1:object$n[1])
