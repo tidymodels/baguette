@@ -79,7 +79,7 @@ make_cart_spec <- function(classif, opt) {
       main_args <- NULL
     }
 
-    # Note: from ?rpart: "arguments to rpartcontrol may also be specified in
+    # Note: from ?rpart: "arguments to rpart.control may also be specified in
     # the call to rpart. They are checked against the list of valid arguments."
 
     cart_spec <-

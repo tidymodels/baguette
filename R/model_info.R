@@ -7,7 +7,7 @@ model_defaults <-
     "model rules" = list(),
     "C5.0" = list(minCases = 2),
     MARS = list(pmethod = "none", nprune = NULL, degree = 1),
-    nnet = list(decay = 0, size = 10, MaxNWts = 10^5)
+    nnet = list(decay = 0, size = 10, maxit = 1000, MaxNWts = 10^5)
   )
 
 # Enumerate the possible arguments in the fit or control functions that can

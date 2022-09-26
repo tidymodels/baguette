@@ -51,10 +51,11 @@ make_nnet_spec <- function(classif, opt) {
     parsnip::mlp(
       mode = nnet_md,
       penalty = !!opts$decay,
-      hidden_units = !!opts$size
+      hidden_units = !!opts$size,
+      epochs = !!opt$maxit
     )
 
-  opts <- opts[!(names(opts) %in% c("decay", "size"))]
+  opts <- opts[!(names(opts) %in% c("decay", "size", "maxit"))]
 
   if (length(opts) > 0) {
     main_args <- list()
