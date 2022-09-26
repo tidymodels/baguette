@@ -73,3 +73,30 @@ test_that('mode specific package dependencies', {
   )
 })
 
+test_that('variable importance', {
+  skip_if_not_installed("nnet")
+
+  # See inst/helper-objects-for-testing.R
+  # Values from another implementation
+  exp_vip <-
+    tibble::tribble(
+ ~predictor,      ~importance,
+      "cyl", 10.4382541964352,
+      "disp", 6.40411349529868,
+      "hp", 10.5671716879969,
+      "drat",  11.816366389055,
+      "wt", 9.78795915963821,
+      "qsec", 18.3934915487232,
+      "vs", 6.28589044459608,
+      "am", 5.70032668136104,
+      "gear", 12.9721190483202,
+      "carb",  7.6343073485756
+    )
+
+  set.seed(1)
+  reg_mod <- nnet::nnet(mpg ~ ., data = mtcars, size = 3, trace = FALSE)
+  baguette_imp <- baguette:::nnet_imp_garson(reg_mod)
+  expect_equal(exp_vip, baguette_imp, tolerance = 0.0001)
+
+})
+
