@@ -43,8 +43,8 @@ install.packages("baguette")
 Install the development version from GitHub with:
 
 ``` r
-require("devtools")
-install_github("tidymodels/baguette")
+# install.packages("pak")
+pak::pak("tidymodels/baguette")
 ```
 
 ## Available Engines
