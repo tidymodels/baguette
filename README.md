@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# baguette
+# baguette <a href="https://baguette.tidymodels.org/"><img src="man/figures/logo.png" align="right" height="138" /></a>
 
 <!-- badges: start -->
 
@@ -24,19 +24,19 @@ ensemble models.
 The model objects produced by baguette are kept smaller than they would
 otherwise be through two operations:
 
--   The [butcher](https://butcher.tidymodels.org/) package is used to
-    remove object elements that are not crucial to using the models. For
-    example, some models contain copies of the training set or model
-    residuals when created. These are removed to save space.
+- The [butcher](https://butcher.tidymodels.org/) package is used to
+  remove object elements that are not crucial to using the models. For
+  example, some models contain copies of the training set or model
+  residuals when created. These are removed to save space.
 
--   For ensembles whose base models use a formula method, there is a
-    built-in redundancy because each model has an identical terms
-    object. However, each one of these takes up separate space in memory
-    and can be quite large when there are many predictors. The baguette
-    package solves this problem by replacing each terms object with the
-    object from the first model in the ensemble. Since the other terms
-    objects are not modified, we get the same functional capabilities
-    using far less memory to save the ensemble.
+- For ensembles whose base models use a formula method, there is a
+  built-in redundancy because each model has an identical terms object.
+  However, each one of these takes up separate space in memory and can
+  be quite large when there are many predictors. The baguette package
+  solves this problem by replacing each terms object with the object
+  from the first model in the ensemble. Since the other terms objects
+  are not modified, we get the same functional capabilities using far
+  less memory to save the ensemble.
 
 ## Installation
 
@@ -63,6 +63,8 @@ table.
 |:---------|:-------|:---------------|
 | bag_mars | earth  | classification |
 | bag_mars | earth  | regression     |
+| bag_mlp  | nnet   | classification |
+| bag_mlp  | nnet   | regression     |
 | bag_tree | rpart  | classification |
 | bag_tree | rpart  | regression     |
 | bag_tree | C5.0   | classification |
@@ -77,7 +79,7 @@ library(baguette)
 
 bag_tree() %>% 
   set_engine("rpart") # C5.0 is also available here
-#> Bagged Decision Tree Model Specification (unknown)
+#> Bagged Decision Tree Model Specification (unknown mode)
 #> 
 #> Main Arguments:
 #>   cost_complexity = 0
@@ -122,18 +124,18 @@ This project is released with a [Contributor Code of
 Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
 
--   For questions and discussions about tidymodels packages, modeling,
-    and machine learning, please [post on Posit
-    Community](https://community.rstudio.com/new-topic?category_id=15&tags=tidymodels,question).
+- For questions and discussions about tidymodels packages, modeling, and
+  machine learning, please [post on Posit
+  Community](https://community.rstudio.com/new-topic?category_id=15&tags=tidymodels,question).
 
--   If you think you have encountered a bug, please [submit an
-    issue](https://github.com/tidymodels/baguette/issues).
+- If you think you have encountered a bug, please [submit an
+  issue](https://github.com/tidymodels/baguette/issues).
 
--   Either way, learn how to create and share a
-    [reprex](https://reprex.tidyverse.org/articles/articles/learn-reprex.html)
-    (a minimal, reproducible example), to clearly communicate about your
-    code.
+- Either way, learn how to create and share a
+  [reprex](https://reprex.tidyverse.org/articles/articles/learn-reprex.html)
+  (a minimal, reproducible example), to clearly communicate about your
+  code.
 
--   Check out further details on [contributing guidelines for tidymodels
-    packages](https://www.tidymodels.org/contribute/) and [how to get
-    help](https://www.tidymodels.org/help/).
+- Check out further details on [contributing guidelines for tidymodels
+  packages](https://www.tidymodels.org/contribute/) and [how to get
+  help](https://www.tidymodels.org/help/).
