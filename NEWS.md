@@ -1,3 +1,5 @@
+# baguette (development version)
+
 # baguette 1.0.1
 
 * Added a `"nnet"` method for `bagger()`. 
