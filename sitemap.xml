@@ -37,6 +37,9 @@
     <loc>https://baguette.tidymodels.org/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://baguette.tidymodels.org/reference/nnet_imp_garson.html</loc>
+  </url>
+  <url>
     <loc>https://baguette.tidymodels.org/reference/predict.bagger.html</loc>
   </url>
   <url>
