@@ -6,6 +6,8 @@
 \alias{baguette-package}
 \title{baguette: Efficient Model Functions for Bagging}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Tree- and rule-based models can be bagged (\doi{10.1007/BF00058655}) using this package and their predictions equations are stored in an efficient format to reduce the model objects size and speed.
 }
 \seealso{
