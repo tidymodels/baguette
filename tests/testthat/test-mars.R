@@ -1,4 +1,5 @@
 test_that('check mars opt', {
+  skip_if_not_installed("earth")
   set.seed(36323)
   check_pruning <- function(x, ...) {
     rlang::eval_tidy(x$call$pmethod) == "backward"
@@ -57,6 +58,7 @@ test_that('check mars opt', {
 # ------------------------------------------------------------------------------
 
 test_that('check model reduction', {
+  skip_if_not_installed("earth")
   set.seed(36323)
   reduced <-
     bagger(
@@ -88,6 +90,7 @@ test_that('check model reduction', {
 # ------------------------------------------------------------------------------
 
 test_that('check MARS parsnip interface', {
+  skip_if_not_installed("earth")
   set.seed(4779)
   expect_error(
     reg_mod <- bag_mars(num_terms = 5, prod_degree = 2) %>%
@@ -149,6 +152,7 @@ test_that('check MARS parsnip interface', {
 })
 
 test_that('mode specific package dependencies', {
+  skip_if_not_installed("earth")
   expect_identical(
     get_from_env(paste0("bag_mars", "_pkgs")) %>%
       dplyr::filter(engine == "earth", mode == "classification") %>%
@@ -167,6 +171,7 @@ test_that('mode specific package dependencies', {
 
 
 test_that('case weights', {
+  skip_if_not_installed("earth")
   set.seed(1)
   wts <- runif(nrow(mtcars))
 

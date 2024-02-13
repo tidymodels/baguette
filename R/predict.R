@@ -15,8 +15,8 @@
 #' data(airquality)
 #'
 #' set.seed(7687)
-#' mars_bag <- bagger(Ozone ~ ., data = airquality, base_model = "MARS", times = 5)
-#' predict(mars_bag, new_data = airquality[, -1])
+#' cart_bag <- bagger(Ozone ~ ., data = airquality, base_model = "CART", times = 5)
+#' predict(cart_bag, new_data = airquality[, -1])
 #' @export
 predict.bagger <- function(object, new_data, type = NULL, ...) {
   type <- check_type(object, type)

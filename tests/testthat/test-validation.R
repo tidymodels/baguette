@@ -87,6 +87,7 @@ test_that('validate imps', {
 # ------------------------------------------------------------------------------
 
 test_that('bad inputs', {
+  skip_if_not_installed("earth")
   expect_error(
     bagger(mpg ~ ., data = mtcars, base_model = letters[1:2]),
     "should be a single character value."
