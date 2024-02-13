@@ -7,7 +7,6 @@
 #' @importFrom parsnip new_model_spec null_value update_main_parameters
 #' @importFrom parsnip check_final_param model_printer show_call
 #' @importFrom utils globalVariables
-#' @importFrom earth earth evimp
 #' @importFrom rsample analysis bootstraps assessment
 #' @importFrom purrr map map2 map_df map_dfr map_lgl
 #' @importFrom tibble tibble as_tibble is_tibble

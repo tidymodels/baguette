@@ -100,7 +100,10 @@ mars_fit  <- function(split, spec, control = control_bag()) {
 }
 
 mars_imp <- function(x) {
-  imps <- earth::evimp(x$fit)
+  # see issue 71
+  rlang::check_installed("earth")
+  cl <- rlang::call2("evimp", .ns = "earth", object = quote(x$fit))
+  imps <- rlang::eval_tidy(cl)
   imps <- imps[, "gcv", drop = FALSE]
   x <- tibble::tibble(predictor = rownames(imps), importance = unname(imps[, "gcv"]))
   x <- x[x$importance > 0,]

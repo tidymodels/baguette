@@ -133,11 +133,6 @@ ctrl <- control_bag(var_imp = TRUE)
 
 # `times` is low to make the examples run faster
 
-set.seed(7687)
-mars_bag <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
-                   base_model = "MARS", times = 5, control = ctrl)
-mars_bag
-var_imp(mars_bag)
 
 set.seed(7687)
 cart_bag <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
@@ -158,10 +153,6 @@ cart_pca_bag <- bagger(biomass_rec, data = biomass_tr, base_model = "CART",
 
 cart_pca_bag
 
-# Using formulas
-mars_bag <- bagger(HHV ~ ., data = biomass_tr, base_model = "MARS", times = 5,
-                   control = ctrl)
-mars_bag
 }
 \references{
 Gevrey, M., Dimopoulos, I., and Lek, S. (2003). Review and

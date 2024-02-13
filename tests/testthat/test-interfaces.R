@@ -28,6 +28,7 @@ test_that('recipe execution', {
 # ------------------------------------------------------------------------------
 
 test_that('var_imp', {
+  skip_if_not_installed("earth")
   mod <- bagger(mpg ~ ., data = mtcars, base_model = "MARS", times = 2)
   expect_true(tibble::is_tibble(var_imp(mod)))
   expect_equal(names(var_imp(mod)), c("term", "value", "std.error", "used"))
