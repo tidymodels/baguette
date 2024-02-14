@@ -1,3 +1,5 @@
+# baguette (development version)
+
 # baguette 1.0.2
 
 * Move the earth package to Suggests due to CRAN note about the TeachingDemos (#71).
