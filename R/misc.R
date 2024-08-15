@@ -78,7 +78,7 @@ seed_fit <- function(seed, split, .fn, ...) {
 down_sampler <- function(x) {
 
   if (!is.factor(x$.outcome)) {
-    rlang::warn("Down-sampling is only used in classification models.", call. = FALSE)
+    cli::cli_warn("Down-sampling is only used in classification models.", call. = FALSE)
     return(x)
   }
 

@@ -51,7 +51,7 @@ validate_case_weights <- function(weights, data) {
   n <- nrow(data)
   if (!is.vector(weights) || !is.numeric(weights) || length(weights) != n ||
       any(weights < 0)) {
-    rlang::abort("'weights' should be a non-negative numeric vector with the same size as the data.")
+    cli::cli_abort("'weights' should be a non-negative numeric vector with the same size as the data.")
   }
   invisible(NULL)
 }
