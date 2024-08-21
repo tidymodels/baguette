@@ -1,7 +1,7 @@
 new_bagger <- function(model_df, imp, control, cost, base_model, blueprint) {
 
   if (!is_tibble(model_df)) {
-    rlang::abort("`model_df` should be a tibble.")
+    cli::cli_abort("`model_df` should be a tibble.")
   }
 
   if (is.numeric(blueprint$ptypes$outcomes[[1]])) {

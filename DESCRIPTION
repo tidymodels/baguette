@@ -20,6 +20,7 @@ Depends:
 Imports: 
     butcher,
     C50,
+    cli,
     dials,
     dplyr,
     furrr,

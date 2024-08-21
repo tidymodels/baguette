@@ -1,33 +1,33 @@
 validate_args <- function(model, times, control, cost) {
   if (!is.character(model) || length(model) != 1) {
-    rlang::abort("`base_model` should be a single character value.")
+    cli::cli_abort("`base_model` should be a single character value.")
   }
   if (!(model %in% baguette_models)) {
     msg <- paste(
       "`base_model` should be one of ",
       paste0("'", baguette_models, "'", collapse = ", ")
     )
-    rlang::abort(msg)
+    cli::cli_abort(msg)
   }
 
   # ----------------------------------------------------------------------------
 
   if (!is.null(cost) & !(model %in% c("CART", "C5.0"))) {
-    rlang::abort("`base_model` should be either 'CART' or 'C5.0'")
+    cli::cli_abort("`base_model` should be either 'CART' or 'C5.0'")
   }
   if (!is.null(cost)) {
     if (is.numeric(cost) && any(cost < 0)) {
-      rlang::abort("`cost` should be non-negative.")
+      cli::cli_abort("`cost` should be non-negative.")
     }
   }
 
   # ----------------------------------------------------------------------------
 
   if (!is.integer(times)) {
-    rlang::abort("`times` must be an integer > 1.")
+    cli::cli_abort("`times` must be an integer > 1.")
   }
   if (times < 1) {
-    rlang::abort("`times` must be an integer > 1.")
+    cli::cli_abort("`times` must be an integer > 1.")
   }
 
   # ----------------------------------------------------------------------------
@@ -86,7 +86,7 @@ check_for_disaster <- function(x) {
     } else msg <- ""
 
 
-    rlang::abort(paste0("All of the models failed. ", msg))
+    cli::cli_abort(paste0("All of the models failed. ", msg))
   }
   x
 }
@@ -103,10 +103,10 @@ check_type <- function(object, type) {
   } else {
     if (object$base_model[2] == "classification") {
       if (!(type %in% c("class", "prob")))
-        rlang::abort("`type` should be either 'class' or 'prob'")
+        cli::cli_abort("`type` should be either 'class' or 'prob'")
     } else {
       if (type != "numeric")
-        rlang::abort("`type` should be 'numeric'")
+        cli::cli_abort("`type` should be 'numeric'")
     }
   }
   type
@@ -118,7 +118,7 @@ validate_importance <- function(x) {
   }
 
   if (!is_tibble(x)) {
-    rlang::abort("Imprtance score results should be a tibble.")
+    cli::cli_abort("Imprtance score results should be a tibble.")
   }
 
   exp_cols <- c("term", "value", "std.error", "used")
@@ -127,7 +127,7 @@ validate_importance <- function(x) {
                   paste0("'", exp_cols, "'", collapse = ", "),
                   "."
                   )
-    rlang::abort(msg)
+    cli::cli_abort(msg)
   }
   x
 }
@@ -136,24 +136,24 @@ validate_importance <- function(x) {
 
 validate_control <- function(x) {
   if (!is.list(x)) {
-    rlang::abort("The control object should be a list created by `control_bag()`.")
+    cli::cli_abort("The control object should be a list created by `control_bag()`.")
   }
   samps <- c("none", "down")
 
   if (length(x$var_imp) != 1 || !is.logical(x$var_imp)) {
-    rlang::abort("`var_imp` should be a single logical value.")
+    cli::cli_abort("`var_imp` should be a single logical value.")
   }
   if (length(x$allow_parallel) != 1 || !is.logical(x$allow_parallel)) {
-    rlang::abort("`allow_parallel` should be a single logical value.")
+    cli::cli_abort("`allow_parallel` should be a single logical value.")
   }
   if (length(x$sampling) != 1 || !is.character(x$sampling) || !any(samps == x$sampling)) {
-    rlang::abort("`sampling` should be either 'none' or 'down'.")
+    cli::cli_abort("`sampling` should be either 'none' or 'down'.")
   }
   if (length(x$reduce) != 1 || !is.logical(x$reduce)) {
-    rlang::abort("`reduce` should be a single logical value.")
+    cli::cli_abort("`reduce` should be a single logical value.")
   }
   if (!is.null(x$extract) && !is.function(x$extract)) {
-    rlang::abort("`extract` should be NULL or a function.")
+    cli::cli_abort("`extract` should be NULL or a function.")
   }
 
   x
