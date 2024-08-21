@@ -2,7 +2,7 @@ pandoc: 3.1.11
 pkgdown: 2.1.0
 pkgdown_sha: ~
 articles: {}
-last_built: 2024-08-05T09:50Z
+last_built: 2024-08-21T21:21Z
 urls:
   reference: https://baguette.tidymodels.org/reference
   article: https://baguette.tidymodels.org/articles
