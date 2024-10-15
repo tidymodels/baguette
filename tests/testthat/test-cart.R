@@ -99,6 +99,8 @@ test_that('check model reduction', {
 # ------------------------------------------------------------------------------
 
 test_that('check CART parsnip interface', {
+  skip_if_not_installed("modeldata")
+
   set.seed(4779)
   expect_error(
     reg_mod <- bag_tree(cost_complexity = .001, min_n = 3) %>%
@@ -204,6 +206,7 @@ test_that('mode specific package dependencies', {
 
 test_that('case weights', {
   skip_if_not_installed("modeldata")
+
   data("two_class_dat", package = "modeldata")
   set.seed(1)
   wts <- runif(nrow(two_class_dat))
