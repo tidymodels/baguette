@@ -44,49 +44,50 @@
 #' comparison of methods to study the contribution of variables in artificial
 #' neural network models. Ecological Modelling, 160(3), 249-264.
 #' @examples
-#' library(recipes)
-#' library(dplyr)
+#' if (rlang::is_installed(c("recipes", "modeldata"))) {
+#'   library(recipes)
+#'   library(dplyr)
 #'
-#' data(biomass, package = "modeldata")
+#'   data(biomass, package = "modeldata")
 #'
-#' biomass_tr <-
-#'   biomass %>%
-#'   dplyr::filter(dataset == "Training") %>%
-#'   dplyr::select(-dataset, -sample)
+#'   biomass_tr <-
+#'     biomass %>%
+#'     dplyr::filter(dataset == "Training") %>%
+#'     dplyr::select(-dataset, -sample)
 #'
-#' biomass_te <-
-#'   biomass %>%
-#'   dplyr::filter(dataset == "Testing") %>%
-#'   dplyr::select(-dataset, -sample)
+#'   biomass_te <-
+#'     biomass %>%
+#'     dplyr::filter(dataset == "Testing") %>%
+#'     dplyr::select(-dataset, -sample)
 #'
-#' # ------------------------------------------------------------------------------
+#'   # ------------------------------------------------------------------------------
 #'
-#' ctrl <- control_bag(var_imp = TRUE)
+#'   ctrl <- control_bag(var_imp = TRUE)
 #'
-#' # ------------------------------------------------------------------------------
+#'   # ------------------------------------------------------------------------------
 #'
-#' # `times` is low to make the examples run faster
+#'   # `times` is low to make the examples run faster
 #'
 #'
-#' set.seed(7687)
-#' cart_bag <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
-#'                    base_model = "CART", times = 5, control = ctrl)
-#' cart_bag
+#'   set.seed(7687)
+#'   cart_bag <- bagger(x = biomass_tr[, -6], y = biomass_tr$HHV,
+#'                      base_model = "CART", times = 5, control = ctrl)
+#'   cart_bag
 #'
-#' # ------------------------------------------------------------------------------
-#' # Other interfaces
+#'   # ------------------------------------------------------------------------------
+#'   # Other interfaces
 #'
-#' # Recipes can be used
-#' biomass_rec <-
-#'   recipe(HHV ~ ., data = biomass_tr) %>%
-#'   step_pca(all_predictors())
+#'   # Recipes can be used
+#'   biomass_rec <-
+#'     recipe(HHV ~ ., data = biomass_tr) %>%
+#'     step_pca(all_predictors())
 #'
-#' set.seed(7687)
-#' cart_pca_bag <- bagger(biomass_rec, data = biomass_tr, base_model = "CART",
-#'                        times = 5, control = ctrl)
+#'   set.seed(7687)
+#'   cart_pca_bag <- bagger(biomass_rec, data = biomass_tr, base_model = "CART",
+#'                          times = 5, control = ctrl)
 #'
-#' cart_pca_bag
-#'
+#'   cart_pca_bag
+#' }
 #' @export
 bagger <- function(x, ...) {
   UseMethod("bagger")

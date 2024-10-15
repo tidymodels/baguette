@@ -1,4 +1,6 @@
 test_that('recipe execution', {
+  skip_if_not_installed("recipes")
+
   # check to make sure that prepped data are given to model
   rec <-
     recipe(Sepal.Length ~ ., data = iris) %>%
