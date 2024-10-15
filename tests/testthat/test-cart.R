@@ -1,4 +1,5 @@
 test_that('check CART opt', {
+  skip_if_not_installed("modeldata")
 
   mod_1 <-
     bagger(
