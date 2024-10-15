@@ -66,6 +66,7 @@ test_that('check model reduction', {
 # ------------------------------------------------------------------------------
 
 test_that('check C5 parsnip interface', {
+  skip_if_not_installed("modeldata")
 
   set.seed(4779)
   expect_error(

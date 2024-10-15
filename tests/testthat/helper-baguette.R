@@ -1,9 +1,14 @@
 library(rlang)
 library(purrr)
-library(yardstick)
-library(recipes)
-
-data("two_class_dat", package = "modeldata")
+if (is_installed("yardstick")) {
+  library(yardstick)
+}
+if (is_installed("recipes")) {
+  library(recipes)
+}
+if (is_installed("modeldata")) {
+  data("two_class_dat", package = "modeldata")
+}
 
 # ------------------------------------------------------------------------------
 

@@ -1,6 +1,8 @@
 
 test_that('check nnet parsnip interface', {
   skip_if_not_installed("nnet")
+  skip_if_not_installed("modeldata")
+
   data(two_class_dat, package = "modeldata")
 
   set.seed(4779)

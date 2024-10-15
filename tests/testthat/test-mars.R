@@ -1,5 +1,7 @@
 test_that('check mars opt', {
   skip_if_not_installed("earth")
+  skip_if_not_installed("modeldata")
+
   set.seed(36323)
   check_pruning <- function(x, ...) {
     rlang::eval_tidy(x$call$pmethod) == "backward"
@@ -91,6 +93,8 @@ test_that('check model reduction', {
 
 test_that('check MARS parsnip interface', {
   skip_if_not_installed("earth")
+  skip_if_not_installed("modeldata")
+
   set.seed(4779)
   expect_error(
     reg_mod <- bag_mars(num_terms = 5, prod_degree = 2) %>%
