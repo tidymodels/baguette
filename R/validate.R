@@ -1,41 +1,25 @@
 #' @include import-standalone-types-check.R
-validate_args <- function(model, times, control, cost) {
-  if (!is.character(model) || length(model) != 1) {
-    cli::cli_abort("`base_model` should be a single character value.")
-  }
-  if (!(model %in% baguette_models)) {
-    msg <- paste(
-      "`base_model` should be one of ",
-      paste0("'", baguette_models, "'", collapse = ", ")
-    )
-    cli::cli_abort(msg)
-  }
-
-  # ----------------------------------------------------------------------------
+validate_args <- function(model, times, control, cost, call = rlang::caller_env()) {
+  model <- rlang::arg_match(model, baguette_models, error_arg = "base_model",
+                            error_call = call)
 
   if (!is.null(cost) & !(model %in% c("CART", "C5.0"))) {
-    cli::cli_abort("`base_model` should be either 'CART' or 'C5.0'")
+    cli::cli_abort("When using misclassification costs, {.arg base_model} should
+                    be either {.val CART} or {.val C5.0}.", call = call)
   }
-  if (!is.null(cost)) {
-    if (is.numeric(cost) && any(cost < 0)) {
-      cli::cli_abort("`cost` should be non-negative.")
+  if (!is.matrix(cost)) {
+    check_number_decimal(cost, allow_null = TRUE, min = 0, call = call)
+  } else {
+    is_sq <- nrow(cost) == ncol(cost)
+    if (!is.numeric(cost) || !is_sq) {
+      cli::cli_abort("If {.arg cost} is a matrix, is must be numeric and square.",
+                     call = call)
     }
   }
 
-  # ----------------------------------------------------------------------------
+  check_number_whole(times, min = 2, call = call)
 
-  if (!is.integer(times)) {
-    cli::cli_abort("`times` must be an integer > 1.")
-  }
-  if (times < 1) {
-    cli::cli_abort("`times` must be an integer > 1.")
-  }
-
-  # ----------------------------------------------------------------------------
-
-  validate_control(control)
-
-  # ----------------------------------------------------------------------------
+  validate_control(control, call = call)
 
   invisible(TRUE)
 
@@ -70,7 +54,7 @@ model_failure <- function(x) {
   res
 }
 
-check_for_disaster <- function(x) {
+check_for_disaster <- function(x, call = rlang::caller_env()) {
   x <- dplyr::mutate(x, passed = !purrr::map_lgl(model, model_failure))
 
   if (sum(x$passed) == 0) {
@@ -83,79 +67,73 @@ check_for_disaster <- function(x) {
     }
 
     if (!is.na(msg)) {
-      msg <- paste0("An example message was:\n  ", msg)
-    } else msg <- ""
-
-
-    cli::cli_abort(paste0("All of the models failed. ", msg))
+      # escape any brackets in the error message
+      msg <- gsub("(\\{)", "\\1\\1", msg)
+      msg <- gsub("(\\})", "\\1\\1", msg)
+      msg <- cli::format_error(msg)
+      cli::cli_abort(c("All of the models failed. Example:", "x" = "{msg}"))
+    } else {
+      cli::cli_abort("All of the models failed.")
+    }
   }
   x
 }
 
 # ------------------------------------------------------------------------------
 
-check_type <- function(object, type) {
+check_type <- function(object, type, call = rlang::caller_env()) {
+  model_type <- object$base_model[2]
+  model_modes <- parsnip::get_from_env("modes")
   if (is.null(type)) {
-    if (object$base_model[2] == "classification") {
+    if (model_type == "classification") {
       type <- "class"
-    } else {
+    } else if (model_type == "regression") {
       type <- "numeric"
     }
   } else {
-    if (object$base_model[2] == "classification") {
-      if (!(type %in% c("class", "prob")))
-        cli::cli_abort("`type` should be either 'class' or 'prob'")
+    if (model_type == "classification") {
+      type <- rlang::arg_match(type, c("class", "prob"), error_call = call)
+    } else if (model_type == "regression") {
+      type <- rlang::arg_match(type, c("numeric"), error_call = call)
     } else {
-      if (type != "numeric")
-        cli::cli_abort("`type` should be 'numeric'")
+      cli::cli_abort("Model mode {.val {model_type}} is not allowed
+                     Possible values are {.or {.val {model_modes}}}.",
+                     call = call)
     }
   }
   type
 }
 
-validate_importance <- function(x) {
+validate_importance <- function(x, call = rlang::caller_env()) {
   if (is.null(x)) {
     return(x)
   }
 
   if (!is_tibble(x)) {
-    cli::cli_abort("Imprtance score results should be a tibble.")
+    cli::cli_abort("Imprtance score results should be a tibble.", call = call)
   }
 
   exp_cols <- c("term", "value", "std.error", "used")
   if (!isTRUE(all.equal(exp_cols, names(x)))) {
-    msg <- paste0("Importance columns should be: ",
-                  paste0("'", exp_cols, "'", collapse = ", "),
-                  "."
-                  )
-    cli::cli_abort(msg)
+    cli::cli_abort("Importance columns should be: {.val {exp_cols}}.", call = call)
   }
   x
 }
 
 # ------------------------------------------------------------------------------
 
-validate_control <- function(x) {
+validate_control <- function(x, call = rlang::caller_env()) {
   if (!is.list(x)) {
-    cli::cli_abort("The control object should be a list created by `control_bag()`.")
+    cli::cli_abort("The control object should be a list created by
+                   {.fn control_bag}.", call = call)
   }
-  samps <- c("none", "down")
 
-  if (length(x$var_imp) != 1 || !is.logical(x$var_imp)) {
-    cli::cli_abort("`var_imp` should be a single logical value.")
-  }
-  if (length(x$allow_parallel) != 1 || !is.logical(x$allow_parallel)) {
-    cli::cli_abort("`allow_parallel` should be a single logical value.")
-  }
-  if (length(x$sampling) != 1 || !is.character(x$sampling) || !any(samps == x$sampling)) {
-    cli::cli_abort("`sampling` should be either 'none' or 'down'.")
-  }
-  if (length(x$reduce) != 1 || !is.logical(x$reduce)) {
-    cli::cli_abort("`reduce` should be a single logical value.")
-  }
-  if (!is.null(x$extract) && !is.function(x$extract)) {
-    cli::cli_abort("`extract` should be NULL or a function.")
-  }
+  check_bool(x$var_imp, arg = "var_imp", call = call)
+  check_bool(x$allow_parallel, arg = "allow_parallel", call = call)
+  x$sampling <- rlang::arg_match0(x$sampling, c("none", "down"),
+                                  arg_nm = "sampling", error_call = call)
+  check_bool(x$reduce, arg = "reduce", call = call)
+  check_function(x$extract, allow_null = TRUE, arg = "extract", call = call)
 
   x
 }
