@@ -52,3 +52,26 @@ Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+Collate: 
+    'C5.0.R'
+    'bag_mars_data.R'
+    'bag_nnet_data.R'
+    'bag_tree_data.R'
+    'import-standalone-types-check.R'
+    'validate.R'
+    'bagger.R'
+    'baguette-package.R'
+    'bridge.R'
+    'cart.R'
+    'class_cost.R'
+    'constructor.R'
+    'cost_models.R'
+    'import-standalone-obj-type.R'
+    'mars.R'
+    'misc.R'
+    'model_info.R'
+    'nnet.R'
+    'out-of-bag.R'
+    'predict.R'
+    'var_imp.R'
+    'zzz.R'

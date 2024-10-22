@@ -89,6 +89,7 @@
 #'   cart_pca_bag
 #' }
 #' @export
+#' @include validate.R
 bagger <- function(x, ...) {
   UseMethod("bagger")
 }

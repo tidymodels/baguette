@@ -1,3 +1,4 @@
+#' @include import-standalone-types-check.R
 validate_args <- function(model, times, control, cost) {
   if (!is.character(model) || length(model) != 1) {
     cli::cli_abort("`base_model` should be a single character value.")
