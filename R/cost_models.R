@@ -1,9 +1,10 @@
-cost_matrix <- function(x, lvl, truth_is_row = TRUE) {
+cost_matrix <- function(x, lvl, truth_is_row = TRUE, call = rlang::caller_env()) {
   if (is.matrix(x)) {
 
   } else {
     if (length(lvl) != 2) {
-      cli::cli_abort("`cost` can only be a scalar when there are two levels.")
+      cli::cli_abort("{.arg cost} can only be a scalar when there are two
+                     levels.", call = call)
     } else {
       x0 <- x
       x <- matrix(1, ncol = 2, nrow = 2)
