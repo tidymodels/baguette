@@ -1,4 +1,5 @@
-bagger_bridge <- function(processed, weights, base_model, seed, times, control, cost, ...) {
+bagger_bridge <- function(processed, weights, base_model, seed, times, control,
+                          cost, ..., call = rlang::caller_env()) {
   validate_outcomes_are_univariate(processed$outcomes)
   if (base_model %in% c("C5.0")) {
     validate_outcomes_are_factors(processed$outcomes)
@@ -27,8 +28,8 @@ bagger_bridge <- function(processed, weights, base_model, seed, times, control, 
   } else {
     res <- switch(
       base_model,
-      CART = cost_sens_cart_bagger(rs, control, cost, ...),
-      C5.0 =   cost_sens_c5_bagger(rs, control, cost, ...)
+      CART = cost_sens_cart_bagger(rs, control, cost, ..., call = call),
+      C5.0 =   cost_sens_c5_bagger(rs, control, cost, ..., call = call)
     )
   }
 

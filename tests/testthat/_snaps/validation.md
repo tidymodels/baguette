@@ -39,7 +39,7 @@
     Code
       bagger(Sepal.Length ~ ., data = iris, times = 2L, base_model = "CART", cost = 2)
     Condition
-      Error in `cost_matrix()`:
+      Error in `bagger()`:
       ! `cost` can only be a scalar when there are two levels.
 
 # wrong y for C5
