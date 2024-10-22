@@ -43,16 +43,3 @@ bagger_bridge <- function(processed, weights, base_model, seed, times, control, 
     )
   res
 }
-
-validate_case_weights <- function(weights, data) {
-  if (is.null(weights)) {
-    return(invisible(NULL))
-  }
-  n <- nrow(data)
-  if (!is.vector(weights) || !is.numeric(weights) || length(weights) != n ||
-      any(weights < 0)) {
-    cli::cli_abort("'weights' should be a non-negative numeric vector with the same size as the data.")
-  }
-  invisible(NULL)
-}
-

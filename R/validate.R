@@ -137,3 +137,19 @@ validate_control <- function(x, call = rlang::caller_env()) {
 
   x
 }
+
+# ------------------------------------------------------------------------------
+
+validate_case_weights <- function(weights, data, call = rlang::caller_env()) {
+  if (is.null(weights)) {
+    return(invisible(NULL))
+  }
+  n <- nrow(data)
+  if (!is.vector(weights) || !is.numeric(weights) || length(weights) != n ||
+      any(weights < 0)) {
+    cli::cli_abort("{.arg weights} should be a non-negative numeric vector
+                    with the same size as the data.", call = call)
+  }
+  invisible(NULL)
+}
+
