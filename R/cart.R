@@ -34,7 +34,7 @@ cart_bagger <- function(rs, control, ...) {
   if (control$reduce) {
     rs <-
       rs %>%
-      mutate(model = map(model, axe_cart))
+      dplyr::mutate(model = purrr::map(model, axe_cart))
   }
 
   list(model = rs, imp = imps)

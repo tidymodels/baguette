@@ -27,10 +27,10 @@ compute_imp <- function(rs, .fn, compute) {
           used = length(predictor)
         ) %>%
         dplyr::select(-sds) %>%
-        dplyr::arrange(desc(value)) %>%
+        dplyr::arrange(dplyr::desc(value)) %>%
         dplyr::rename(term = predictor)
     } else {
-      imps <- tibble(
+      imps <- tibble::tibble(
         term = character(0),
         value = numeric(0),
         std.error = numeric(0),
@@ -48,7 +48,7 @@ compute_imp <- function(rs, .fn, compute) {
 
 extractor <- function(rs, extract) {
   if (!is.null(extract)) {
-    rs <- rs %>% dplyr::mutate(extras = map(model, ~ extract(.x$fit)))
+    rs <- rs %>% dplyr::mutate(extras = purrr::map(model, ~ extract(.x$fit)))
   }
   rs
 }
@@ -84,9 +84,9 @@ down_sampler <- function(x) {
 
   min_n <- min(table(x$.outcome))
   x %>%
-    group_by(.outcome) %>%
-    sample_n(size = min_n, replace = TRUE) %>%
-    ungroup()
+    dplyr::group_by(.outcome) %>%
+    dplyr::sample_n(size = min_n, replace = TRUE) %>%
+    dplyr::ungroup()
 }
 
 
@@ -112,7 +112,7 @@ replaced <- function(x, replacement) {
 replace_parsnip_terms <- function(x) {
   new_terms <- butcher::axe_env(x$model[[1]]$preproc$terms)
   x <- x %>%
-    mutate(model = map(model, replaced, replacement = new_terms))
+    dplyr::mutate(model = purrr::map(model, replaced, replacement = new_terms))
   x
 }
 
@@ -121,12 +121,9 @@ replace_parsnip_terms <- function(x) {
 # fix column names (see https://github.com/tidymodels/parsnip/issues/263)
 
 fix_column_names <- function(result, object) {
-  # print("# ------------------------------------------------------------------------------\n")
-  # print(head(result))
   nms <- colnames(result)
   nms <- gsub(".pred_", "", nms, fixed = TRUE)
   result <- setNames(result, nms)
-  # print(head(result))
   result
 }
 

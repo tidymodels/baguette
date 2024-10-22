@@ -33,7 +33,7 @@ mars_bagger <- function(rs, control, ...) {
   if (control$reduce) {
     rs <-
      rs %>%
-      mutate(model = map(model, axe_mars))
+      dplyr::mutate(model = purrr::map(model, axe_mars))
   }
 
   list(model = rs, imp = imps)
