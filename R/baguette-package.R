@@ -1,7 +1,10 @@
+#' @keywords internal
+"_PACKAGE"
+
+## usethis namespace: start
 #' @import rlang
 #' @import dplyr
 #' @import hardhat
-#'
 #' @importFrom parsnip set_engine fit fit_xy control_parsnip mars decision_tree
 #' @importFrom parsnip set_new_model multi_predict update_dot_check show_fit
 #' @importFrom parsnip new_model_spec null_value update_main_parameters
@@ -17,8 +20,20 @@
 #' @importFrom withr with_seed
 #' @importFrom dials new_quant_param
 #' @importFrom stats coef
-#'
-# ------------------------------------------------------------------------------
+
+#' @keywords internal
+"_PACKAGE"
+
+#' @importFrom magrittr %>%
+#' @export
+magrittr::`%>%`
+
+#' @importFrom generics var_imp
+#' @export
+generics::var_imp
+
+## usethis namespace: end
+NULL
 
 utils::globalVariables(
   c(
@@ -42,16 +57,3 @@ utils::globalVariables(
     ".estimator"
   )
 )
-
-# ------------------------------------------------------------------------------
-
-# The functions below define the model information. These access the model
-# environment inside of parsnip so they have to be executed once parsnip has
-# been loaded.
-
-.onLoad <- function(libname, pkgname) {
-  # This defines model functions in the parsnip model database
-  make_bag_tree()
-  make_bag_mars()
-  make_bag_mlp()
-}
