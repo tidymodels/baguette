@@ -34,7 +34,7 @@ nnet_bagger <- function(rs, control, ...) {
   if (control$reduce) {
     rs <-
       rs %>%
-      mutate(model = map(model, axe_nnet))
+      dplyr::mutate(model = purrr::map(model, axe_nnet))
   }
 
   list(model = rs, imp = imps)

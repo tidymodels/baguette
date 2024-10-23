@@ -32,7 +32,7 @@ c5_bagger <- function(rs, control, ...) {
   if (control$reduce) {
     rs <-
       rs %>%
-      mutate(model = map(model, axe_C5))
+      dplyr::mutate(model = purrr::map(model, axe_C5))
   }
 
   list(model = rs, imp = imps)
