@@ -97,7 +97,7 @@ bagger <- function(x, ...) {
 #' @export
 #' @rdname bagger
 bagger.default <- function(x, ...) {
-  stop("`bagger()` is not defined for a '", class(x)[1], "'.", call. = FALSE)
+  cli::cli_abort("{.fn bagger} is not defined for a {.cls {class(x)[1]}}.")
 }
 
 # XY method - data frame
