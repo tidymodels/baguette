@@ -26,7 +26,7 @@ validate_args <- function(model, times, control, cost, call = rlang::caller_env(
 }
 
 integer_B <- function(B) {
-  if (is.numeric(B) & !is.integer(B)) {
+  if (is.double(B)) {
     B <- as.integer(B)
   }
   B
@@ -68,9 +68,7 @@ check_for_disaster <- function(x, call = rlang::caller_env()) {
 
     if (!is.na(msg)) {
       # escape any brackets in the error message
-      msg <- gsub("(\\{)", "\\1\\1", msg)
-      msg <- gsub("(\\})", "\\1\\1", msg)
-      msg <- cli::format_error(msg)
+      msg <- cli::format_error("{msg}")
       cli::cli_abort(c("All of the models failed. Example:", "x" = "{msg}"))
     } else {
       cli::cli_abort("All of the models failed.")
