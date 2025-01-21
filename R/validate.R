@@ -69,9 +69,12 @@ check_for_disaster <- function(x, call = rlang::caller_env()) {
     if (!is.na(msg)) {
       # escape any brackets in the error message
       msg <- cli::format_error("{msg}")
-      cli::cli_abort(c("All of the models failed. Example:", "x" = "{msg}"))
+      cli::cli_abort(
+        c("All of the models failed. Example:", "x" = "{msg}"),
+        call = call
+      )
     } else {
-      cli::cli_abort("All of the models failed.")
+      cli::cli_abort("All of the models failed.", call = call)
     }
   }
   x

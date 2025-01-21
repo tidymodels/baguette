@@ -1,5 +1,5 @@
 
-nnet_bagger <- function(rs, control, ...) {
+nnet_bagger <- function(rs, control, ..., call) {
   opt <- rlang::dots_list(...)
   is_classif <- is.factor(rs$splits[[1]]$data$.outcome)
   mod_spec <- make_nnet_spec(is_classif, opt)
@@ -19,7 +19,7 @@ nnet_bagger <- function(rs, control, ...) {
       )
     )
 
-  rs <- check_for_disaster(rs)
+  rs <- check_for_disaster(rs, call = call)
 
   rs <- filter_rs(rs)
 

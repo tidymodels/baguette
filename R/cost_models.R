@@ -37,7 +37,7 @@ cost_sens_cart_bagger <- function(rs, control, cost, ..., call = rlang::caller_e
     opt$parms <- list(loss = cost)
   }
 
-  cart_bagger(rs = rs, control = control, !!!opt)
+  cart_bagger(rs = rs, control = control, call = call, !!!opt)
 }
 
 
@@ -54,5 +54,5 @@ cost_sens_c5_bagger <- function(rs, control, cost, ..., call = rlang::caller_env
   # Attach cost matrix to options
   opt$costs <-  cost
 
-  c5_bagger(rs = rs, control = control, !!!opt)
+  c5_bagger(rs = rs, control = control, call = call, !!!opt)
 }

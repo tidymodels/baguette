@@ -160,7 +160,7 @@
       set.seed(459394)
       bagger(a ~ ., data = bad_iris, base_model = "CART", times = 3)
     Condition
-      Error in `check_for_disaster()`:
+      Error in `bagger()`:
       ! All of the models failed. Example:
       x Error in cbind(yval2, yprob, nodeprob) : number of rows of matrices must match (see arg 2)
 
