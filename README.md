@@ -7,7 +7,7 @@
 
 [![R-CMD-check](https://github.com/tidymodels/baguette/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidymodels/baguette/actions/workflows/R-CMD-check.yaml)
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/baguette)](https://cran.r-project.org/package=baguette)
 [![Codecov test
@@ -17,9 +17,7 @@ coverage](https://codecov.io/gh/tidymodels/baguette/branch/main/graph/badge.svg)
 ## Introduction
 
 The goal of baguette is to provide efficient functions for bagging (aka
-[bootstrap
-aggregating](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C7&q=bagging+predictors+breiman+1996&oq=Bagging+predictors+))
-ensemble models.
+bootstrap aggregating) ensemble models.
 
 The model objects produced by baguette are kept smaller than they would
 otherwise be through two operations:
@@ -126,7 +124,7 @@ By contributing to this project, you agree to abide by its terms.
 
 - For questions and discussions about tidymodels packages, modeling, and
   machine learning, please [post on Posit
-  Community](https://community.rstudio.com/new-topic?category_id=15&tags=tidymodels,question).
+  Community](https://forum.posit.co/new-topic?category_id=15&tags=tidymodels,question).
 
 - If you think you have encountered a bug, please [submit an
   issue](https://github.com/tidymodels/baguette/issues).
