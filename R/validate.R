@@ -5,7 +5,8 @@ validate_args <- function(model, times, control, cost, call = rlang::caller_env(
 
   if (!is.null(cost) & !(model %in% c("CART", "C5.0"))) {
     cli::cli_abort("When using misclassification costs, {.arg base_model} should
-                    be either {.val CART} or {.val C5.0}.", call = call)
+                    be either {.val CART} or {.val C5.0}, not
+                   {obj_type_friendly(model)}.", call = call)
   }
   if (!is.matrix(cost)) {
     check_number_decimal(cost, allow_null = TRUE, min = 0, call = call)
@@ -111,7 +112,8 @@ validate_importance <- function(x, call = rlang::caller_env()) {
   }
 
   if (!is_tibble(x)) {
-    cli::cli_abort("Imprtance score results should be a tibble.", call = call)
+    cli::cli_abort("Imprtance score results should be a tibble, not
+                   {obj_type_friendly(x)}.", call = call)
   }
 
   exp_cols <- c("term", "value", "std.error", "used")
@@ -126,7 +128,7 @@ validate_importance <- function(x, call = rlang::caller_env()) {
 validate_control <- function(x, call = rlang::caller_env()) {
   if (!is.list(x)) {
     cli::cli_abort("The control object should be a list created by
-                   {.fn control_bag}.", call = call)
+                   {.fn control_bag}, not {obj_type_friendly(x)}.", call = call)
   }
 
   check_bool(x$var_imp, arg = "var_imp", call = call)
@@ -149,7 +151,8 @@ validate_case_weights <- function(weights, data, call = rlang::caller_env()) {
   if (!is.vector(weights) || !is.numeric(weights) || length(weights) != n ||
       any(weights < 0)) {
     cli::cli_abort("{.arg weights} should be a non-negative numeric vector
-                    with the same size as the data.", call = call)
+                    with the same size as the data, not
+                   {obj_type_friendly(weights)}.", call = call)
   }
   invisible(NULL)
 }

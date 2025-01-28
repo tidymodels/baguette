@@ -157,12 +157,12 @@ test_that('bad inputs', {
   }
 
   expect_snapshot({
-      set.seed(3983)
-      predict(bagger(Class ~ ., data = two_class_dat, base_model = "MARS"),
-              two_class_dat[1:2, -3],
-              type = "topepo")
-    },
-    error = TRUE
+    set.seed(3983)
+    predict(bagger(Class ~ ., data = two_class_dat, base_model = "MARS"),
+            two_class_dat[1:2, -3],
+            type = "topepo")
+  },
+  error = TRUE
   )
 
 })

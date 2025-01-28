@@ -32,7 +32,7 @@
       baguette:::validate_args(model = "MARS", times = 5L, control = 2, cost = NULL)
     Condition
       Error:
-      ! The control object should be a list created by `control_bag()`.
+      ! The control object should be a list created by `control_bag()`, not the number 2.
 
 ---
 
@@ -48,8 +48,9 @@
       bagger(Sepal.Length ~ ., data = iris, times = 2L, base_model = "C5.0")
     Condition
       Error in `validate_outcomes_are_factors()`:
-      ! All outcomes must be factors, but the following are not:
-      'Sepal.Length': 'numeric'
+      ! All outcomes must be factors.
+      i The following is not:
+      "Sepal.Length": <numeric>
 
 # validate imps
 
@@ -67,7 +68,7 @@
       std.error = 1:2))
     Condition
       Error:
-      ! Imprtance score results should be a tibble.
+      ! Imprtance score results should be a tibble, not a <data.frame> object.
 
 # bad inputs
 
@@ -83,7 +84,7 @@
       bagger(mpg ~ ., data = mtcars, base_model = "MARS", cost = 2)
     Condition
       Error in `bagger()`:
-      ! When using misclassification costs, `base_model` should be either "CART" or "C5.0".
+      ! When using misclassification costs, `base_model` should be either "CART" or "C5.0", not the string "MARS".
 
 ---
 
@@ -117,8 +118,9 @@
       bagger(mpg ~ ., data = mtcars, base_model = "C5.0")
     Condition
       Error in `validate_outcomes_are_factors()`:
-      ! All outcomes must be factors, but the following are not:
-      'mpg': 'numeric'
+      ! All outcomes must be factors.
+      i The following is not:
+      "mpg": <numeric>
 
 ---
 
