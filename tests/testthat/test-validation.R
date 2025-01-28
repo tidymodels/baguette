@@ -65,6 +65,7 @@ test_that('bad values', {
 # ------------------------------------------------------------------------------
 
 test_that('wrong y for C5', {
+  skip_if_not_installed("hardhat", minimum_version = "1.4.0.9002")
   expect_snapshot(
     bagger(Sepal.Length ~ ., data = iris, times = 2L, base_model = "C5.0"),
     error = TRUE
@@ -99,6 +100,7 @@ test_that('validate imps', {
 test_that('bad inputs', {
   skip_if_not_installed("earth")
   skip_if_not_installed("modeldata")
+  skip_if_not_installed("hardhat", minimum_version = "1.4.0.9002")
 
   expect_snapshot(
     bagger(mpg ~ ., data = mtcars, base_model = letters[1:2]),
