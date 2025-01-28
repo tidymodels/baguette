@@ -1,5 +1,5 @@
 
-mars_bagger <- function(rs, control, ...) {
+mars_bagger <- function(rs, control, ..., call) {
 
   opt <- rlang::dots_list(...)
   is_classif <- is.factor(rs$splits[[1]]$data$.outcome)
@@ -18,7 +18,7 @@ mars_bagger <- function(rs, control, ...) {
       control = control
     ))
 
-  rs <- check_for_disaster(rs)
+  rs <- check_for_disaster(rs, call = call)
 
   rs <- filter_rs(rs)
 
@@ -33,7 +33,7 @@ mars_bagger <- function(rs, control, ...) {
   if (control$reduce) {
     rs <-
      rs %>%
-      mutate(model = map(model, axe_mars))
+      dplyr::mutate(model = purrr::map(model, axe_mars))
   }
 
   list(model = rs, imp = imps)

@@ -48,7 +48,7 @@ compute_oob <- function(rs, oob) {
       purrr::map2_dfr(rs$model, rs$splits, .fn, met = oob) %>%
       dplyr::group_by(.metric, .estimator) %>%
       dplyr::summarize(.estimate = mean(.estimate, na.rm = TRUE)) %>%
-      mutate(.estimator = "out-of-bag") %>%
+      dplyr::mutate(.estimator = "out-of-bag") %>%
       dplyr::ungroup()
   } else {
     oob <- NULL
