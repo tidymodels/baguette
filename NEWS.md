@@ -1,3 +1,5 @@
+# baguette (development version)
+
 # baguette 1.1.0
 
 * Small update with improved error and warning logging. 
