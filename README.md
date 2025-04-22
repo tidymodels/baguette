@@ -75,7 +75,7 @@ outcome.
 ``` r
 library(baguette)
 
-bag_tree() %>% 
+bag_tree() |> 
   set_engine("rpart") # C5.0 is also available here
 #> Bagged Decision Tree Model Specification (unknown mode)
 #> 
@@ -87,9 +87,9 @@ bag_tree() %>%
 
 set.seed(123)
 bag_cars <- 
-  bag_tree() %>% 
-  set_engine("rpart", times = 25) %>% # 25 ensemble members 
-  set_mode("regression") %>% 
+  bag_tree() |> 
+  set_engine("rpart", times = 25) |> # 25 ensemble members 
+  set_mode("regression") |> 
   fit(mpg ~ ., data = mtcars)
 
 bag_cars

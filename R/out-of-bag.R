@@ -5,7 +5,7 @@ oob_parsnip <- function(model, split, met) {
   y <- dat$.outcome
   dat <- dat[, names(dat) != ".outcome", drop = FALSE]
   pred <-
-    predict(model, dat) %>%
+    predict(model, dat) |>
     dplyr::mutate(.obs = y)
   if (model$spec$mode == "classification") {
     probs <- predict(model, dat, type = "prob")
@@ -45,10 +45,10 @@ compute_oob <- function(rs, oob) {
 
   if (!is.null(oob)) {
     oob <-
-      purrr::map2_dfr(rs$model, rs$splits, .fn, met = oob) %>%
-      dplyr::group_by(.metric, .estimator) %>%
-      dplyr::summarize(.estimate = mean(.estimate, na.rm = TRUE)) %>%
-      dplyr::mutate(.estimator = "out-of-bag") %>%
+      purrr::map2_dfr(rs$model, rs$splits, .fn, met = oob) |>
+      dplyr::group_by(.metric, .estimator) |>
+      dplyr::summarize(.estimate = mean(.estimate, na.rm = TRUE)) |>
+      dplyr::mutate(.estimator = "out-of-bag") |>
       dplyr::ungroup()
   } else {
     oob <- NULL

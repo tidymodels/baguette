@@ -97,9 +97,9 @@ test_that('check MARS parsnip interface', {
 
   set.seed(4779)
   expect_error(
-    reg_mod <- bag_mars(num_terms = 5, prod_degree = 2) %>%
-      set_engine("earth", times = 3) %>%
-      set_mode("regression") %>%
+    reg_mod <- bag_mars(num_terms = 5, prod_degree = 2) |>
+      set_engine("earth", times = 3) |>
+      set_mode("regression") |>
       fit(mpg ~ ., data = mtcars),
     regexp = NA
   )
@@ -121,9 +121,9 @@ test_that('check MARS parsnip interface', {
 
   set.seed(4779)
   expect_error(
-    reg_class <- bag_mars(num_terms = 5, prod_degree = 2) %>%
-      set_engine("earth", times = 3) %>%
-      set_mode("classification") %>%
+    reg_class <- bag_mars(num_terms = 5, prod_degree = 2) |>
+      set_engine("earth", times = 3) |>
+      set_mode("classification") |>
       fit(Class ~ ., data = two_class_dat),
     regexp = NA
   )
@@ -158,15 +158,15 @@ test_that('check MARS parsnip interface', {
 test_that('mode specific package dependencies', {
   skip_if_not_installed("earth")
   expect_identical(
-    get_from_env(paste0("bag_mars", "_pkgs")) %>%
-      dplyr::filter(engine == "earth", mode == "classification") %>%
+    get_from_env(paste0("bag_mars", "_pkgs")) |>
+      dplyr::filter(engine == "earth", mode == "classification") |>
       dplyr::pull(pkg),
     list(c("earth", "baguette"))
   )
 
   expect_identical(
-    get_from_env(paste0("bag_mars", "_pkgs")) %>%
-      dplyr::filter(engine == "earth", mode == "regression") %>%
+    get_from_env(paste0("bag_mars", "_pkgs")) |>
+      dplyr::filter(engine == "earth", mode == "regression") |>
       dplyr::pull(pkg),
     list(c("earth", "baguette"))
   )

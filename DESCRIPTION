@@ -26,7 +26,6 @@ Imports:
     furrr,
     generics,
     hardhat (>= 1.1.0),
-    magrittr,
     purrr,
     rlang (>= 1.1.0),
     rpart,

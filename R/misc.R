@@ -13,21 +13,21 @@ compute_imp <- function(rs, .fn, compute) {
   if (compute) {
     num_mod <- nrow(rs)
     imps <-
-      purrr::map_df(rs$model, .fn) %>%
+      purrr::map_df(rs$model, .fn) |>
       dplyr::filter(!is.na(predictor) & !is.na(importance))
     if (nrow(imps) > 0) {
       imps <-
-        imps %>%
-        dplyr::group_by(predictor) %>%
+        imps |>
+        dplyr::group_by(predictor) |>
         dplyr::summarize(
           value = sum(importance, na.rm = TRUE)/num_mod,
           sds = sd(importance, na.rm = TRUE),
           sds = ifelse(length(predictor) == 1, 0, sds),
           std.error = sds/sqrt(num_mod),
           used = length(predictor)
-        ) %>%
-        dplyr::select(-sds) %>%
-        dplyr::arrange(dplyr::desc(value)) %>%
+        ) |>
+        dplyr::select(-sds) |>
+        dplyr::arrange(dplyr::desc(value)) |>
         dplyr::rename(term = predictor)
     } else {
       imps <- tibble::tibble(
@@ -48,7 +48,7 @@ compute_imp <- function(rs, .fn, compute) {
 
 extractor <- function(rs, extract) {
   if (!is.null(extract)) {
-    rs <- rs %>% dplyr::mutate(extras = purrr::map(model, ~ extract(.x$fit)))
+    rs <- rs |> dplyr::mutate(extras = purrr::map(model, ~ extract(.x$fit)))
   }
   rs
 }
@@ -56,12 +56,12 @@ extractor <- function(rs, extract) {
 # ------------------------------------------------------------------------------
 
 select_rs <- function(rs) {
-  rs %>% dplyr::select(-splits, -id, -fit_seed, -passed)
+  rs |> dplyr::select(-splits, -id, -fit_seed, -passed)
 }
 
 filter_rs <- function(rs) {
   if (any(names(rs) == "passed")) {
-    rs <- rs %>% dplyr::filter(passed)
+    rs <- rs |> dplyr::filter(passed)
   }
   rs
 }
@@ -83,9 +83,9 @@ down_sampler <- function(x) {
   }
 
   min_n <- min(table(x$.outcome))
-  x %>%
-    dplyr::group_by(.outcome) %>%
-    dplyr::sample_n(size = min_n, replace = TRUE) %>%
+  x |>
+    dplyr::group_by(.outcome) |>
+    dplyr::sample_n(size = min_n, replace = TRUE) |>
     dplyr::ungroup()
 }
 
@@ -111,7 +111,7 @@ replaced <- function(x, replacement) {
 
 replace_parsnip_terms <- function(x) {
   new_terms <- butcher::axe_env(x$model[[1]]$preproc$terms)
-  x <- x %>%
+  x <- x |>
     dplyr::mutate(model = purrr::map(model, replaced, replacement = new_terms))
   x
 }

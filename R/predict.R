@@ -55,34 +55,34 @@ numeric_pred <- function(models, data) {
   n <- nrow(data)
   m <- nrow(models)
   preds <-
-    purrr::map_df(models$model, predict, new_data = data, type = "numeric") %>%
-    dplyr::mutate(.row = rep(1:n, m)) %>%
-    dplyr::group_by(.row) %>%
+    purrr::map_df(models$model, predict, new_data = data, type = "numeric") |>
+    dplyr::mutate(.row = rep(1:n, m)) |>
+    dplyr::group_by(.row) |>
     dplyr::summarize(
       # .n = sum(!is.na(.pred)),
       .pred = mean(.pred, na.rm = TRUE)
-    ) %>%
-    dplyr::arrange(.row) %>%
+    ) |>
+    dplyr::arrange(.row) |>
     dplyr::select(.pred)
   preds
 }
 
 class_pred <- function(models, data, lvl) {
-  classprob_pred(models, data, lvl) %>%
-    dplyr::mutate(.row = dplyr::row_number()) %>%
+  classprob_pred(models, data, lvl) |>
+    dplyr::mutate(.row = dplyr::row_number()) |>
     tidyr::pivot_longer(
       cols = c(dplyr::starts_with(".pred")),
       names_to = "class",
       values_to = "prob"
-    ) %>%
-    dplyr::group_by(.row) %>%
-    dplyr::arrange(desc(prob)) %>%
-    dplyr::slice(1) %>%
+    ) |>
+    dplyr::group_by(.row) |>
+    dplyr::arrange(desc(prob)) |>
+    dplyr::slice(1) |>
     dplyr::mutate(
       .pred_class = gsub(".pred_", "", class, fixed = TRUE),
       .pred_class = factor(.pred_class, levels = lvl)
-    ) %>%
-    dplyr::ungroup() %>%
+    ) |>
+    dplyr::ungroup() |>
     dplyr::select(.pred_class)
 }
 
@@ -91,12 +91,12 @@ classprob_pred <- function(models, data, lvl) {
   m <- nrow(models)
   prob_cols <- paste0(".pred_", lvl)
   preds <-
-    purrr::map_df(models$model, predict, new_data = data, type = "prob") %>%
-    dplyr::mutate(.row = rep(1:n, m)) %>%
-    dplyr::group_by(.row) %>%
+    purrr::map_df(models$model, predict, new_data = data, type = "prob") |>
+    dplyr::mutate(.row = rep(1:n, m)) |>
+    dplyr::group_by(.row) |>
     ## TODO normalize these; use pivot longer
-    dplyr::summarize_at(prob_cols, mean, na.rm = TRUE) %>%
-    dplyr::arrange(.row) %>%
+    dplyr::summarize_at(prob_cols, mean, na.rm = TRUE) |>
+    dplyr::arrange(.row) |>
     dplyr::select(-.row)
   preds
 }
@@ -106,27 +106,27 @@ majority_vote <- function(models, data, lvl, probs = FALSE) {
   m <- nrow(models)
   prob_cols <- paste0(".pred_", lvl)
   preds <-
-    purrr::map_df(models$model, predict, new_data = data, type = "class") %>%
-    dplyr::mutate(.row = rep(1:n, each = m)) %>%
-    dplyr::group_by(.row) %>%
-    dplyr::count(.pred_class, .drop = FALSE) %>%
+    purrr::map_df(models$model, predict, new_data = data, type = "class") |>
+    dplyr::mutate(.row = rep(1:n, each = m)) |>
+    dplyr::group_by(.row) |>
+    dplyr::count(.pred_class, .drop = FALSE) |>
     dplyr::mutate(n = n/m)
 
   if (probs) {
     preds <-
-      preds %>%
-      dplyr::mutate(.pred_class = paste0(".pred_", .pred_class)) %>%
-      dplyr::ungroup() %>%
+      preds |>
+      dplyr::mutate(.pred_class = paste0(".pred_", .pred_class)) |>
+      dplyr::ungroup() |>
       tidyr::pivot_wider(id_cols = .row,
                          names_from = ".pred_class",
-                         values_from = "n") %>%
+                         values_from = "n") |>
       dplyr::select(dplyr::one_of(prob_cols))
   } else {
     preds <-
-      preds %>%
-      dplyr::arrange(desc(n), .by_group = TRUE) %>%
-      dplyr::slice(1) %>%
-      dplyr::ungroup() %>%
+      preds |>
+      dplyr::arrange(desc(n), .by_group = TRUE) |>
+      dplyr::slice(1) |>
+      dplyr::ungroup() |>
       dplyr::select(.pred_class)
   }
   preds
