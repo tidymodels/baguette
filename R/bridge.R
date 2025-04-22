@@ -14,7 +14,7 @@ bagger_bridge <- function(processed, weights, base_model, seed, times, control,
   }
 
   set.seed(seed)
-  rs <- rsample::bootstraps(dat, times = times) %>%
+  rs <- rsample::bootstraps(dat, times = times) |>
     dplyr::mutate(fit_seed = sample.int(10^5, times))
 
   if (is.null(cost)) {

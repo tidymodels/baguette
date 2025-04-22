@@ -7,9 +7,9 @@ test_that('check nnet parsnip interface', {
 
   set.seed(4779)
   expect_error(
-    reg_mod <- bag_mlp() %>%
-      set_engine("nnet", times = 3) %>%
-      set_mode("regression") %>%
+    reg_mod <- bag_mlp() |>
+      set_engine("nnet", times = 3) |>
+      set_mode("regression") |>
       fit(mpg ~ ., data = mtcars),
     regexp = NA
   )
@@ -29,9 +29,9 @@ test_that('check nnet parsnip interface', {
 
   set.seed(4779)
   expect_error(
-    class_cost <- bag_mlp() %>%
-      set_engine("nnet", times = 3) %>%
-      set_mode("classification") %>%
+    class_cost <- bag_mlp() |>
+      set_engine("nnet", times = 3) |>
+      set_mode("classification") |>
       fit(Class ~ ., data = two_class_dat),
     regexp = NA
   )
@@ -61,15 +61,15 @@ test_that('check nnet parsnip interface', {
 
 test_that('mode specific package dependencies', {
   expect_identical(
-    get_from_env(paste0("bag_mlp", "_pkgs")) %>%
-      dplyr::filter(engine == "nnet", mode == "classification") %>%
+    get_from_env(paste0("bag_mlp", "_pkgs")) |>
+      dplyr::filter(engine == "nnet", mode == "classification") |>
       dplyr::pull(pkg),
     list(c("nnet", "baguette"))
   )
 
   expect_identical(
-    get_from_env(paste0("bag_mlp", "_pkgs")) %>%
-      dplyr::filter(engine == "nnet", mode == "regression") %>%
+    get_from_env(paste0("bag_mlp", "_pkgs")) |>
+      dplyr::filter(engine == "nnet", mode == "regression") |>
       dplyr::pull(pkg),
     list(c("nnet", "baguette"))
   )

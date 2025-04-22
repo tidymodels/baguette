@@ -7,7 +7,7 @@ cart_bagger <- function(rs, control, ..., call) {
   iter <- get_iterator(control)
 
   rs <-
-    rs %>%
+    rs |>
     dplyr::mutate(
       model = iter(
         fit_seed,
@@ -28,12 +28,12 @@ cart_bagger <- function(rs, control, ..., call) {
   imps <- compute_imp(rs, cart_imp, control$var_imp)
 
   rs <-
-    rs %>%
+    rs |>
     replace_parsnip_terms()
 
   if (control$reduce) {
     rs <-
-      rs %>%
+      rs |>
       dplyr::mutate(model = purrr::map(model, axe_cart))
   }
 

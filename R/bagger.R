@@ -51,13 +51,13 @@
 #'   data(biomass, package = "modeldata")
 #'
 #'   biomass_tr <-
-#'     biomass %>%
-#'     dplyr::filter(dataset == "Training") %>%
+#'     biomass |>
+#'     dplyr::filter(dataset == "Training") |>
 #'     dplyr::select(-dataset, -sample)
 #'
 #'   biomass_te <-
-#'     biomass %>%
-#'     dplyr::filter(dataset == "Testing") %>%
+#'     biomass |>
+#'     dplyr::filter(dataset == "Testing") |>
 #'     dplyr::select(-dataset, -sample)
 #'
 #'   # ------------------------------------------------------------------------------
@@ -79,7 +79,7 @@
 #'
 #'   # Recipes can be used
 #'   biomass_rec <-
-#'     recipe(HHV ~ ., data = biomass_tr) %>%
+#'     recipe(HHV ~ ., data = biomass_tr) |>
 #'     step_pca(all_predictors())
 #'
 #'   set.seed(7687)

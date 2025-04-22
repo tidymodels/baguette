@@ -3,8 +3,8 @@ test_that('recipe execution', {
 
   # check to make sure that prepped data are given to model
   rec <-
-    recipe(Sepal.Length ~ ., data = iris) %>%
-    step_log(starts_with("Petal")) %>%
+    recipe(Sepal.Length ~ ., data = iris) |>
+    step_log(starts_with("Petal")) |>
     step_sqrt(Sepal.Length, skip = TRUE)
 
   check_ranges <- function(x) {

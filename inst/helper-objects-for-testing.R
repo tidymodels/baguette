@@ -17,4 +17,4 @@ set.seed(1)
 reg_mod <- nnet(mpg ~ ., data = mtcars, size = 3, trace = FALSE)
 
 baguette:::nnet_imp_garson(reg_mod)
-NeuralNetTools::garson(reg_mod, bar_plot = FALSE) %>% nnt_reformat()
+NeuralNetTools::garson(reg_mod, bar_plot = FALSE) |> nnt_reformat()

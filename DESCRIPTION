@@ -16,7 +16,7 @@ URL: https://baguette.tidymodels.org,
 BugReports: https://github.com/tidymodels/baguette/issues
 Depends: 
     parsnip (>= 1.0.0),
-    R (>= 3.6)
+    R (>= 4.1)
 Imports: 
     butcher,
     C50,
@@ -26,7 +26,6 @@ Imports:
     furrr,
     generics,
     hardhat (>= 1.1.0),
-    magrittr,
     purrr,
     rlang (>= 1.1.0),
     rpart,
