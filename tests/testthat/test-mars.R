@@ -159,7 +159,7 @@ test_that("earth engine arguments are tunable", {
   res <- bag_mars() |>
     set_engine("earth") |>
     set_mode("regression") |>
-    tunable()
+    generics::tunable()
   res <- res[res$name == "nk", ]
   expect_identical(nrow(res), 1L)
   expect_identical(res$call_info[[1]]$pkg, "dials")

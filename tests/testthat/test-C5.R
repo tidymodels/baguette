@@ -144,7 +144,7 @@ test_that("C5.0 engine arguments are tunable", {
   res <- bag_tree() |>
     set_engine("C5.0") |>
     set_mode("classification") |>
-    tunable()
+    generics::tunable()
   eng_args <- c("CF", "noGlobalPruning", "winnow", "fuzzyThreshold")
   res <- res[res$name %in% eng_args, ]
   expect_named(
