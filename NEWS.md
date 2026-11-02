@@ -2,6 +2,8 @@
 
 * Transition from the magrittr pipe to the vase R pipe.
 
+* The `C5.0` engine for `bag_tree()` now registers `CF`, `noGlobalPruning`, `winnow`, and `fuzzyThreshold` as tunable engine arguments, and the `earth` engine for `bag_mars()` now registers `nk`, so that they map to their corresponding dials parameters.
+
 # baguette 1.1.0
 
 * Small update with improved error and warning logging. 

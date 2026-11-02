@@ -155,6 +155,17 @@ test_that('check MARS parsnip interface', {
   expect_equal(update(bag_mars(), prune_method = "none"), bag_mars(prune_method = "none"))
 })
 
+test_that("earth engine arguments are tunable", {
+  res <- bag_mars() |>
+    set_engine("earth") |>
+    set_mode("regression") |>
+    generics::tunable()
+  res <- res[res$name == "nk", ]
+  expect_identical(nrow(res), 1L)
+  expect_identical(res$call_info[[1]]$pkg, "dials")
+  expect_identical(res$call_info[[1]]$fun, "max_num_terms")
+})
+
 test_that('mode specific package dependencies', {
   skip_if_not_installed("earth")
   expect_identical(
