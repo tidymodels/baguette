@@ -28,12 +28,14 @@ You can install the released version of baguette from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
+
 install.packages("baguette")
 ```
 
 Install the development version from GitHub with:
 
 ``` r
+
 # install.packages("pak")
 pak::pak("tidymodels/baguette")
 ```
@@ -59,6 +61,7 @@ Let’s build a bagged decision tree model to predict a continuous
 outcome.
 
 ``` r
+
 library(baguette)
 
 bag_tree() |> 
