@@ -140,6 +140,30 @@ test_that('check C5 parsnip interface', {
 
 })
 
+test_that("C5.0 engine arguments are tunable", {
+  res <- bag_tree() |>
+    set_engine("C5.0") |>
+    set_mode("classification") |>
+    tunable()
+  eng_args <- c("CF", "noGlobalPruning", "winnow", "fuzzyThreshold")
+  res <- res[res$name %in% eng_args, ]
+  expect_named(
+    res,
+    c("name", "call_info", "source", "component", "component_id")
+  )
+  expect_identical(res$name, eng_args)
+  expect_identical(
+    purrr::map_chr(res$call_info, "fun"),
+    c(
+      "confidence_factor",
+      "no_global_pruning",
+      "predictor_winnowing",
+      "fuzzy_thresholding"
+    )
+  )
+  expect_identical(purrr::map_chr(res$call_info, "pkg"), rep("dials", 4))
+})
+
 test_that('mode specific package dependencies', {
   expect_identical(
     get_from_env(paste0("bag_tree", "_pkgs")) |>

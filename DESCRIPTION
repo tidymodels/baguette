@@ -21,7 +21,7 @@ Imports:
     butcher,
     C50,
     cli,
-    dials,
+    dials (>= 0.0.8),
     dplyr,
     furrr,
     generics,

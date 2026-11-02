@@ -41,6 +41,15 @@ make_bag_mars <- function() {
     has_submodel = FALSE
   )
 
+  parsnip::set_model_arg(
+    model = "bag_mars",
+    eng = "earth",
+    parsnip = "nk",
+    original = "nk",
+    func = list(pkg = "dials", fun = "max_num_terms"),
+    has_submodel = FALSE
+  )
+
   parsnip::set_fit(
     model = "bag_mars",
     eng = "earth",

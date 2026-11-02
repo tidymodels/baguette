@@ -189,6 +189,42 @@ make_bag_tree <- function() {
     has_submodel = FALSE
   )
 
+  parsnip::set_model_arg(
+    model = "bag_tree",
+    eng = "C5.0",
+    parsnip = "CF",
+    original = "CF",
+    func = list(pkg = "dials", fun = "confidence_factor"),
+    has_submodel = FALSE
+  )
+
+  parsnip::set_model_arg(
+    model = "bag_tree",
+    eng = "C5.0",
+    parsnip = "noGlobalPruning",
+    original = "noGlobalPruning",
+    func = list(pkg = "dials", fun = "no_global_pruning"),
+    has_submodel = FALSE
+  )
+
+  parsnip::set_model_arg(
+    model = "bag_tree",
+    eng = "C5.0",
+    parsnip = "winnow",
+    original = "winnow",
+    func = list(pkg = "dials", fun = "predictor_winnowing"),
+    has_submodel = FALSE
+  )
+
+  parsnip::set_model_arg(
+    model = "bag_tree",
+    eng = "C5.0",
+    parsnip = "fuzzyThreshold",
+    original = "fuzzyThreshold",
+    func = list(pkg = "dials", fun = "fuzzy_thresholding"),
+    has_submodel = FALSE
+  )
+
   parsnip::set_pred(
     model = "bag_tree",
     eng = "C5.0",
