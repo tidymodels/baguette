@@ -1,6 +1,6 @@
 Package: baguette
 Title: Efficient Model Functions for Bagging
-Version: 1.1.0.9000
+Version: 1.2.0
 Authors@R: c(
     person("Max", "Kuhn", , "max@posit.co", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-2402-136X")),
@@ -50,7 +50,6 @@ Config/usethis/last-upkeep: 2024-10-23
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
 Collate: 
     'C5.0.R'
     'bag_mars_data.R'
@@ -74,3 +73,4 @@ Collate:
     'predict.R'
     'var_imp.R'
     'zzz.R'
+Config/roxygen2/version: 8.1.1
