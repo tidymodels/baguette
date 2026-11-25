@@ -2,6 +2,10 @@
 
 ## baguette (development version)
 
+## baguette 1.2.0
+
+CRAN release: 2026-11-24
+
 - Transition from the magrittr pipe to the vase R pipe.
 
 - The `C5.0` engine for

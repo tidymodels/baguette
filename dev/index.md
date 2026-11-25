@@ -80,6 +80,9 @@ bag_cars <-
   set_engine("rpart", times = 25) |> # 25 ensemble members 
   set_mode("regression") |> 
   fit(mpg ~ ., data = mtcars)
+#> Registered S3 method overwritten by 'butcher':
+#>   method                 from    
+#>   as.character.dev_topic generics
 
 bag_cars
 #> parsnip model object

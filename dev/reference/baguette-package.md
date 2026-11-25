@@ -20,18 +20,15 @@ Useful links:
 
 - Report bugs at <https://github.com/tidymodels/baguette/issues>
 
-Useful links:
-
-- <https://baguette.tidymodels.org>
-
-- <https://github.com/tidymodels/baguette>
-
-- Report bugs at <https://github.com/tidymodels/baguette/issues>
-
 ## Author
 
 **Maintainer**: Max Kuhn <max@posit.co>
 ([ORCID](https://orcid.org/0000-0003-2402-136X))
+
+Authors:
+
+- Max Kuhn <max@posit.co>
+  ([ORCID](https://orcid.org/0000-0003-2402-136X))
 
 Other contributors:
 

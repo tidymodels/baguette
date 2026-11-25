@@ -14,12 +14,12 @@ Source:
 [`DESCRIPTION`](https://github.com/tidymodels/baguette/blob/main/DESCRIPTION)
 
 Kuhn M (2026). *baguette: Efficient Model Functions for Bagging*. R
-package version 1.1.0.9000, <https://baguette.tidymodels.org>.
+package version 1.2.0.9000, <https://baguette.tidymodels.org>.
 
     @Manual{,
       title = {baguette: Efficient Model Functions for Bagging},
       author = {Max Kuhn},
       year = {2026},
-      note = {R package version 1.1.0.9000},
+      note = {R package version 1.2.0.9000},
       url = {https://baguette.tidymodels.org},
     }
