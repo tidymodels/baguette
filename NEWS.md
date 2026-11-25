@@ -1,3 +1,5 @@
+# baguette (development version)
+
 # baguette 1.2.0
 
 * Transition from the magrittr pipe to the vase R pipe.
