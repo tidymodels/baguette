@@ -107,7 +107,7 @@ majority_vote <- function(models, data, lvl, probs = FALSE) {
   prob_cols <- paste0(".pred_", lvl)
   preds <-
     purrr::map_df(models$model, predict, new_data = data, type = "class") |>
-    dplyr::mutate(.row = rep(1:n, each = m)) |>
+    dplyr::mutate(.row = rep(1:n, m)) |>
     dplyr::group_by(.row) |>
     dplyr::count(.pred_class, .drop = FALSE) |>
     dplyr::mutate(n = n/m)
