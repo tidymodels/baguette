@@ -200,3 +200,42 @@ test_that('case weights', {
   expect_true(all(purrr::map_lgl(c5_wts_fit$model_df$model, ~ .x$fit$caseWeights)))
 
 })
+
+test_that("cost-sensitive C5.0 majority vote aggregates per observation", {
+  skip_if_not_installed("modeldata")
+  data("two_class_dat", package = "modeldata")
+
+  set.seed(4779)
+  mod <- bagger(
+    Class ~ .,
+    data = two_class_dat,
+    base_model = "C5.0",
+    times = 5,
+    cost = 2
+  )
+  new_dat <- two_class_dat[1:6, -3]
+
+  member_preds <- lapply(
+    mod$model_df$model,
+    function(m) predict(m, new_data = new_dat, type = "class")$.pred_class
+  )
+  pred_mat <- do.call(cbind, lapply(member_preds, as.character))
+  expected_p1 <- rowMeans(pred_mat == "Class1")
+  expected_p2 <- rowMeans(pred_mat == "Class2")
+  expected_class <- factor(
+    ifelse(expected_p1 >= expected_p2, "Class1", "Class2"),
+    levels = levels(two_class_dat$Class)
+  )
+
+  batch_prob <- predict(mod, new_dat, type = "prob")
+  batch_class <- predict(mod, new_dat, type = "class")
+  single_prob <- dplyr::bind_rows(lapply(
+    seq_len(nrow(new_dat)),
+    function(i) predict(mod, new_dat[i, , drop = FALSE], type = "prob")
+  ))
+
+  expect_equal(batch_prob$.pred_Class1, expected_p1)
+  expect_equal(batch_prob$.pred_Class2, expected_p2)
+  expect_equal(batch_prob, single_prob)
+  expect_equal(batch_class$.pred_class, expected_class)
+})
